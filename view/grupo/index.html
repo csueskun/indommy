@@ -1,0 +1,126 @@
+<div>
+  <div class="collapse show" id="list">
+    <p>Grupos <button type="button" class="btn btn-link" ng-click='prepareForm()'>Nuevo</button></p>
+
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Descripción</th>
+          <th scope="col">Clase</th>
+		      <th scope="col">Estado</th>
+		      <th scope="col">Imagen</th>
+		      <th scope="col" width='1'></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat='grupo in grupoList'>
+          <td>{{$index + 1}}</td>
+		      <td>{{grupo.descripcion}}</td>
+          <td>{{grupo.clase.descripcion}}</td>
+          <td>{{grupo.estado}}</td>
+		      <td>{{grupo.imagen}}</td>
+          <td>
+            <div class="btn-group" role="group" aria-label="Basic example">
+              <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareForm(grupo, false, $index)'><i class="fa fa-search"></i></button>
+              <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareDelete(grupo, $event, $index)'><i class="fa fa-trash"></i></button>
+            </div>
+          </td>
+        </tr>
+        <tr ng-hide='loadingGrupos || grupoList.length'>
+          <td colspan="6">
+            <div class="alert alert-warning" role="alert">
+              No se encontraron registros
+            </div>
+          </td>
+        </tr>
+        <tr ng-show='loadingGrupos'>
+          <td colspan="6" class="text-center">
+            <h1><i class="fa fa-cog fa-spin text-secondary"></i></h1>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="collapse" id="form">
+    <button class="btn btn-link" type="button" ng-click='show("list")'>
+      Volver
+    </button>
+    <div ng-show="grupo.id" style="display: initial;">
+      <button class="btn btn-link" type="button" ng-click='editable=!editable'>
+        {{editable?'Ver detalles':'Editar'}}
+      </button>
+      <h3>{{editable?'Editar':'Detalles'}}</h3>
+    </div>
+    <h3 ng-hide='grupo.id'>Nuevo Grupo</h3>
+    <form name="form" novalidate class="needs-validation">
+      <div class="form-row">
+
+        <div class="form-group col-md-6">
+          <label for="descripcion">Descripción</label>
+          <input type="text" ng-model="grupo.descripcion" class="form-control {{form.descripcion.$valid?'is-valid':'is-invalid'}}" name="descripcion" required ng-readonly="!editable">
+          <div class="invalid-feedback" ng-if="form.descripcion.$error.required"><i class="fa fa-times"></i> La descripcion es obligatoria</div> 
+          <div class="invalid-feedback" ng-if="form.descripcion.$error.unique"><i class="fa fa-times"></i> La descripcion ya existe</div> 
+        </div>
+
+        <div class="form-group col-md-6">
+          <label for="clase_id">Clase {{grupo.clase_id}}</label>
+          <select 
+            ng-options="clase.id as clase.descripcion for clase in claseList" ng-model="grupo.clase_id" 
+            class="custom-select {{form.clase_id.$valid?'is-valid':'is-invalid'}}" name="clase_id" required ng-disabled="!editable">
+          </select>
+          <div class="invalid-feedback" ng-if="form.clase_id.$error.required"><i class="fa fa-times"></i> La clase es obligatoria</div> 
+        </div>
+
+      </div>
+
+      <div class="form-row">
+
+        <div class="form-group col-md-6">
+          <label for="estado">Estado</label>
+          <select 
+            ng-options="e.value as e.des for e in [{'des':'Activo','value':1},{'des':'Inactivo','value':0}]" type="text" ng-model="grupo.estado" 
+            class="custom-select {{form.estado.$valid?'is-valid':'is-invalid'}}" name="estado" required ng-disabled="!editable">
+          </select>
+          <div class="invalid-feedback" ng-if="form.estado.$error.required"><i class="fa fa-times"></i> El estado es obligatorio</div> 
+        </div>
+        
+        <div class="form-group col-md-6">
+          <label for="imagen">Imagen</label>
+          <input type="text" ng-model="grupo.imagen" class="form-control {{form.imagen.$valid?'is-valid':'is-invalid'}}" name="imagen" ng-readonly="!editable">
+        </div>
+
+      </div>
+      
+
+      <div class="form row">
+        <div class="col-md-12">
+          <button ng-click="save()" ng-if="editable" type="submit" class="btn btn-primary" ng-disabled="form.$invalid || saving">
+            <i class="fa fa-save {{saving?'fa-spin':''}}"></i> Guardar
+          </button>
+        </div>
+      </div>
+
+    </form>
+
+
+  </div>
+
+  
+
+  <div role="alert" aria-live="assertive" aria-atomic="true" class="toast delete hide" data-autohide="false">
+    <div class="toast-header">
+      <i class="fa fa-trash"></i>&nbsp;&nbsp;<strong class="mr-auto">Desea borrar el registro?</strong>
+    </div>
+    <div class="toast-body">
+      Esta acción es definitiva
+      <button type="button" class="btn btn-link" ng-disabled='saving' ng-click='delete()'>Borrar</i></button>
+      <button type="button" class="btn btn-link" data-dismiss="toast" aria-label="Close">Cancelar</button>
+    </div>
+  </div>
+
+  
+
+
+</div>

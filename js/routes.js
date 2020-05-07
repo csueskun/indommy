@@ -18,5 +18,9 @@ function routes($routeProvider) {
   .when("/tipoproducto", {
     templateUrl : "/view/tipoproducto/index.html",
     controller: 'tipoproductoController'
+  })
+  .when("/grupo", {
+    templateUrl : "/view/grupo/index.html",
+    controller: 'grupoController'
   });
 }
