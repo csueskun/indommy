@@ -1,0 +1,20 @@
+body{
+  font-family: 'Oswald', sans-serif;
+  font-weight: 300;
+  font-size: 20px;
+  padding-top: 80px;
+}
+div.mi-snackbar>p{
+  font-weight: 400 !important;
+}
+
+div.toast.delete{
+  position: absolute;
+  right: 1%;
+  z-index: 1000;
+  font-size: .85em;
+}
+div.toast.delete>div.toast-body>button{
+  padding: 0px 4px;
+  vertical-align: initial;
+}

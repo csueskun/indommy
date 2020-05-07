@@ -1,0 +1,121 @@
+<div>
+
+
+  <div class="collapse show" id="list">
+    <p>TIPO PRODUCTO <button type="button" class="btn btn-link" ng-click='prepareForm()'>Nueva</button></p>
+
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Código</th>
+		  <th scope="col">Descripción</th>
+          <th scope="col">Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat='tipoproducto in tipoproductoList'>
+          <td>{{$index + 1}}</td>
+		  <td>{{tipoproducto.codigo}}</td>
+          <td>{{tipoproducto.descripcion}}</td>
+		  <td>
+            <div class="btn-group" role="group" aria-label="Basic example">
+              <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareForm(tipoproducto, false, $index)'><i class="fa fa-search"></i></button>
+              <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareDelete(tipoproducto, $event, $index)'><i class="fa fa-trash"></i></button>
+            </div>
+          </td>
+        </tr>
+        <tr ng-hide='loadingTipoproducto || tipoproductoList.length'>
+          <td colspan="4">
+            <div class="alert alert-warning" role="alert">
+              No se encontraron registros
+            </div>
+          </td>
+        </tr>
+        <tr ng-show='loadingEmpresas'>
+          <td colspan="4" class="text-center">
+            <h1><i class="fa fa-cog fa-spin text-secondary"></i></h1>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="collapse" id="form">
+    <button class="btn btn-link" type="button" ng-click='show("list")'>
+      Volver
+    </button>
+    <div ng-show="tipoproducto.id" style="display: initial;">
+      <button class="btn btn-link" type="button" ng-click='editable=!editable'>
+        {{editable?'Ver detalles':'Editar'}}
+      </button>
+      <h3>{{editable?'Editar':'Detalles'}}</h3>
+    </div>
+    <h3 ng-hide='tipoproducto.id'>Nueva Tipo Producto</h3>
+    <form name="form" novalidate class="needs-validation">
+      <div class="form-row">
+
+          <div class="form-group col-md-6">
+          <label for="codigo">Código</label>
+          <input type="text" ng-model="tipoproducto.codigo" class="form-control {{form.codigo.$valid?'is-valid':'is-invalid'}}" name="codigo" required ng-readonly="!editable">
+          <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  -->
+          <div class="invalid-feedback" ng-if="form.codigo.$error.required"><i class="fa fa-times"></i> El código es obligatorio</div> 
+          <div class="invalid-feedback" ng-if="form.codigo.$error.unique"><i class="fa fa-times"></i> El código ya existe</div> 
+        </div>
+        
+		<div class="form-group col-md-6">
+          <label for="descripcion">Descripción</label>
+          <input type="text" ng-model="tipoproducto.descripcion" class="form-control {{form.descripcion.$valid?'is-valid':'is-invalid'}}" name="descripcion" required ng-readonly="!editable">
+          <!--div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  -->
+          <div class="invalid-feedback" ng-if="form.descripcion.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+        </div>
+        
+      </div>
+
+	  
+	  <div class="form-row">
+		<div class="form-group col-md-6">
+          <label for="prioridad">Prioridad</label>
+          <input type="text" ng-model="tipoproducto.prioridad" class="form-control {{form.prioridad.$valid?'is-valid':'is-invalid'}}" name="prioridad" required ng-readonly="!editable">
+          <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  -->
+          <div class="invalid-feedback" ng-if="form.prioridad.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div>
+        </div>
+		<div class="form-group col-md-6">
+          <label for="estado">Estado</label>
+          <input type="text" ng-model="tipoproducto.estado" class="form-control {{form.estado.$valid?'is-valid':'is-invalid'}}" name="estado" required ng-readonly="!editable">
+          <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div> -->
+          <div class="invalid-feedback" ng-if="form.estado.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+        </div>
+      </div>
+	  
+	  
+      <div class="form row">
+        <div class="col-md-12">
+          <button ng-click="save()" ng-if="editable" type="submit" class="btn btn-primary" ng-disabled="form.$invalid || saving">
+            <i class="fa fa-save {{saving?'fa-spin':''}}"></i> Guardar
+          </button>
+        </div>
+      </div>
+
+    </form>
+
+
+  </div>
+
+  
+
+  <div role="alert" aria-live="assertive" aria-atomic="true" class="toast delete hide" data-autohide="false">
+    <div class="toast-header">
+      <i class="fa fa-trash"></i>&nbsp;&nbsp;<strong class="mr-auto">Desea borrar el registro?</strong>
+    </div>
+    <div class="toast-body">
+      Esta acción es definitiva
+      <button type="button" class="btn btn-link" ng-disabled='saving' ng-click='delete()'>Borrar</i></button>
+      <button type="button" class="btn btn-link" data-dismiss="toast" aria-label="Close">Cancelar</button>
+    </div>
+  </div>
+
+  
+
+
+</div>
