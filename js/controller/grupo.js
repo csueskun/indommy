@@ -5,15 +5,15 @@ app.controller('grupoController', function($scope, apiInterface, snackbar) {
   loadGrupo();
 
   function loadGrupo(){
-    $scope.loadingGrupo = true;
+    $scope.loadingGrupos = true;
     let success = data=>{
       if(data.status == 200){
         $scope.grupoList = data.data.data;
-        $scope.loadingGrupo = false;
+        $scope.loadingGrupos = false;
       }};
     let error = error=>{
       console.log(error);
-      $scope.loadingGrupo = false;
+      $scope.loadingGrupos = false;
     };
     apiInterface.get(apiName, {}, success, error);
   }

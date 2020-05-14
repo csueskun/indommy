@@ -17,7 +17,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat='tipoproducto in tipoproductoList'>
+        <tr ng-repeat='grupo in grupoList'>
           <td>{{$index + 1}}</td>
 		  <td>{{grupo.descripcion}}</td>
 		  <td>{{grupo.clase_id}}</td>
@@ -31,14 +31,14 @@
             </div>
           </td>
         </tr>
-        <tr ng-hide='loadingGrupo || grupoList.length'>
+        <tr ng-hide='loadingGrupos || grupoList.length'>
           <td colspan="4">
             <div class="alert alert-warning" role="alert">
               No se encontraron registros
             </div>
           </td>
         </tr>
-        <tr ng-show='loadingGrupo'>
+        <tr ng-show='loadingGrupos'>
           <td colspan="4" class="text-center">
             <h1><i class="fa fa-cog fa-spin text-secondary"></i></h1>
           </td>
