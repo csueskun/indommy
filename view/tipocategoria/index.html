@@ -9,7 +9,7 @@
         <tr>
           <th scope="col">#</th>
           <th scope="col">Nombre</th>
-		      <th scope="col">Descripción</th>
+		  <th scope="col">Descripción</th>
           <th scope="col">Estado</th>
 		  <th scope="col">Acción</th>
         </tr>
@@ -17,10 +17,10 @@
       <tbody>
         <tr ng-repeat='tipocategoria in tipocategoriaList'>
           <td>{{$index + 1}}</td>
-		      <td>{{tipocategoria.codigo}}</td>
+		  <td>{{tipocategoria.nombre}}</td>
           <td>{{tipocategoria.descripcion}}</td>
-          <td>{{tipocategoria.estado}}</td>
-		      <td>
+		  <td>{{tipocategoria.estado}}</td>
+		  <td>
             <div class="btn-group" role="group" aria-label="Basic example">
               <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareForm(tipocategoria, false, $index)'><i class="fa fa-search"></i></button>
               <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareDelete(tipocategoria, $event, $index)'><i class="fa fa-trash"></i></button>

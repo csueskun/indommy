@@ -1,19 +1,19 @@
-app.controller('grupoController', function($scope, apiInterface, snackbar) {
-  $scope.grupoList = [];
-  const apiName = 'grupo';
+app.controller('servicioController', function($scope, apiInterface, snackbar) {
+  $scope.tipocategoriaList = [];
+  const apiName = 'servicio';
 
-  loadGrupo();
+  loadServicio();
 
-  function loadGrupo(){
-    $scope.loadingGrupo = true;
+  function loadServicio(){
+    $scope.loadingServicio = true;
     let success = data=>{
       if(data.status == 200){
-        $scope.grupoList = data.data.data;
-        $scope.loadingGrupo = false;
+        $scope.servicioList = data.data.data;
+        $scope.loadingServicio = false;
       }};
     let error = error=>{
       console.log(error);
-      $scope.loadingGrupo = false;
+      $scope.loadingServicio = false;
     };
     apiInterface.get(apiName, {}, success, error);
   }
@@ -23,9 +23,9 @@ app.controller('grupoController', function($scope, apiInterface, snackbar) {
     $('.collapse#'+section).collapse('toggle');
   }
 
-  $scope.prepareDelete = function(grupo, event, index){
-    $scope.grupoIndex = index;
-    $scope.grupo = Object.assign({}, grupo);
+  $scope.prepareDelete = function(servicio, event, index){
+    $scope.servicioIndex = index;
+    $scope.servicio = Object.assign({}, servicio);
     showToast('.toast.delete', event.clientY - 40);
   }
 
@@ -34,7 +34,7 @@ app.controller('grupoController', function($scope, apiInterface, snackbar) {
     let success = data=>{
       if(data.status == 200){
         snackbar.green('Se ha borrado el registro.');
-        $scope.grupoList.splice($scope.grupoIndex, 1);
+        $scope.servicioList.splice($scope.servicioIndex, 1);
       }
       hideToast('.toast.delete');
       $scope.saving = false;
@@ -44,13 +44,13 @@ app.controller('grupoController', function($scope, apiInterface, snackbar) {
       $scope.saving = false;
       console.log(error);
     };
-    apiInterface.delete(apiName+'/'+$scope.grupo.id, {}, success, error);
+    apiInterface.delete(apiName+'/'+$scope.servicio.id, {}, success, error);
   }
 
-  $scope.prepareForm = function(grupo={}, editable=true, index){
-    $scope.grupoIndex = index;
+  $scope.prepareForm = function(servicio={}, editable=true, index){
+    $scope.servicioIndex = index;
     $scope.editable = editable;
-    $scope.grupo = Object.assign({}, grupo);
+    $scope.servicio = Object.assign({}, servicio);
     $scope.show('form');
   }
 
@@ -60,14 +60,14 @@ app.controller('grupoController', function($scope, apiInterface, snackbar) {
         snackbar.green('Guardado exitosamente.');
       }
       $scope.saving = false;
-      if($scope.grupo.id){
+      if($scope.servicio.id){
         $scope.editable = false;
       }
       else{
-        $scope.grupo = Object.assign({}, {});
+        $scope.servicio = Object.assign({}, {});
         $scope.form.$setPristine();
       }
-      loadGrupo();
+      loadServicio();
     };
     let error = error=>{
       snackbar.red('Se presentó un error al guardar.');
@@ -79,11 +79,11 @@ app.controller('grupoController', function($scope, apiInterface, snackbar) {
       $scope.saving = false;
     };
     $scope.saving = true;
-    if($scope.grupo.id){
-      apiInterface.put(apiName+'/'+$scope.grupo.id, $scope.grupo, {}, success, error);
+    if($scope.servicio.id){
+      apiInterface.put(apiName+'/'+$scope.servicio.id, $scope.servicio, {}, success, error);
     }
     else{
-      apiInterface.post(apiName, $scope.grupo, {}, success, error);
+      apiInterface.post(apiName, $scope.servicio, {}, success, error);
     }
   }
 

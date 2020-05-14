@@ -2,43 +2,39 @@
 
 
   <div class="collapse show" id="list">
-    <p>GRUPOS<button type="button" class="btn btn-link" ng-click='prepareForm()'>Nueva</button></p>
+    <p>SERVICIOS <button type="button" class="btn btn-link" ng-click='prepareForm()'>Nueva</button></p>
 
     <table class="table table-sm">
       <thead>
         <tr>
           <th scope="col">#</th>
           <th scope="col">Descripción</th>
-		  <th scope="col">Clase</th>
 		  <th scope="col">Estado</th>
-		  
-		  <th scope="col">Ruta Imagen</th>
-          <th scope="col">Acción</th>
+          <th scope="col">Prioridad</th>
+		  <th scope="col">Acción</th>
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat='tipoproducto in tipoproductoList'>
+        <tr ng-repeat='servicio in servicioList'>
           <td>{{$index + 1}}</td>
-		  <td>{{grupo.descripcion}}</td>
-		  <td>{{grupo.clase_id}}</td>
-		  <td>{{grupo.estado}}</td>
-		  <td>{{grupo.imagen}}</td>
-          
-		  <td>
+		  <td>{{servicio.descripcion}}</td>
+          <td>{{servicio.estado}}</td>
+          <td>{{servicio.prioridad}}</td>
+          <td>
             <div class="btn-group" role="group" aria-label="Basic example">
-              <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareForm(grupo, false, $index)'><i class="fa fa-search"></i></button>
-              <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareDelete(grupo, $event, $index)'><i class="fa fa-trash"></i></button>
+              <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareForm(servicio, false, $index)'><i class="fa fa-search"></i></button>
+              <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareDelete(servicio, $event, $index)'><i class="fa fa-trash"></i></button>
             </div>
           </td>
         </tr>
-        <tr ng-hide='loadingGrupo || grupoList.length'>
+        <tr ng-hide='loadingServicio || servicioList.length'>
           <td colspan="4">
             <div class="alert alert-warning" role="alert">
               No se encontraron registros
             </div>
           </td>
         </tr>
-        <tr ng-show='loadingGrupo'>
+        <tr ng-show='loadingServicio'>
           <td colspan="4" class="text-center">
             <h1><i class="fa fa-cog fa-spin text-secondary"></i></h1>
           </td>
@@ -51,52 +47,41 @@
     <button class="btn btn-link" type="button" ng-click='show("list")'>
       Volver
     </button>
-    <div ng-show="grupo.id" style="display: initial;">
+    <div ng-show="servicio.id" style="display: initial;">
       <button class="btn btn-link" type="button" ng-click='editable=!editable'>
         {{editable?'Ver detalles':'Editar'}}
       </button>
-      <h3>{{editable?'Editar Grupo':'Detalles Grupo'}}</h3>
+      <h3>{{editable?'Editar Servicio':'Detalles Servicio'}}</h3>
     </div>
-    <h3 ng-hide='grupo.id'>Nueva Grupo</h3>
+    <h3 ng-hide='servicio.id'>Nuevo Servicio</h3>
     <form name="form" novalidate class="needs-validation">
       <div class="form-row">
 
-          <div class="form-group col-md-6">
+        <div class="form-group col-md-12">
           <label for="descripcion">Descripción</label>
-          <input type="text" ng-model="grupo.descripcion" class="form-control {{form.descripcion.$valid?'is-valid':'is-invalid'}}" name="descripcion" required ng-readonly="!editable">
-          <!--div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  -->
-          <div class="invalid-feedback" ng-if="form.descripcion.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
-        </div>
-		  
-		  <div class="form-group col-md-6">
-          <label for="clase_id">Clase</label>
-          <input type="text" ng-model="grupo.clase_id" class="form-control {{form.clase_id.$valid?'is-valid':'is-invalid'}}" name="clase_id" required ng-readonly="!editable">
+          <input type="text" ng-model="servicio.descripcion" class="form-control {{form.descripcion.$valid?'is-valid':'is-invalid'}}" name="descripcion" required ng-readonly="!editable">
           <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  -->
-          <div class="invalid-feedback" ng-if="form.clase_id.$error.required"><i class="fa fa-times"></i> Campo es obligatorio</div> 
-          <!--<div class="invalid-feedback" ng-if="form.clase_id.$error.unique"><i class="fa fa-times"></i> La clase ya existe</div> -->
+          <div class="invalid-feedback" ng-if="form.descripcion.$error.required"><i class="fa fa-times"></i> Campo es obligatorio</div> 
+          <div class="invalid-feedback" ng-if="form.descripcion.$error.unique"><i class="fa fa-times"></i> La descripción ya existe</div> 
         </div>
-        
-		
-        
       </div>
 
-	  
+      
 	  <div class="form-row">
-		<div class="form-group col-md-6">
+          <div class="form-group col-md-6">
           <label for="estado">Estado</label>
-          <input type="text" ng-model="grupo.estado" class="form-control {{form.estado.$valid?'is-valid':'is-invalid'}}" name="estado" required ng-readonly="!editable">
+          <input type="text" ng-model="servicio.estado" class="form-control {{form.estado.$valid?'is-valid':'is-invalid'}}" name="estado" required ng-readonly="!editable">
           <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div> -->
           <div class="invalid-feedback" ng-if="form.estado.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
-        </div>
-		<div class="form-group col-md-6">
-          <label for="imagen">Ruta Imagen</label>
-          <input type="text" ng-model="grupo.imagen" class="form-control {{form.imagen.$valid?'is-valid':'is-invalid'}}" name="imagen" required ng-readonly="!editable">
+         </div>
+	     <div class="form-group col-md-6">
+          <label for="prioridad">Prioridad</label>
+          <input type="text" ng-model="servicio.prioridad" class="form-control {{form.prioridad.$valid?'is-valid':'is-invalid'}}" name="prioridad" required ng-readonly="!editable">
           <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  -->
-          <div class="invalid-feedback" ng-if="form.imagen.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div>
+          <div class="invalid-feedback" ng-if="form.prioridad.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div>
         </div>
 		
       </div>
-	  
 	  
       <div class="form row">
         <div class="col-md-12">
@@ -124,7 +109,6 @@
     </div>
   </div>
 
-  
-
+ 
 
 </div>

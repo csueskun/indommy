@@ -15,12 +15,17 @@ function routes($routeProvider) {
     templateUrl : "/view/tipocategoria/index.html",
     controller: 'tipocategoriaController'
   })
-  .when("/tipoproducto", {
-    templateUrl : "/view/tipoproducto/index.html",
-    controller: 'tipoproductoController'
+  .when("/servicio", {
+    templateUrl : "/view/servicio/index.html",
+    controller: 'servicioController'
   })
   .when("/grupo", {
     templateUrl : "/view/grupo/index.html",
     controller: 'grupoController'
+  })
+
+  .when("/tipoproducto", {
+    templateUrl : "/view/tipoproducto/index.html",
+    controller: 'tipoproductoController'
   });
 }
