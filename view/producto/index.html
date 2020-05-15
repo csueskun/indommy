@@ -1,0 +1,227 @@
+<div>
+
+
+  <div class="collapse show" id="list">
+    <p>PRODUCTO <button type="button" class="btn btn-link" ng-click='prepareForm()'>Nueva</button></p>
+
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Código</th>
+          <th scope="col">Descripción</th>
+          <th scope="col">Empresa</th>          
+          <th scope="col">Tipo Producto</th>
+          <th scope="col">Precio</th>
+          
+		  <th scope="col">Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat='producto in productoList'>
+          <td>{{$index + 1}}</td>
+		      <td>{{producto.codigo}}</td>
+          <td>{{producto.descripcion}}</td>    
+          <td>{{producto.empresa_id}}</td>
+          <td>{{producto.tipoproducto_id}}</td>    
+		      <td>{{producto.precio1}}</td>
+          <td>
+            <div class="btn-group" role="group" aria-label="Basic example">
+              <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareForm(producto, false, $index)'><i class="fa fa-search"></i></button>
+              <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareDelete(producto, $event, $index)'><i class="fa fa-trash"></i></button>
+            </div>
+          </td>
+        </tr>
+        <tr ng-hide='loadingProducto || productoList.length'>
+          <td colspan="4">
+            <div class="alert alert-warning" role="alert">
+              No se encontraron registros
+            </div>
+          </td>
+        </tr>
+        <tr ng-show='loadingProducto'>
+          <td colspan="4" class="text-center">
+            <h1><i class="fa fa-cog fa-spin text-secondary"></i></h1>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="collapse" id="form">
+    <button class="btn btn-link" type="button" ng-click='show("list")'>
+      Volver
+    </button>
+    <div ng-show="producto.id" style="display: initial;">
+      <button class="btn btn-link" type="button" ng-click='editable=!editable'>
+        {{editable?'Ver detalles':'Editar'}}
+      </button>
+      <h3>{{editable?'Editar Producto':'Detalles Producto'}}</h3>
+    </div>
+    <h3 ng-hide='producto.id'>Nueva Empresa</h3>
+    <form name="form" novalidate class="needs-validation">
+      <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="codigo">Código</label>
+            <input type="text" ng-model="producto.codigo" class="form-control {{form.codigo.$valid?'is-valid':'is-invalid'}}" name="codigo" required ng-readonly="!editable">
+            <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  -->
+            <div class="invalid-feedback" ng-if="form.codigo.$error.required"><i class="fa fa-times"></i> El código es obligatorio</div> 
+            <div class="invalid-feedback" ng-if="form.codigo.$error.unique"><i class="fa fa-times"></i> El código ya existe</div> 
+          </div>
+       
+          <div class="form-group col-md-4">
+            <label for="empresa_id">Empresa ID</label>
+            <input type="text" ng-model="producto.empresa_id" class="form-control {{form.empresa_id.$valid?'is-valid':'is-invalid'}}" name="empresa_id" required ng-readonly="!editable">
+            <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  -->
+            <div class="invalid-feedback" ng-if="form.empresa_id.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+          </div>
+      </div>
+      
+      <div class="form-row">
+
+         <div class="form-group col-md-12">
+            <label for="descripcion">Descripción del Producto</label>
+            <input type="text" ng-model="producto.descripcion" class="form-control {{form.descripcion.$valid?'is-valid':'is-invalid'}}" name="descripcion" required ng-readonly="!editable">
+            <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  -->
+            <div class="invalid-feedback" ng-if="form.descripcion.$error.required"><i class="fa fa-times"></i> La descripción es obligatorio</div> 
+            <div class="invalid-feedback" ng-if="form.descripcion.$error.unique"><i class="fa fa-times"></i> La descripción ya existe</div> 
+         </div>
+      </div>
+
+     
+	    <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="tipoproducto_id">Tipo Producto</label>
+          <input type="text" ng-model="producto.tipoproducto_id" class="form-control {{form.tipoproducto_id.$valid?'is-valid':'is-invalid'}}" name="tipoproducto_id" required ng-readonly="!editable">
+          <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div> -->
+          <div class="invalid-feedback" ng-if="form.tipoproducto_id.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div>
+        </div>
+        
+        <div class="form-group col-md-4">
+          <label for="tipocategoria_id">Tipo Categoria</label>
+          <input type="text" ng-model="producto.tipocategoria_id" class="form-control {{form.tipocategoria_id.$valid?'is-valid':'is-invalid'}}" name="tipocategoria_id" required ng-readonly="!editable">
+          <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  -->
+          <div class="invalid-feedback" ng-if="form.tipocategoria_id.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+        </div>
+    
+        <div class="form-group col-md-4">
+          <label for="prioridad">Prioridad</label>
+          <input type="text" ng-model="producto.prioridad" class="form-control {{form.prioridad.$valid?'is-valid':'is-invalid'}}" name="prioridad" required ng-readonly="!editable">
+          <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  -->
+          <div class="invalid-feedback" ng-if="form.prioridad.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div>
+        </div>
+    
+        <div class="form-group col-md-4">
+          <label for="estado">Estado</label>
+          <input type="text" ng-model="producto.estado" class="form-control {{form.estado.$valid?'is-valid':'is-invalid'}}" name="estado" required ng-readonly="!editable">
+          <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div> -->
+          <div class="invalid-feedback" ng-if="form.estado.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+        </div>
+
+      </div>
+
+  	  <div class="form-row">
+    
+	     	<div class="form-group col-md-3">
+            <label for="tamano">Tamano del producto</label>
+            <input type="text" ng-model="producto.tamano" class="form-control {{form.tamano.$valid?'is-valid':'is-invalid'}}" name="tamano" required ng-readonly="!editable">
+            <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>-->
+            <div class="invalid-feedback" ng-if="form.tamano.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div>
+        </div>
+      
+        <div class="form-group col-md-3">
+          <label for="precio1">Precio Detal</label>
+          <input type="text" ng-model="producto.precio1" class="form-control {{form.precio1.$valid?'is-valid':'is-invalid'}}" name="precio1" required ng-readonly="!editable">
+          <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>-->
+          <div class="invalid-feedback" ng-if="form.precio1.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+        </div>
+		
+        <div class="form-group col-md-3">
+          <label for="precio3">Precio Mayor</label>
+          <input type="text" ng-model="producto.precio3" class="form-control {{form.precio3.$valid?'is-valid':'is-invalid'}}" name="precio3" required ng-readonly="!editable">
+          <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>-->
+          <div class="invalid-feedback" ng-if="form.precio3.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+        </div>
+		
+        <div class="form-group col-md-3">
+          <label for="unidad">Unidad</label>
+          <input type="text" ng-model="producto.unidad" class="form-control {{form.unidad.$valid?'is-valid':'is-invalid'}}" name="unidad" required ng-readonly="!editable">
+          <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>-->
+          <div class="invalid-feedback" ng-if="form.unidad.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+        </div>
+		      
+      </div>
+    
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <label for="etiquetas">Etiquetas de búsqueda</label>
+          <input type="text" ng-model="producto.etiquetas" class="form-control {{form.etiquetas.$valid?'is-valid':'is-invalid'}}" name="etiquetas" required ng-readonly="!editable">
+          <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>-->
+          <div class="invalid-feedback" ng-if="form.etiquetas.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+        </div>
+      </div>
+
+	  
+	   <div class="form-row">
+        <div class="form-group col-md-8">
+          <label for="etiquetas">Etiquetas de búsqueda</label>
+          <input type="text" ng-model="producto.etiquetas" class="form-control {{form.etiquetas.$valid?'is-valid':'is-invalid'}}" name="etiquetas" required ng-readonly="!editable">
+          <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>-->
+          <div class="invalid-feedback" ng-if="form.etiquetas.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+        </div> 
+        <div class="form-group col-md-2">
+          <label for="iva">Valor IVA</label>
+          <input type="text" ng-model="producto.iva" class="form-control {{form.iva.$valid?'is-valid':'is-invalid'}}" name="iva" required ng-readonly="!editable">
+          <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>-->
+          <div class="invalid-feedback" ng-if="form.iva.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+        </div>
+		    <div class="form-group col-md-2">
+          <label for="impco">Imp CO</label>
+          <input type="text" ng-model="producto.impco" class="form-control {{form.impco.$valid?'is-valid':'is-invalid'}}" name="impco" required ng-readonly="!editable">
+          <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>-->
+          <div class="invalid-feedback" ng-if="form.impco.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div>
+        </div>
+      </div>
+	  
+	  
+	
+	 <div class="form-row">
+        <div class="form-group col-md-12">
+          <label for="observacion">Observacion</label>
+          <input type="text" ng-model="producto.observacion" class="form-control {{form.observacion.$valid?'is-valid':'is-invalid'}}" name="observacion" required ng-readonly="!editable">
+          <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div> -->
+          <div class="invalid-feedback" ng-if="form.observacion.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+        </div>
+	 </div>
+	  
+  
+   <div class="form row">
+        <div class="col-md-12">
+          <button ng-click="save()" ng-if="editable" type="submit" class="btn btn-primary" ng-disabled="form.$invalid || saving">
+            <i class="fa fa-save {{saving?'fa-spin':''}}"></i> Guardar
+          </button>
+        </div>
+   </div>
+
+  </form>
+
+
+  </div>
+
+  
+
+  <div role="alert" aria-live="assertive" aria-atomic="true" class="toast delete hide" data-autohide="false">
+    <div class="toast-header">
+      <i class="fa fa-trash"></i>&nbsp;&nbsp;<strong class="mr-auto">Desea borrar el registro?</strong>
+    </div>
+    <div class="toast-body">
+      Esta acción es definitiva
+      <button type="button" class="btn btn-link" ng-disabled='saving' ng-click='delete()'>Borrar</i></button>
+      <button type="button" class="btn btn-link" data-dismiss="toast" aria-label="Close">Cancelar</button>
+    </div>
+  </div>
+
+  
+
+
+</div>

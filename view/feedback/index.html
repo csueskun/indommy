@@ -18,7 +18,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat='news in newsList'>
+        <tr ng-repeat='feedback in feedbackList'>
           <td>{{$index + 1}}</td>
 		      <td>{{feedback.empresa_id}} </td>
           <td>{{feedback.visitas}}</td>
@@ -27,7 +27,7 @@
 		      <td>{{feedback.puntaje}}</td>
           <td>{{feedback.estado}}</td>
 		  
-		  <td>
+		      <td>
             <div class="btn-group" role="group" aria-label="Basic example">
               <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareForm(feedback, false, $index)'><i class="fa fa-search"></i></button>
               <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareDelete(feedback, $event, $index)'><i class="fa fa-trash"></i></button>
@@ -98,7 +98,6 @@
           <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>-->
           <div class="invalid-feedback" ng-if="form.favorito.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
         </div>
-   
        
 		
 		<div class="form-group col-md-4">

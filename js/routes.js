@@ -23,7 +23,26 @@ function routes($routeProvider) {
     templateUrl : "/view/grupo/index.html",
     controller: 'grupoController'
   })
-
+  .when("/oferta", {
+    templateUrl : "/view/oferta/index.html",
+    controller: 'ofertaController'
+  })
+  .when("/news", {
+    templateUrl : "/view/news/index.html",
+    controller: 'newsController'
+  })
+  .when("/feedback", {
+    templateUrl : "/view/feedback/index.html",
+    controller: 'feedbackController'
+  })
+  .when("/producto", {
+    templateUrl : "/view/producto/index.html",
+    controller: 'productoController'
+  })
+  .when("/atencion", {
+    templateUrl : "/view/atencion/index.html",
+    controller: 'atencionController'
+  })
   .when("/tipoproducto", {
     templateUrl : "/view/tipoproducto/index.html",
     controller: 'tipoproductoController'
