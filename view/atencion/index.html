@@ -1,0 +1,246 @@
+<div>
+
+
+  <div class="collapse show" id="list">
+    <p>ATENCIÓN <button type="button" class="btn btn-link" ng-click='prepareForm()'>Nueva</button></p>
+
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Empresa ID</th>
+		      <th scope="col">Estado</th>
+		      <th scope="col">Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat='atencion in atencionList'>
+          <td>{{$index + 1}}</td>
+		      <td>{{atencion.empresa_id}}</td>
+          <td>{{atencion.estado}}</td>
+          
+          <td>
+            <div class="btn-group" role="group" aria-label="Basic example">
+              <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareForm(atencion, false, $index)'><i class="fa fa-search"></i></button>
+              <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareDelete(atencion, $event, $index)'><i class="fa fa-trash"></i></button>
+            </div>
+          </td>
+        </tr>
+        <tr ng-hide='loadingAtencion || atencionList.length'>
+          <td colspan="4">
+            <div class="alert alert-warning" role="alert">
+              No se encontraron registros
+            </div>
+          </td>
+        </tr>
+        <tr ng-show='loadingAtencion'>
+          <td colspan="4" class="text-center">
+            <h1><i class="fa fa-cog fa-spin text-secondary"></i></h1>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="collapse" id="form">
+    <button class="btn btn-link" type="button" ng-click='show("list")'>
+      Volver
+    </button>
+    <div ng-show="atencion.id" style="display: initial;">
+      <button class="btn btn-link" type="button" ng-click='editable=!editable'>
+        {{editable?'Ver detalles':'Editar'}}
+      </button>
+      <h3>{{editable?'Editar Atención':'Detalles Atención'}}</h3>
+    </div>
+    <h3 ng-hide='atencion.id'>Nueva Atención</h3>
+    <form name="form" novalidate class="needs-validation">
+      <div class="form-row">
+
+        <div class="form-group col-md-6">
+          <label for="empresa_id">Empresa ID</label>
+          <input type="text" ng-model="atencion.empresa_id" class="form-control {{form.empresa_id.$valid?'is-valid':'is-invalid'}}" name="empresa_id" required ng-readonly="!editable">
+          <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  
+           <div class="invalid-feedback" ng-if="form.empresa_id.$error.unique"><i class="fa fa-times"></i> La empresa ya existe</div>
+          -->
+          <div class="invalid-feedback" ng-if="form.empresa_id.$error.required"><i class="fa fa-times"></i> El nombre es obligatorio</div> 
+        </div>
+
+        <div class="form-group col-md-4">
+          <label for="estado">Estado</label>
+          <input type="text" ng-model="atencion.estado" class="form-control {{form.estado.$valid?'is-valid':'is-invalid'}}" name="estado" required ng-readonly="!editable">
+          <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div> -->
+          <div class="invalid-feedback" ng-if="form.estado.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+        </div>
+
+        
+      </div>
+      <div class="form-row">
+         <div class="well well-sm col-md-6 ">Lunes</div>
+         <div class="well well-sm col-md-6 ">Martes</div>
+      </div>
+      <div class="form-row">
+         
+        <div class="form-group col-md-3">
+          
+          <label for="horaini_lunes">Hora Inicial</label>
+          <input type="text" ng-model="atencion.horaini_lunes" class="form-control {{form.horaini_lunes.$valid?'is-valid':'is-invalid'}}" name="horaini_lunes" required ng-readonly="!editable">
+          <!--div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  -->
+          <div class="invalid-feedback" ng-if="form.horaini_lunes.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+        </div>
+        <div class="form-group col-md-3">    
+          <label for="horafin_lunes">Hora Final</label>
+          <input type="text" ng-model="atencion.horafin_lunes" class="form-control {{form.horafin_lunes.$valid?'is-valid':'is-invalid'}}" name="horafin_lunes" required ng-readonly="!editable">
+          <!--div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  -->
+          <div class="invalid-feedback" ng-if="form.horafin_lunes.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+        </div>
+
+        <div class="form-group col-md-3">
+          <label for="horaini_martes">Hora Inicial</label>
+          <input type="text" ng-model="atencion.horaini_martes" class="form-control {{form.horaini_martes.$valid?'is-valid':'is-invalid'}}" name="horaini_martes" required ng-readonly="!editable">
+          <!--div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  -->
+          <div class="invalid-feedback" ng-if="form.horaini_martes.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+        </div>
+        <div class="form-group col-md-3">
+          
+          <label for="horafin_martes">Hora Final</label>
+          <input type="text" ng-model="atencion.horafin_martes" class="form-control {{form.horafin_martes.$valid?'is-valid':'is-invalid'}}" name="horafin_martes" required ng-readonly="!editable">
+          <!--div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  -->
+          <div class="invalid-feedback" ng-if="form.horafin_martes.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="well well-sm col-md-6 ">Miércoles</div>
+        <div class="well well-sm col-md-6 ">Jueves</div>
+     </div>
+     
+
+      <div class="form-row"> 
+        <div class="form-group col-md-3">
+          <label for="horaini_miercoles">Hora Inicial</label>
+          <input type="text" ng-model="atencion.horaini_miercoles" class="form-control {{form.horaini_miercoles.$valid?'is-valid':'is-invalid'}}" name="horaini_miercoles" required ng-readonly="!editable">
+          <!--div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  -->
+          <div class="invalid-feedback" ng-if="form.horaini_miercoles.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+        </div>
+        <div class="form-group col-md-3">
+          <label for="horafin_miercoles">Hora Final</label>
+          <input type="text" ng-model="atencion.horafin_miercoles" class="form-control {{form.horafin_miercoles.$valid?'is-valid':'is-invalid'}}" name="horafin_miercoles" required ng-readonly="!editable">
+          <!--div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  -->
+          <div class="invalid-feedback" ng-if="form.horafin_miercoles.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+        </div>
+        <div class="form-group col-md-3">
+          <label for="horaini_jueves">Hora Inicial</label>
+          <input type="text" ng-model="atencion.horaini_jueves" class="form-control {{form.horaini_jueves.$valid?'is-valid':'is-invalid'}}" name="horaini_jueves" required ng-readonly="!editable">
+          <!--div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  -->
+          <div class="invalid-feedback" ng-if="form.horaini_jueves.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+        </div>
+        <div class="form-group col-md-3">
+          <label for="horafin_jueves">Hora Final</label>
+          <input type="text" ng-model="atencion.horafin_jueves" class="form-control {{form.horafin_jueves.$valid?'is-valid':'is-invalid'}}" name="horafin_jueves" required ng-readonly="!editable">
+          <!--div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  -->
+          <div class="invalid-feedback" ng-if="form.horafin_jueves.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+        </div>
+
+      </div>
+
+      <div class="form-row">
+        <div class="well well-sm col-md-6 ">Viernes</div>
+        <div class="well well-sm col-md-6 ">Sábado</div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label for="horaini_viernes">Hora Inicial</label>
+          <input type="text" ng-model="atencion.horaini_viernes" class="form-control {{form.horaini_viernes.$valid?'is-valid':'is-invalid'}}" name="horaini_viernes" required ng-readonly="!editable">
+          <!--div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  -->
+          <div class="invalid-feedback" ng-if="form.horaini_viernes.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+        </div>
+        <div class="form-group col-md-3">
+          <label for="horafin_viernes">Hora Final</label>
+          <input type="text" ng-model="atencion.horafin_viernes" class="form-control {{form.horafin_viernes.$valid?'is-valid':'is-invalid'}}" name="horafin_viernes" required ng-readonly="!editable">
+          <!--div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  -->
+          <div class="invalid-feedback" ng-if="form.horafin_viernes.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+        </div>
+
+        <div class="form-group col-md-3">          
+          <label for="horaini_sabado">Hora Inicial</label>
+          <input type="text" ng-model="atencion.horaini_sabado" class="form-control {{form.horaini_sabado.$valid?'is-valid':'is-invalid'}}" name="horaini_sabado" required ng-readonly="!editable">
+          <!--div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  -->
+          <div class="invalid-feedback" ng-if="form.horaini_sabado.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+        </div>
+      
+        <div class="form-group col-md-3">
+          
+          <label for="horafin_sabado">Hora Final</label>
+          <input type="text" ng-model="atencion.horafin_sabado" class="form-control {{form.horafin_sabado.$valid?'is-valid':'is-invalid'}}" name="horafin_sabado" required ng-readonly="!editable">
+          <!--div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  -->
+          <div class="invalid-feedback" ng-if="form.horafin_sabado.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+        </div>
+      </div>
+      
+      <div class="form-row">
+        <div class="well well-sm col-md-6 ">Domingo</div>
+        <div class="well well-sm col-md-6 ">Festivo</div>
+      </div>
+
+      <div class="form-row"> 
+        <div class="form-group col-md-3">          
+          <label for="horaini_domingo">Hora Inicial</label>
+          <input type="text" ng-model="atencion.horaini_domingo" class="form-control {{form.horaini_domingo.$valid?'is-valid':'is-invalid'}}" name="horaini_domingo" required ng-readonly="!editable">
+          <!--div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  -->
+          <div class="invalid-feedback" ng-if="form.horaini_domingo.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+        </div>
+        <div class="form-group col-md-3">
+          
+          <label for="horafin_domingo">Hora Final</label>
+          <input type="text" ng-model="atencion.horafin_domingo" class="form-control {{form.horafin_domingo.$valid?'is-valid':'is-invalid'}}" name="horafin_domingo" required ng-readonly="!editable">
+          <!--div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  -->
+          <div class="invalid-feedback" ng-if="form.horafin_domingo.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+        </div>
+      
+        <div class="form-group col-md-3">    
+          <label for="horaini_festivo">Hora Inicial</label>
+          <input type="text" ng-model="atencion.horaini_festivo" class="form-control {{form.horaini_festivo.$valid?'is-valid':'is-invalid'}}" name="horaini_festivo" required ng-readonly="!editable">
+          <!--div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  -->
+          <div class="invalid-feedback" ng-if="form.horaini_festivo.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+        </div>
+        <div class="form-group col-md-3">
+          <label for="horafin_festivo">Hora Final</label>
+          <input type="text" ng-model="atencion.horafin_festivo" class="form-control {{form.horafin_festivo.$valid?'is-valid':'is-invalid'}}" name="horafin_festivo" required ng-readonly="!editable">
+          <!--div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  -->
+          <div class="invalid-feedback" ng-if="form.horafin_festivo.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+        </div>
+      </div>
+
+
+
+      <div class="form row">
+        <div class="col-md-12">
+          <button ng-click="save()" ng-if="editable" type="submit" class="btn btn-primary" ng-disabled="form.$invalid || saving">
+            <i class="fa fa-save {{saving?'fa-spin':''}}"></i> Guardar
+          </button>
+        </div>
+      </div>
+
+    </form>
+
+
+  </div>
+
+  
+
+  <div role="alert" aria-live="assertive" aria-atomic="true" class="toast delete hide" data-autohide="false">
+    <div class="toast-header">
+      <i class="fa fa-trash"></i>&nbsp;&nbsp;<strong class="mr-auto">Desea borrar el registro?</strong>
+    </div>
+    <div class="toast-body">
+      Esta acción es definitiva
+      <button type="button" class="btn btn-link" ng-disabled='saving' ng-click='delete()'>Borrar</i></button>
+      <button type="button" class="btn btn-link" data-dismiss="toast" aria-label="Close">Cancelar</button>
+    </div>
+  </div>
+
+  
+
+
+</div>
