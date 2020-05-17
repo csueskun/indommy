@@ -70,7 +70,7 @@
 		  
 		    <div class="form-group col-md-6">
           <label for="clase_id">Clase</label>
-          <select class="custom-select {{form.descripcion.$valid?'is-valid':'is-invalid'}}" ng-model="grupo.clase_id" required ng-disabled="!editable" 
+          <select class="custom-select {{form.clase_id.$valid?'is-valid':'is-invalid'}}" name="clase_id" ng-model="grupo.clase_id" required ng-disabled="!editable" 
             ng-readonly="!editable" ng-options="item.id as item.descripcion for item in claseList"></select>
           <div class="invalid-feedback" ng-if="form.clase_id.$error.required"><i class="fa fa-times"></i> Campo es obligatorio</div> 
         </div>
@@ -82,7 +82,7 @@
 
 		    <div class="form-group col-md-6">
           <label for="estado">Estado</label>
-          <select class="custom-select {{form.descripcion.$valid?'is-valid':'is-invalid'}}" ng-model="grupo.estado" required ng-disabled="!editable" ng-readonly="!editable"
+          <select class="custom-select {{form.estado.$valid?'is-valid':'is-invalid'}}" name="estado" ng-model="grupo.estado" required ng-disabled="!editable" ng-readonly="!editable"
             ng-options="item.val as item.des for item in estados"></select>
           <div class="invalid-feedback" ng-if="form.estado.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
         </div>
