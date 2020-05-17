@@ -1,7 +1,13 @@
 app.controller('grupoController', function($scope, apiInterface, snackbar) {
   $scope.grupoList = [];
+  $scope.claseList = [];
   const apiName = 'grupo';
+  $scope.estados = [
+    {des: 'Activo', val: 1},
+    {des: 'Inactivo', val: 0}
+  ]
 
+  loadClases();
   loadGrupo();
 
   function loadGrupo(){
@@ -16,6 +22,19 @@ app.controller('grupoController', function($scope, apiInterface, snackbar) {
       $scope.loadingGrupos = false;
     };
     apiInterface.get(apiName, {}, success, error);
+  }
+  function loadClases(){
+    $scope.loadingGrupos = true;
+    let success = data=>{
+      if(data.status == 200){
+        $scope.claseList = data.data.data;
+        $scope.loadingGrupos = false;
+      }};
+    let error = error=>{
+      console.log(error);
+      $scope.loadingGrupos = false;
+    };
+    apiInterface.get('clase', {}, success, error);
   }
 
   $scope.show = function(section){

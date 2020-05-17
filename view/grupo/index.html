@@ -9,22 +9,22 @@
         <tr>
           <th scope="col">#</th>
           <th scope="col">Descripción</th>
-		  <th scope="col">Clase</th>
-		  <th scope="col">Estado</th>
-		  
-		  <th scope="col">Ruta Imagen</th>
+          <th scope="col">Clase</th>
+          <th scope="col">Estado</th>
+          
+          <th scope="col">Ruta Imagen</th>
           <th scope="col">Acción</th>
         </tr>
       </thead>
       <tbody>
         <tr ng-repeat='grupo in grupoList'>
           <td>{{$index + 1}}</td>
-		  <td>{{grupo.descripcion}}</td>
-		  <td>{{grupo.clase_id}}</td>
-		  <td>{{grupo.estado}}</td>
-		  <td>{{grupo.imagen}}</td>
+          <td>{{grupo.descripcion}}</td>
+          <td>{{grupo.clase.descripcion}}</td>
+          <td>{{grupo.estado}}</td>
+          <td>{{grupo.imagen}}</td>
           
-		  <td>
+		      <td>
             <div class="btn-group" role="group" aria-label="Basic example">
               <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareForm(grupo, false, $index)'><i class="fa fa-search"></i></button>
               <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareDelete(grupo, $event, $index)'><i class="fa fa-trash"></i></button>
@@ -68,27 +68,27 @@
           <div class="invalid-feedback" ng-if="form.descripcion.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
         </div>
 		  
-		  <div class="form-group col-md-6">
+		    <div class="form-group col-md-6">
           <label for="clase_id">Clase</label>
-          <input type="text" ng-model="grupo.clase_id" class="form-control {{form.clase_id.$valid?'is-valid':'is-invalid'}}" name="clase_id" required ng-readonly="!editable">
-          <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  -->
+          <select class="custom-select {{form.descripcion.$valid?'is-valid':'is-invalid'}}" ng-model="grupo.clase_id" required ng-disabled="!editable" 
+            ng-readonly="!editable" ng-options="item.id as item.descripcion for item in claseList"></select>
           <div class="invalid-feedback" ng-if="form.clase_id.$error.required"><i class="fa fa-times"></i> Campo es obligatorio</div> 
-          <!--<div class="invalid-feedback" ng-if="form.clase_id.$error.unique"><i class="fa fa-times"></i> La clase ya existe</div> -->
         </div>
-        
-		
         
       </div>
 
 	  
 	  <div class="form-row">
-		<div class="form-group col-md-6">
+
+		    <div class="form-group col-md-6">
           <label for="estado">Estado</label>
-          <input type="text" ng-model="grupo.estado" class="form-control {{form.estado.$valid?'is-valid':'is-invalid'}}" name="estado" required ng-readonly="!editable">
-          <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div> -->
+          <select class="custom-select {{form.descripcion.$valid?'is-valid':'is-invalid'}}" ng-model="grupo.estado" required ng-disabled="!editable" ng-readonly="!editable"
+            ng-options="item.val as item.des for item in estados"></select>
           <div class="invalid-feedback" ng-if="form.estado.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
         </div>
-		<div class="form-group col-md-6">
+
+
+		    <div class="form-group col-md-6">
           <label for="imagen">Ruta Imagen</label>
           <input type="text" ng-model="grupo.imagen" class="form-control {{form.imagen.$valid?'is-valid':'is-invalid'}}" name="imagen" required ng-readonly="!editable">
           <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  -->
