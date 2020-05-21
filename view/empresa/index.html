@@ -1,7 +1,5 @@
 <div>
-
-
-  <div class="collapse show" id="list">
+    <div class="collapse show" id="list">
     <p>EMPRESAS <button type="button" class="btn btn-link" ng-click='prepareForm()'>Nueva</button></p>
 
     <table class="table table-sm">
@@ -9,7 +7,7 @@
         <tr>
           <th scope="col">#</th>
           <th scope="col">Código</th>
-		  <th scope="col">Nombre</th>
+		      <th scope="col">Nombre</th>
           <th scope="col">Descripción</th>
           <th scope="col">Teléfono</th>
 		  <th scope="col">Acción</th>
@@ -18,10 +16,10 @@
       <tbody>
         <tr ng-repeat='empresa in empresaList'>
           <td>{{$index + 1}}</td>
-		  <td>{{empresa.codemp}}</td>
+		      <td>{{empresa.codemp}}</td>
           <td>{{empresa.nombre}}</td>
           <td>{{empresa.descripcion}}</td>
-		  <td>{{empresa.telefono}}</td>
+		      <td>{{empresa.telefono}}</td>
           <td>
             <div class="btn-group" role="group" aria-label="Basic example">
               <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareForm(empresa, false, $index)'><i class="fa fa-search"></i></button>
@@ -171,7 +169,7 @@
       </div>
 
 	  
-      <div class="form-row">
+    <div class="form-row">
         <div class="form-group col-md-4">
           <label for="facebook">Facebook</label>
           <div class="input-group">
@@ -182,6 +180,7 @@
             <div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>
           </div>
         </div>
+
         <div class="form-group col-md-4">
           <label for="instagram">Instagram</label>
           <div class="input-group">
@@ -191,6 +190,7 @@
             <input type="text" class="form-control" id="instagram" ng-model="empresa.instagram" ng-readonly="!editable">
           </div>
         </div>
+        
         <div class="form-group col-md-4">
           <label for="sitioweb">Sitio Web</label>
           <div class="input-group">
