@@ -1,7 +1,28 @@
 app.controller('empresaController', function($scope, apiInterface, snackbar) {
   $scope.empresaList = [];
-  const apiName = 'empresa';
+  $scope.ciudadList = [];
 
+  const apiName = 'empresa';
+  
+  $scope.estados = [
+    {des: 'Activo', val: 1},
+    {des: 'Inactivo', val: 0}
+  ]
+
+  $scope.prioridades = [
+    {des: '1', val: 1},
+    {des: '2', val: 2},
+    {des: '3', val: 3},
+    {des: '4', val: 4},
+    {des: '5', val: 5},
+    {des: '6', val: 6}
+    {des: '7', val: 7},
+    {des: '8', val: 8},
+    {des: '9', val: 9},
+    {des: '10', val: 10}
+  ]
+
+  loadCiudades();
   loadEmpresas();
 
   function loadEmpresas(){
@@ -17,6 +38,21 @@ app.controller('empresaController', function($scope, apiInterface, snackbar) {
     };
     apiInterface.get(apiName, {}, success, error);
   }
+
+  function loadCiudades(){
+    $scope.loadingEmpresas = true;
+    let success = data=>{
+      if(data.status == 200){
+        $scope.ciudadList = data.data.data;
+        $scope.loadingEmpresas = false;
+      }};
+    let error = error=>{
+      console.log(error);
+      $scope.loadingEmpresas = false;
+    };
+    apiInterface.get('ciudad', {}, success, error);
+  }
+
 
   $scope.show = function(section){
     $('.collapse.show').collapse('toggle');

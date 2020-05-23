@@ -43,6 +43,10 @@ function routes($routeProvider) {
     templateUrl : "/view/atencion/index.html",
     controller: 'atencionController'
   })
+  .when("/ciudad", {
+    templateUrl : "/view/ciudad/index.html",
+    controller: 'ciudadController'
+  })
   .when("/tipoproducto", {
     templateUrl : "/view/tipoproducto/index.html",
     controller: 'tipoproductoController'
