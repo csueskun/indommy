@@ -15,7 +15,7 @@ app.controller('empresaController', function($scope, apiInterface, snackbar) {
     {des: '3', val: 3},
     {des: '4', val: 4},
     {des: '5', val: 5},
-    {des: '6', val: 6}
+    {des: '6', val: 6},
     {des: '7', val: 7},
     {des: '8', val: 8},
     {des: '9', val: 9},
