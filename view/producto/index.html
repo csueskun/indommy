@@ -88,7 +88,15 @@
          </div>
       </div>
 
-     
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <label for="detalle">Detalle del Producto</label>
+          <input type="text" ng-model="producto.detalle" class="form-control {{form.detalle.$valid?'is-valid':'is-invalid'}}" name="detalle" required ng-readonly="!editable">
+          <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div> -->
+          <div class="invalid-feedback" ng-if="form.detalle.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+        </div>
+      </div>
+      
 	    <div class="form-row">
         <div class="form-group col-md-3">
           <label for="tipoproducto_id">Tipo Producto</label>
