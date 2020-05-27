@@ -2,6 +2,24 @@ app.controller('tipoproductoController', function($scope, apiInterface, snackbar
   $scope.tipoproductoList = [];
   const apiName = 'tipoproducto';
 
+  $scope.estados = [
+    {des: 'Activo', val: 1},
+    {des: 'Inactivo', val: 0}
+  ]
+
+  $scope.prioridades = [
+    {des: '1', val: 1},
+    {des: '2', val: 2},
+    {des: '3', val: 3},
+    {des: '4', val: 4},
+    {des: '5', val: 5},
+    {des: '6', val: 6},
+    {des: '7', val: 7},
+    {des: '8', val: 8},
+    {des: '9', val: 9},
+    {des: '10', val: 10}
+  ]
+
   loadTipoproducto();
 
   function loadTipoproducto(){
