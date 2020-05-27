@@ -2,6 +2,11 @@ app.controller('tipocategoriaController', function($scope, apiInterface, snackba
   $scope.tipocategoriaList = [];
   const apiName = 'tipocategoria';
 
+  $scope.estados = [
+    {des: 'Activo', val: 1},
+    {des: 'Inactivo', val: 0}
+  ]
+
   loadTipocategoria();
 
   function loadTipocategoria(){
