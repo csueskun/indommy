@@ -2,9 +2,10 @@ app.controller('grupoController', function($scope, apiInterface, snackbar) {
   $scope.grupoList = [];
   $scope.claseList = [];
   const apiName = 'grupo';
+  
   $scope.estados = [
-    {des: 'Activo', val: 1},
-    {des: 'Inactivo', val: 0}
+    {des: 'Inactivo', val: 0},
+    {des: 'Activo', val: 1}
   ]
 
   loadClases();
