@@ -2,6 +2,11 @@ app.controller('ciudadController', function($scope, apiInterface, snackbar) {
   $scope.ciudadList = [];
   const apiName = 'ciudad';
 
+  $scope.estados = [
+    {des: 'Activo', val: 1},
+    {des: 'Inactivo', val: 0}
+  ]
+
   loadCiudad();
 
   function loadCiudad(){

@@ -10,6 +10,7 @@
           <th scope="col">#</th>
           <th scope="col">Código</th>
           <th scope="col">Descripción</th>
+          <th scope="col">Prioridad</th>
           <th scope="col">Estado</th>
           <th scope="col">Acción</th>
         </tr>
@@ -19,7 +20,8 @@
           <td>{{$index + 1}}</td>
 		      <td>{{tipoproducto.codigo}}</td>
           <td>{{tipoproducto.descripcion}}</td>
-          <td>{{tipoproducto.estado}}</td>
+          <td >{{tipoproducto.prioridad}}</td>
+          <td >{{tipoproducto.estado}}</td>
 		      <td>
             <div class="btn-group" role="group" aria-label="Basic example">
               <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareForm(tipoproducto, false, $index)'><i class="fa fa-search"></i></button>
