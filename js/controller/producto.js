@@ -1,5 +1,9 @@
 app.controller('productoController', function($scope, apiInterface, snackbar) {
   $scope.productoList = [];
+  $scope.empresaList = [];
+  $scope.tipoproductoList = [];
+  $scope.tipocategoriaList = [];
+
   const apiName = 'producto';
 
   $scope.estados = [
@@ -38,7 +42,7 @@ app.controller('productoController', function($scope, apiInterface, snackbar) {
       console.log(error);
       $scope.loadingProducto = false;
     };
-    apiInterface.get(apiName, {}, success, error);
+    apiInterface.get('tipocategoria', {}, success, error);
   }
 
   function loadTipoproducto(){
@@ -52,7 +56,7 @@ app.controller('productoController', function($scope, apiInterface, snackbar) {
       console.log(error);
       $scope.loadingProducto = false;
     };
-    apiInterface.get(apiName, {}, success, error);
+    apiInterface.get('tipoproducto', {}, success, error);
   }
 
   function loadEmpresas(){
@@ -66,7 +70,7 @@ app.controller('productoController', function($scope, apiInterface, snackbar) {
       console.log(error);
       $scope.loadingProducto = false;
     };
-    apiInterface.get(apiName, {}, success, error);
+    apiInterface.get('empresa', {}, success, error);
   }
 
   function loadProducto(){

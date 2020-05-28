@@ -22,9 +22,9 @@
           <td>{{$index + 1}}</td>
 		      <td>{{producto.codigo}}</td>
           <td>{{producto.descripcion}}</td>    
-          <td>{{producto.empresa_id}}</td>
-          <td>{{producto.tipoproducto_id}}</td>    
-		      <td>{{producto.precio1}}</td>
+          <td>{{producto.empresa.nombre}}</td>
+          <td>{{producto.tipoproducto.descripcion}}</td>    
+		      <td align = "right" >{{producto.precio1}}</td>
           <td>
             <div class="btn-group" role="group" aria-label="Basic example">
               <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareForm(producto, false, $index)'><i class="fa fa-search"></i></button>
@@ -116,16 +116,15 @@
 
         <div class="form-group col-md-3">
           <label for="prioridad">Prioridad</label>
-          <input type="text" ng-model="producto.prioridad" class="form-control {{form.prioridad.$valid?'is-valid':'is-invalid'}}" name="prioridad" required ng-readonly="!editable">
-          <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  -->
+          <select class="custom-select {{form.prioridad.$valid?'is-valid':'is-invalid'}}" name="prioridad" ng-model="producto.prioridad" required ng-disabled="!editable" ng-readonly="!editable"
+             ng-options="item.val as item.des for item in prioridades"></select>
           <div class="invalid-feedback" ng-if="form.prioridad.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div>
         </div>
-    
-        <div class="form-group col-md-3">
-          <label for="estado">Estado</label>
-          <input type="text" ng-model="producto.estado" class="form-control {{form.estado.$valid?'is-valid':'is-invalid'}}" name="estado" required ng-readonly="!editable">
-          <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div> -->
-          <div class="invalid-feedback" ng-if="form.estado.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+		    <div class="form-group col-md-3">
+           <label for="estado">Estado</label>
+           <select class="custom-select {{form.estado.$valid?'is-valid':'is-invalid'}}" name="estado" ng-model="producto.estado" required ng-disabled="!editable" ng-readonly="!editable"
+             ng-options="item.val as item.des for item in estados"></select>
+           <div class="invalid-feedback" ng-if="form.estado.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
         </div>
 
       </div>

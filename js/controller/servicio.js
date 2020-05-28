@@ -1,5 +1,5 @@
 app.controller('servicioController', function($scope, apiInterface, snackbar) {
-  $scope.tipocategoriaList = [];
+  $scope.servicioList = [];
   const apiName = 'servicio';
 
   $scope.estados = [
@@ -20,7 +20,6 @@ app.controller('servicioController', function($scope, apiInterface, snackbar) {
     {des: '9', val: 9},
     {des: '10', val: 10}
   ]
-
   
   loadServicio();
 

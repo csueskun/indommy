@@ -24,6 +24,7 @@ app.controller('grupoController', function($scope, apiInterface, snackbar) {
     };
     apiInterface.get(apiName, {}, success, error);
   }
+  
   function loadClases(){
     $scope.loadingGrupos = true;
     let success = data=>{
