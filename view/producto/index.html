@@ -72,7 +72,7 @@
           <div class="form-group col-md-4">
             <label for="empresa_id">Empresa</label>
             <select class="custom-select {{form.empresa_id.$valid?'is-valid':'is-invalid'}}" name="empresa_id" ng-model="producto.empresa_id" required ng-disabled="!editable" 
-              ng-readonly="!editable" ng-options="item.id as item.descripcion for item in empresaList"></select>
+              ng-readonly="!editable" ng-options="iteme.id as iteme.nombre for iteme in empresaList"></select>
             <div class="invalid-feedback" ng-if="form.empresa_id.$error.required"><i class="fa fa-times"></i> Campo es obligatorio</div> 
           </div>
 
@@ -103,14 +103,14 @@
         <div class="form-group col-md-3">
           <label for="tipoproducto_id">Tipo Producto</label>
           <select class="custom-select {{form.tipoproducto_id.$valid?'is-valid':'is-invalid'}}" name="tipoproducto_id" ng-model="producto.tipoproducto_id" required ng-disabled="!editable" 
-            ng-readonly="!editable" ng-options="item.id as item.descripcion for item in tipoproductoList"></select>
+            ng-readonly="!editable" ng-options="itemt.id as itemt.descripcion for itemt in tipoproductoList"></select>
           <div class="invalid-feedback" ng-if="form.tipoproducto_id.$error.required"><i class="fa fa-times"></i> Campo es obligatorio</div> 
         </div>
 
         <div class="form-group col-md-3">
           <label for="tipocategoria_id">Categoría</label>
           <select class="custom-select {{form.tipocategoria_id.$valid?'is-valid':'is-invalid'}}" name="tipocategoria_id" ng-model="producto.tipocategoria_id" required ng-disabled="!editable" 
-            ng-readonly="!editable" ng-options="item.id as item.descripcion for item in tipoproductoList"></select>
+            ng-readonly="!editable" ng-options="itemc.id as itemc.nombre for itemc in tipocategoriaList"></select>
           <div class="invalid-feedback" ng-if="form.tipocategoria_id.$error.required"><i class="fa fa-times"></i> Campo es obligatorio</div> 
         </div>
 
