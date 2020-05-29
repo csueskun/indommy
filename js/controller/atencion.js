@@ -1,8 +1,16 @@
 app.controller('atencionController', function($scope, apiInterface, snackbar) {
   $scope.atencionList = [];
+  $scope.empresaList = [];
+
   const apiName = 'atencion';
 
+  $scope.estados = [
+    {des: 'Inactivo', val: 0},
+    {des: 'Activo', val: 1}   
+  ]
+
   loadAtencion();
+  loadEmpresas();
 
   function loadAtencion(){
     $scope.loadingAtencion = true;
@@ -16,6 +24,20 @@ app.controller('atencionController', function($scope, apiInterface, snackbar) {
       $scope.loadingAtencion = false;
     };
     apiInterface.get(apiName, {}, success, error);
+  }
+
+  function loadEmpresas(){
+    $scope.loadingAtencion = true;
+    let success = data=>{
+      if(data.status == 200){
+        $scope.empresaList = data.data.data;
+        $scope.loadingAtencion = false;
+      }};
+    let error = error=>{
+      console.log(error);
+      $scope.loadingAtencion = false;
+    };
+    apiInterface.get('empresa', {}, success, error);
   }
 
   $scope.show = function(section){

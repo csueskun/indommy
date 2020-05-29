@@ -8,8 +8,7 @@ app.controller('productoController', function($scope, apiInterface, snackbar) {
 
   $scope.estados = [
     {des: 'Inactivo', val: 0},
-    {des: 'Activo', val: 1}
-    
+    {des: 'Activo', val: 1}   
   ]
 
   $scope.prioridades = [

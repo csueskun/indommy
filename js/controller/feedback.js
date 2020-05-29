@@ -1,8 +1,16 @@
 app.controller('feedbackController', function($scope, apiInterface, snackbar) {
   $scope.feedbackList = [];
+  $scope.empresaList = [];
+
   const apiName = 'feedback';
 
+  $scope.estados = [
+    {des: 'Inactivo', val: 0},
+    {des: 'Activo', val: 1}   
+  ]
+
   loadFeedback();
+  loadEmpresas();
 
   function loadFeedback(){
     $scope.loadingFeedback = true;
@@ -17,6 +25,21 @@ app.controller('feedbackController', function($scope, apiInterface, snackbar) {
     };
     apiInterface.get(apiName, {}, success, error);
   }
+
+  function loadEmpresas(){
+    $scope.loadingFeedback = true;
+    let success = data=>{
+      if(data.status == 200){
+        $scope.empresaList = data.data.data;
+        $scope.loadingFeedback = false;
+      }};
+    let error = error=>{
+      console.log(error);
+      $scope.loadingFeedback = false;
+    };
+    apiInterface.get('empresa', {}, success, error);
+  }
+
 
   $scope.show = function(section){
     $('.collapse.show').collapse('toggle');

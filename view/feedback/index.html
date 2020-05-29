@@ -20,7 +20,7 @@
       <tbody>
         <tr ng-repeat='feedback in feedbackList'>
           <td>{{$index + 1}}</td>
-		      <td>{{feedback.empresa_id}} </td>
+		      <td>{{feedback.empresa.nombre}} </td>
           <td>{{feedback.visitas}}</td>
           <td>{{feedback.likes}}</td>
 		      <td>{{feedback.favorito}}</td>
@@ -65,15 +65,30 @@
       <div class="form-row">
 
         <div class="form-group col-md-6">
-          <label for="empresa_id">Id Empresa</label>
-          <input type="text" ng-model="feedback.empresa_id" class="form-control {{form.empresa_id.$valid?'is-valid':'is-invalid'}}" name="empresa_id" required ng-readonly="!editable">
-          <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  
-          
-          <div class="invalid-feedback" ng-if="form.empresa_id.$error.unique"><i class="fa fa-times"></i> El nombre ya existe</div>  -->
-		  <div class="invalid-feedback" ng-if="form.empresa_id.$error.required"><i class="fa fa-times"></i> La Empresa es obligatorio</div> 
+          <label for="empresa_id">Empresa</label>
+          <select class="custom-select {{form.empresa_id.$valid?'is-valid':'is-invalid'}}" name="empresa_id" ng-model="feedback.empresa_id" required ng-disabled="!editable" 
+            ng-readonly="!editable" ng-options="iteme.id as iteme.nombre for iteme in empresaList"></select>
+          <div class="invalid-feedback" ng-if="form.empresa_id.$error.required"><i class="fa fa-times"></i> Campo Empresa es obligatorio</div> 
+        </div>
+        
+        <div class="form-group col-md-4">
+          <label for="estado">Estado</label>
+          <select class="custom-select {{form.estado.$valid?'is-valid':'is-invalid'}}" name="estado" ng-model="feedback.estado" required ng-disabled="!editable" ng-readonly="!editable"
+          ng-options="item.val as item.des for item in estados"></select>
+          <div class="invalid-feedback" ng-if="form.estado.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
         </div>
 
-        <div class="form-group col-md-3">
+      </div>
+
+	    <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="favorito">Favorito</label>
+          <input type="text" ng-model="feedback.favorito" class="form-control {{form.favorito.$valid?'is-valid':'is-invalid'}}" name="favorito" required ng-readonly="!editable">
+          <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>-->
+          <div class="invalid-feedback" ng-if="form.favorito.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+        </div>
+      
+        <div class="form-group col-md-4">
           <label for="visitas">Visitas</label>
           <input type="text" ng-model="feedback.visitas" class="form-control {{form.visitas.$valid?'is-valid':'is-invalid'}}" name="visitas" required ng-readonly="!editable">
           <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  
@@ -81,7 +96,7 @@
           <div class="invalid-feedback" ng-if="form.visitas.$error.unique"><i class="fa fa-times"></i> El código ya existe</div>  -->
     		  <div class="invalid-feedback" ng-if="form.visitas.$error.required"><i class="fa fa-times"></i> El valor de las Visitas es obligatorio</div> 
         </div>
-        <div class="form-group col-md-3">
+        <div class="form-group col-md-4">
           <label for="likes">Likes</label>
           <input type="text" ng-model="feedback.likes" class="form-control {{form.likes.$valid?'is-valid':'is-invalid'}}" name="likes" required ng-readonly="!editable">
           <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div> 
@@ -89,33 +104,59 @@
           <div class="invalid-feedback" ng-if="form.likes.$error.required"><i class="fa fa-times"></i> El valor de los Likes es obligatorio</div>  
             
         </div>
+
       </div>
 
-	  <div class="form-row">
+      <div class="form-row">
         <div class="form-group col-md-4">
-          <label for="favorito">Favorito</label>
-          <input type="text" ng-model="feedback.favorito" class="form-control {{form.favorito.$valid?'is-valid':'is-invalid'}}" name="favorito" required ng-readonly="!editable">
-          <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>-->
-          <div class="invalid-feedback" ng-if="form.favorito.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
-        </div>
-       
-		
-		<div class="form-group col-md-4">
           <label for="puntaje">Puntaje</label>
           <input type="text" ng-model="feedback.puntaje" class="form-control {{form.puntaje.$valid?'is-valid':'is-invalid'}}" name="puntaje" required ng-readonly="!editable">
           <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div> -->
           <div class="invalid-feedback" ng-if="form.puntaje.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div>
         </div>
+
+        
+        <div class="form-group col-md-4">
+          <label for="comida">Comida</label>
+          <input type="text" ng-model="feedback.comida" class="form-control {{form.comida.$valid?'is-valid':'is-invalid'}}" name="comida" required ng-readonly="!editable">
+          <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>-->
+          <div class="invalid-feedback" ng-if="form.comida.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+        </div>
+		
+		    <div class="form-group col-md-4">
+          <label for="servicio">Servicio</label>
+          <input type="text" ng-model="feedback.servicio" class="form-control {{form.servicio.$valid?'is-valid':'is-invalid'}}" name="servicio" required ng-readonly="!editable">
+          <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div> -->
+          <div class="invalid-feedback" ng-if="form.servicio.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div>
+        </div>
+
+      </div>
+   
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="precios">Precios</label>
+          <input type="text" ng-model="feedback.precios" class="form-control {{form.precios.$valid?'is-valid':'is-invalid'}}" name="precios" required ng-readonly="!editable">
+          <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div> -->
+          <div class="invalid-feedback" ng-if="form.precios.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div>
+        </div>
+
+        
+        <div class="form-group col-md-4">
+          <label for="personal">Personal</label>
+          <input type="text" ng-model="feedback.personal" class="form-control {{form.personal.$valid?'is-valid':'is-invalid'}}" name="personal" required ng-readonly="!editable">
+          <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>-->
+          <div class="invalid-feedback" ng-if="form.personal.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+        </div>
+		
+        <div class="form-group col-md-4">
+          <label for="infraestructura">Infraestructura</label>
+          <input type="text" ng-model="feedback.infraestructura" class="form-control {{form.infraestructura.$valid?'is-valid':'is-invalid'}}" name="infraestructura" required ng-readonly="!editable">
+          <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div> -->
+          <div class="invalid-feedback" ng-if="form.infraestructura.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div>
+        </div>
+
       </div>
 
-      <div class="form-group col-md-4">
-        <label for="estado">Estado</label>
-        <input type="text" ng-model="feedback.estado" class="form-control {{form.estado.$valid?'is-valid':'is-invalid'}}" name="estado" required ng-readonly="!editable">
-        <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div> -->
-        <div class="invalid-feedback" ng-if="form.estado.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div>
-      </div>
-    </div>
-	 
       <div class="form row">
         <div class="col-md-12">
           <button ng-click="save()" ng-if="editable" type="submit" class="btn btn-primary" ng-disabled="form.$invalid || saving">
