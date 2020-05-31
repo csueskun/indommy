@@ -3,8 +3,8 @@ app.controller('ciudadController', function($scope, apiInterface, snackbar) {
   const apiName = 'ciudad';
 
   $scope.estados = [
-    {des: 'Activo', val: 1},
-    {des: 'Inactivo', val: 0}
+    {des: 'Inactivo', val: 0},
+    {des: 'Activo', val: 1}
   ]
 
   loadCiudad();
