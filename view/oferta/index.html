@@ -65,7 +65,7 @@
     <form name="form" novalidate class="needs-validation">
       <div class="form-row">
 
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-9">
           <label for="empresa_id">Empresa</label>
           <select class="custom-select {{form.empresa_id.$valid?'is-valid':'is-invalid'}}" name="empresa_id" ng-model="oferta.empresa_id" required ng-disabled="!editable" 
             ng-readonly="!editable" ng-options="iteme.id as iteme.nombre for iteme in empresaList"></select>
@@ -73,20 +73,46 @@
         </div>
         
         <div class="form-group col-md-3">
+          <label for="tipo">Tipo Oferta</label>
+          <input type="text" ng-model="oferta.tipo" class="form-control {{form.tipo.$valid?'is-valid':'is-invalid'}}" name="tipo" required ng-readonly="!editable">
+          <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>-->
+          <div class="invalid-feedback" ng-if="form.tipo.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+        </div>  
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-3">
           <label for="fechaini">Fecha de Inicio</label>
           <input type="text" ng-model="oferta.fechaini" class="form-control {{form.fechaini.$valid?'is-valid':'is-invalid'}}" name="fechaini" required ng-readonly="!editable">
           <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  
-          
-          <div class="invalid-feedback" ng-if="form.fechaini.$error.unique"><i class="fa fa-times"></i> El código ya existe</div>  -->
-		      <div class="invalid-feedback" ng-if="form.fechaini.$error.required"><i class="fa fa-times"></i> El código es obligatorio</div> 
-        </div>
         
+          <div class="invalid-feedback" ng-if="form.fechaini.$error.unique"><i class="fa fa-times"></i> El código ya existe</div>  -->
+          <div class="invalid-feedback" ng-if="form.fechaini.$error.required"><i class="fa fa-times"></i> La Fecha Inicial es obligatorio</div> 
+        </div>
+      
         <div class="form-group col-md-3">
           <label for="fechafin">Fecha Final</label>
           <input type="text" ng-model="oferta.fechafin" class="form-control {{form.fechafin.$valid?'is-valid':'is-invalid'}}" name="fechafin" required ng-readonly="!editable">
           <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  
-          <div class="invalid-feedback" ng-if="form.fechafin.$error.required"><i class="fa fa-times"></i> El código es obligatorio</div> 
-          <div class="invalid-feedback" ng-if="form.fechafin.$error.unique"><i class="fa fa-times"></i> El código ya existe</div>  -->
+          <div class="invalid-feedback" ng-if="form.fechafin.$error.required"><i class="fa fa-times"></i> El código es obligatorio</div>--> 
+          <div class="invalid-feedback" ng-if="form.fechafin.$error.unique"><i class="fa fa-times"></i> La Fecha Final ya existe</div>  
+        </div>
+
+        <div class="form-group col-md-3">
+          <label for="horaini">Hora Inicial</label>
+          <input type="text" ng-model="oferta.horaini" class="form-control {{form.horaini.$valid?'is-valid':'is-invalid'}}" name="horaini" required ng-readonly="!editable">
+          <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  
+        
+          <div class="invalid-feedback" ng-if="form.horaini.$error.unique"><i class="fa fa-times"></i> El código ya existe</div>  -->
+          <div class="invalid-feedback" ng-if="form.horaini.$error.required"><i class="fa fa-times"></i> La Hora Inicial es obligatorio</div> 
+        </div>
+      
+        <div class="form-group col-md-3">
+          <label for="horafin">Hora Final</label>
+          <input type="text" ng-model="oferta.horafin" class="form-control {{form.horafin.$valid?'is-valid':'is-invalid'}}" name="horafin" required ng-readonly="!editable">
+          <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  
+          <div class="invalid-feedback" ng-if="form.horafin.$error.required"><i class="fa fa-times"></i> El código es obligatorio</div>--> 
+          <div class="invalid-feedback" ng-if="form.horafin.$error.unique"><i class="fa fa-times"></i> la Hora final ya existe</div>  
         </div>
       </div>
 
@@ -100,27 +126,22 @@
       </div>
 
       <div class="form-row">
-        <div class="form-group col-md-3">
-          <label for="tipo">Tipo Oferta</label>
-          <input type="text" ng-model="oferta.tipo" class="form-control {{form.tipo.$valid?'is-valid':'is-invalid'}}" name="tipo" required ng-readonly="!editable">
-          <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>-->
-          <div class="invalid-feedback" ng-if="form.tipo.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
-        </div>
+        
    
-        <div class="form-group col-md-3">
+        <div class="form-group col-md-4">
           <label for="likes">Likes</label>
           <input type="text" ng-model="oferta.likes" class="form-control {{form.likes.$valid?'is-valid':'is-invalid'}}" name="likes" required ng-readonly="!editable">
           <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  -->
           <div class="invalid-feedback" ng-if="form.likes.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
         </div>
         
-        <div class="form-group col-md-3">
+        <div class="form-group col-md-4">
           <label for="prioridad">Prioridad</label>
           <select class="custom-select {{form.prioridad.$valid?'is-valid':'is-invalid'}}" name="prioridad" ng-model="oferta.prioridad" required ng-disabled="!editable" ng-readonly="!editable"
              ng-options="item.val as item.des for item in prioridades"></select>
           <div class="invalid-feedback" ng-if="form.prioridad.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div>
         </div>
-		    <div class="form-group col-md-3">
+		    <div class="form-group col-md-4">
            <label for="estado">Estado</label>
            <select class="custom-select {{form.estado.$valid?'is-valid':'is-invalid'}}" name="estado" ng-model="oferta.estado" required ng-disabled="!editable" ng-readonly="!editable"
              ng-options="item.val as item.des for item in estados"></select>

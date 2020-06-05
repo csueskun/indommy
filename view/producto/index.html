@@ -69,7 +69,7 @@
             <div class="invalid-feedback" ng-if="form.codigo.$error.unique"><i class="fa fa-times"></i> El código ya existe</div> 
           </div>
        
-          <div class="form-group col-md-4">
+          <div class="form-group col-md-8">
             <label for="empresa_id">Empresa</label>
             <select class="custom-select {{form.empresa_id.$valid?'is-valid':'is-invalid'}}" name="empresa_id" ng-model="producto.empresa_id" required ng-disabled="!editable" 
               ng-readonly="!editable" ng-options="iteme.id as iteme.nombre for iteme in empresaList"></select>
