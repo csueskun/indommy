@@ -73,10 +73,10 @@
         </div>
         
         <div class="form-group col-md-3">
-          <label for="tipo">Tipo Oferta</label>
-          <input type="text" ng-model="oferta.tipo" class="form-control {{form.tipo.$valid?'is-valid':'is-invalid'}}" name="tipo" required ng-readonly="!editable">
-          <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>-->
-          <div class="invalid-feedback" ng-if="form.tipo.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+          <label for="tipo">Tipo Producto</label>
+          <select class="custom-select {{form.tipo.$valid?'is-valid':'is-invalid'}}" name="tipo" ng-model="oferta.tipo" required ng-disabled="!editable" ng-readonly="!editable"
+             ng-options="item.val as item.des for item in tiposoferta"></select>
+          <div class="invalid-feedback" ng-if="form.tipo.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div>
         </div>  
       </div>
 
