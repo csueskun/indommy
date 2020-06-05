@@ -5,7 +5,7 @@ app.controller('ofertaController', function($scope, apiInterface, snackbar) {
   const apiName = 'oferta';
 
   $scope.tiposoferta = [
-    {des: '2x1"', val: 0},
+    {des: '2x1', val: 0},
     {des: '3x2', val: 1},
     {des: 'Promoción día de la Madre', val: 2},
     {des: 'Promoción día del Padre', val: 3},
