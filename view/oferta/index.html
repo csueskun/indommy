@@ -94,15 +94,15 @@
           <label for="fechafin">Fecha Final</label>
           <input type="text" ng-model="oferta.fechafin" class="form-control {{form.fechafin.$valid?'is-valid':'is-invalid'}}" name="fechafin" required ng-readonly="!editable">
           <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  
-          <div class="invalid-feedback" ng-if="form.fechafin.$error.required"><i class="fa fa-times"></i> El código es obligatorio</div>--> 
-          <div class="invalid-feedback" ng-if="form.fechafin.$error.unique"><i class="fa fa-times"></i> La Fecha Final ya existe</div>  
+          <div class="invalid-feedback" ng-if="form.fechafin.$error.unique"><i class="fa fa-times"></i> La Fecha Final ya existe</div>--> 
+            <div class="invalid-feedback" ng-if="form.fechafin.$error.required"><i class="fa fa-times"></i> El campo es obligatorio</div>
+            
         </div>
 
         <div class="form-group col-md-3">
           <label for="horaini">Hora Inicial</label>
           <input type="text" ng-model="oferta.horaini" class="form-control {{form.horaini.$valid?'is-valid':'is-invalid'}}" name="horaini" required ng-readonly="!editable">
           <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  
-        
           <div class="invalid-feedback" ng-if="form.horaini.$error.unique"><i class="fa fa-times"></i> El código ya existe</div>  -->
           <div class="invalid-feedback" ng-if="form.horaini.$error.required"><i class="fa fa-times"></i> La Hora Inicial es obligatorio</div> 
         </div>
@@ -110,9 +110,10 @@
         <div class="form-group col-md-3">
           <label for="horafin">Hora Final</label>
           <input type="text" ng-model="oferta.horafin" class="form-control {{form.horafin.$valid?'is-valid':'is-invalid'}}" name="horafin" required ng-readonly="!editable">
-          <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  
-          <div class="invalid-feedback" ng-if="form.horafin.$error.required"><i class="fa fa-times"></i> El código es obligatorio</div>--> 
-          <div class="invalid-feedback" ng-if="form.horafin.$error.unique"><i class="fa fa-times"></i> la Hora final ya existe</div>  
+          <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>
+          <div class="invalid-feedback" ng-if="form.horafin.$error.unique"><i class="fa fa-times"></i> la Hora final ya existe</div>   --> 
+          <div class="invalid-feedback" ng-if="form.horafin.$error.required"><i class="fa fa-times"></i> El código es obligatorio</div> 
+            
         </div>
       </div>
 
