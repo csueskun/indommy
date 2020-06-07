@@ -72,7 +72,7 @@
      </div>
     
     <div class="form-row">
-      <div class="form-group col-md-12">
+      <div class="form-group col-md-6">
          <label for="imagen">Ruta de la Imagen</label>
          <input type="text" ng-model="clase.imagen" class="form-control {{form.imagen.$valid?'is-valid':'is-invalid'}}" name="imagen" required ng-readonly="!editable">
          <!--div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  
@@ -80,6 +80,14 @@
           -->
          <div class="invalid-feedback" ng-if="form.imagen.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
       </div>
+      <div class="form-group col-md-6">
+        <label for="icono">Ruta del Icono</label>
+        <input type="text" ng-model="clase.icono" class="form-control {{form.icono.$valid?'is-valid':'is-invalid'}}" name="icono" required ng-readonly="!editable">
+        <!--div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  
+        <div class="invalid-feedback" ng-if="form.imagen.$error.unique"><i class="fa fa-times"></i> Descripción ya existe</div>
+         -->
+        <div class="invalid-feedback" ng-if="form.icono.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+     </div>
     </div>
       
     <div class="form row">
