@@ -57,29 +57,37 @@
     <form name="form" novalidate class="needs-validation">
       <div class="form-row">
 
-        <div class="form-group col-md-12">
+        <div class="form-group col-md-8">
           <label for="descripcion">Descripción</label>
           <input type="text" ng-model="servicio.descripcion" class="form-control {{form.descripcion.$valid?'is-valid':'is-invalid'}}" name="descripcion" required ng-readonly="!editable">
           <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  -->
           <div class="invalid-feedback" ng-if="form.descripcion.$error.required"><i class="fa fa-times"></i> Campo es obligatorio</div> 
           <div class="invalid-feedback" ng-if="form.descripcion.$error.unique"><i class="fa fa-times"></i> La descripción ya existe</div> 
         </div>
+        <div class="form-group col-md-4">
+          <label for="estado">Estado</label>
+          <select class="custom-select {{form.estado.$valid?'is-valid':'is-invalid'}}" name="estado" ng-model="servicio.estado" required ng-disabled="!editable" ng-readonly="!editable"
+            ng-options="item.val as item.des for item in estados"></select>
+          <div class="invalid-feedback" ng-if="form.estado.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+       </div>
+
       </div>
 
       
       <div class="form-row">
        
-		    <div class="form-group col-md-6">
+		    <div class="form-group col-md-3">
           <label for="prioridad">Prioridad</label>
           <select class="custom-select {{form.prioridad.$valid?'is-valid':'is-invalid'}}" name="prioridad" ng-model="servicio.prioridad" required ng-disabled="!editable" ng-readonly="!editable"
              ng-options="item.val as item.des for item in prioridades"></select>
           <div class="invalid-feedback" ng-if="form.prioridad.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div>
         </div>
-		    <div class="form-group col-md-6">
-           <label for="estado">Estado</label>
-           <select class="custom-select {{form.estado.$valid?'is-valid':'is-invalid'}}" name="estado" ng-model="servicio.estado" required ng-disabled="!editable" ng-readonly="!editable"
-             ng-options="item.val as item.des for item in estados"></select>
-           <div class="invalid-feedback" ng-if="form.estado.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+		    <div class="form-group col-md-9">
+          <label for="icono">Ruta del Icono</label>
+          <input type="text" ng-model="servicio.icono" class="form-control " name="icono" required ng-readonly="!editable">
+          <!--div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  
+          <div class="invalid-feedback" ng-if="form.imagen.$error.unique"><i class="fa fa-times"></i> Descripción ya existe</div>
+          <div class="invalid-feedback" ng-if="form.icono.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div>--> 
         </div>
       </div>
 	  
