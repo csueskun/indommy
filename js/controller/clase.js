@@ -2,6 +2,11 @@ app.controller('claseController', function($scope, apiInterface, snackbar) {
   $scope.claseList = [];
   const apiName = 'clase';
 
+  $scope.estados = [
+    {des: 'Inactivo', val: 0},
+    {des: 'Activo', val: 1}
+  ]
+  
   loadClase();
 
   function loadClase(){
