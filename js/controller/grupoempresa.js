@@ -1,57 +1,70 @@
-app.controller('empgrupoController', function($scope, apiInterface, snackbar) {
-  $scope.empgrupoList = [];
+app.controller('grupoempresaController', function($scope, apiInterface, snackbar) {
+  $scope.grupoempresaList = [];
   $scope.empresaList = [];
   $scope.grupoList = [];
 
-  const apiName = 'empgrupo';
+  const apiName = 'grupoempresa';
   
   $scope.estados = [
     {des: 'Inactivo', val: 0},
     {des: 'Activo', val: 1}
   ]
 
+  $scope.prioridades = [
+    {des: '1', val: 1},
+    {des: '2', val: 2},
+    {des: '3', val: 3},
+    {des: '4', val: 4},
+    {des: '5', val: 5},
+    {des: '6', val: 6},
+    {des: '7', val: 7},
+    {des: '8', val: 8},
+    {des: '9', val: 9},
+    {des: '10', val: 10}
+  ]
+
   loadEmpresa();
   loadGrupo();
-  loadEmpGrupo();
+  loadGrupoEmpresa();
 
-  function loadEmpGrupo(){
-    $scope.loadingEmpGrupos = true;
+  function loadGrupoEmpresa(){
+    $scope.loadingGrupoEmpresa = true;
     let success = data=>{
       if(data.status == 200){
-        $scope.empgrupoList = data.data.data;
-        $scope.loadingEmpGrupos = false;
+        $scope.grupoempresaList = data.data.data;
+        $scope.loadingGrupoEmpresa = false;
       }};
     let error = error=>{
       console.log(error);
-      $scope.loadingEmpGrupos = false;
+      $scope.loadingGrupoEmpresa = false;
     };
     apiInterface.get(apiName, {}, success, error);
   }
   
   function loadGrupo(){
-    $scope.loadingEmpGrupos = true;
+    $scope.loadingGrupoEmpresa = true;
     let success = data=>{
       if(data.status == 200){
         $scope.grupoList = data.data.data;
-        $scope.loadingEmpGrupos = false;
+        $scope.loadingGrupoEmpresa = false;
       }};
     let error = error=>{
       console.log(error);
-      $scope.loadingEmpGrupos = false;
+      $scope.loadingGrupoEmpresa = false;
     };
     apiInterface.get('grupo', {}, success, error);
   }
 
-  function loadGrupo(){
-    $scope.loadingEmpGrupos = true;
+  function loadEmpresa(){
+    $scope.loadingGrupoEmpresa = true;
     let success = data=>{
       if(data.status == 200){
         $scope.empresaList = data.data.data;
-        $scope.loadingEmpGrupos = false;
+        $scope.loadingGrupoEmpresa = false;
       }};
     let error = error=>{
       console.log(error);
-      $scope.loadingEmpGrupos = false;
+      $scope.loadingGrupoEmpresa = false;
     };
     apiInterface.get('empresa', {}, success, error);
   }
@@ -61,9 +74,9 @@ app.controller('empgrupoController', function($scope, apiInterface, snackbar) {
     $('.collapse#'+section).collapse('toggle');
   }
 
-  $scope.prepareDelete = function(grupo, event, index){
-    $scope.empgrupoIndex = index;
-    $scope.empgrupo = Object.assign({}, grupo);
+  $scope.prepareDelete = function(grupoempresa, event, index){
+    $scope.grupoempresaIndex = index;
+    $scope.grupoempresa = Object.assign({}, grupoempresa);
     showToast('.toast.delete', event.clientY - 40);
   }
 
@@ -72,7 +85,7 @@ app.controller('empgrupoController', function($scope, apiInterface, snackbar) {
     let success = data=>{
       if(data.status == 200){
         snackbar.green('Se ha borrado el registro.');
-        $scope.empgrupoList.splice($scope.empgrupoIndex, 1);
+        $scope.grupoempresaList.splice($scope.grupoempresaIndex, 1);
       }
       hideToast('.toast.delete');
       $scope.saving = false;
@@ -82,13 +95,13 @@ app.controller('empgrupoController', function($scope, apiInterface, snackbar) {
       $scope.saving = false;
       console.log(error);
     };
-    apiInterface.delete(apiName+'/'+$scope.empgrupo.id, {}, success, error);
+    apiInterface.delete(apiName+'/'+$scope.grupoempresa.id, {}, success, error);
   }
 
-  $scope.prepareForm = function(grupo={}, editable=true, index){
-    $scope.empgrupoIndex = index;
+  $scope.prepareForm = function(grupoempresa={}, editable=true, index){
+    $scope.grupoempresaIndex = index;
     $scope.editable = editable;
-    $scope.empgrupo = Object.assign({}, grupo);
+    $scope.grupoempresa = Object.assign({}, grupoempresa);
     $scope.show('form');
   }
 
@@ -98,14 +111,14 @@ app.controller('empgrupoController', function($scope, apiInterface, snackbar) {
         snackbar.green('Guardado exitosamente.');
       }
       $scope.saving = false;
-      if($scope.empgrupo.id){
+      if($scope.grupoempresa.id){
         $scope.editable = false;
       }
       else{
-        $scope.empgrupo = Object.assign({}, {});
+        $scope.grupoempresa = Object.assign({}, {});
         $scope.form.$setPristine();
       }
-      loadEmpGrupo();
+      loadGrupoEmpresa();
     };
     let error = error=>{
       snackbar.red('Se presentó un error al guardar.');
@@ -117,11 +130,11 @@ app.controller('empgrupoController', function($scope, apiInterface, snackbar) {
       $scope.saving = false;
     };
     $scope.saving = true;
-    if($scope.empgrupo.id){
-      apiInterface.put(apiName+'/'+$scope.empgrupo.id, $scope.empgrupo, {}, success, error);
+    if($scope.grupoempresa.id){
+      apiInterface.put(apiName+'/'+$scope.grupoempresa.id, $scope.grupoempresa, {}, success, error);
     }
     else{
-      apiInterface.post(apiName, $scope.empgrupo, {}, success, error);
+      apiInterface.post(apiName, $scope.grupoempresa, {}, success, error);
     }
   }
 
