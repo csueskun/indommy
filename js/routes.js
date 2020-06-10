@@ -49,8 +49,8 @@ function routes($routeProvider) {
     controller: 'ciudadController'
   })
   .when("/grupoempresa", {
-    templateUrl : "/view/empgrupo/index.html",
-    controller: 'empgrupoController'
+    templateUrl : "/view/grupoempresa/index.html",
+    controller: 'grupoempresaController'
   })
   .when("/tipoproducto", {
     templateUrl : "/view/tipoproducto/index.html",
