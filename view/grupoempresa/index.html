@@ -19,7 +19,7 @@
           <td>{{grupoempresa.empresa.nombre}}</td>
           <td>{{grupoempresa.grupo.descripcion}}</td>
           <td>{{grupoempresa.estado}}</td>
-          <td>{{grupoempresa.prioridad}}</td>
+          <td>{{grupoempresa.prioridad}} </td>
           
 		      <td>
             <div class="btn-group" role="group" aria-label="Basic example">
@@ -61,12 +61,12 @@
         <div class="form-group col-md-6">
           <label for="empresa_id">Empresa</label>
           <select class="custom-select {{form.empresa_id.$valid?'is-valid':'is-invalid'}}" name="empresa_id" ng-model="grupoempresa.empresa_id" required ng-disabled="!editable" 
-            ng-readonly="!editable" ng-options="item.id as item.descripcion for item in empresaList"></select>
+            ng-readonly="!editable" ng-options="iteme.id as iteme.nombre for iteme in empresaList"></select>
           <div class="invalid-feedback" ng-if="form.empresa_id.$error.required"><i class="fa fa-times"></i> Campo es obligatorio</div> 
         </div>
 		  
 		    <div class="form-group col-md-6">
-          <label for="grupo_id">Clase</label>
+          <label for="grupo_id">Grupo</label>
           <select class="custom-select {{form.grupo_id.$valid?'is-valid':'is-invalid'}}" name="grupo_id" ng-model="grupoempresa.grupo_id" required ng-disabled="!editable" 
             ng-readonly="!editable" ng-options="itemg.id as itemg.descripcion for itemg in grupoList"></select>
           <div class="invalid-feedback" ng-if="form.grupo_id.$error.required"><i class="fa fa-times"></i> Campo es obligatorio</div> 
@@ -80,14 +80,14 @@
       <div class="form-group col-md-6">
         <label for="estado">Estado</label>
         <select class="custom-select {{form.estado.$valid?'is-valid':'is-invalid'}}" name="estado" ng-model="grupoempresa.estado" required ng-disabled="!editable" ng-readonly="!editable"
-          ng-options="iteme.val as iteme.des for iteme in estados"></select>
+          ng-options="item.val as item.des for item in estados"></select>
         <div class="invalid-feedback" ng-if="form.estado.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
       </div>
 
-      <div class="form-group col-md-2">
+      <div class="form-group col-md-6">
           <label for="prioridad">Prioridad</label>
-          <select class="custom-select {{form.estado.$valid?'is-valid':'is-invalid'}}" name="prioridad" ng-model="grupoempresa.priodidad" required ng-disabled="!editable" ng-readonly="!editable"
-            ng-options="item.val as item.des for item in prioridades"></select>
+          <select class="custom-select {{form.estado.$valid?'is-valid':'is-invalid'}}" name="prioridad" ng-model="grupoempresa.prioridad" required ng-disabled="!editable" ng-readonly="!editable"
+            ng-options="itemp.val as itemp.des for itemp in prioridades"></select>
           <div class="invalid-feedback" ng-if="form.prioridad.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
       </div>
     </div>
