@@ -9,12 +9,13 @@
         <tr>
           <th scope="col">#</th>
           <th scope="col">Empresa</th>
+          <th scope="col">Descripción</th>
 		      <th scope="col">Fecha Inicio</th>
           <th scope="col">Fecha Final</th>
           <th scope="col">Tipo</th>
           <th scope="col">Likes</th>
           <th scope="col">Estado</th>
-          <th scope="col">Prioridad</th>
+          <th scope="col">Pr.</th>
           <th scope="col">Acción</th>
         </tr>
       </thead>
@@ -22,6 +23,7 @@
         <tr ng-repeat='oferta in ofertaList'>
           <td>{{$index + 1}}</td>
 		      <td>{{oferta.empresa.nombre}}</td>
+          <td>{{oferta.descripcion}}</td>
           <td>{{oferta.fechaini}}</td>
           <td>{{oferta.fechafin}}</td>
 		      <td>{{oferta.tipo}}</td>

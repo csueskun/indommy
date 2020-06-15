@@ -2,7 +2,7 @@
 
 
   <div class="collapse show" id="list">
-    <p>NOTICIAS <button type="button" class="btn btn-link" ng-click='prepareForm()'>Nueva</button></p>
+    <p>EVENTOS <button type="button" class="btn btn-link" ng-click='prepareForm()'>Nueva</button></p>
 
     <table class="table table-sm">
       <thead>
@@ -19,30 +19,30 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat='news in newsList'>
+        <tr ng-repeat='evento in eventoList'>
           <td>{{$index + 1}}</td>
-		      <td>{{news.empresa.nombre}} </td>
-          <td>{{news.titulo}}</td>
-          <td>{{news.fechaini}}</td>
-          <td>{{news.fechafin}}</td>
-		      <td>{{news.likes}}</td>
-          <td>{{news.prioridad}}</td>
-		      <td>{{news.estado}}</td>
+		      <td>{{evento.empresa.nombre}} </td>
+          <td>{{evento.titulo}}</td>
+          <td>{{evento.fechaini}}</td>
+          <td>{{evento.fechafin}}</td>
+		      <td>{{evento.likes}}</td>
+          <td>{{evento.prioridad}}</td>
+		      <td>{{evento.estado}}</td>
 		  <td>
             <div class="btn-group" role="group" aria-label="Basic example">
-              <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareForm(news, false, $index)'><i class="fa fa-search"></i></button>
-              <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareDelete(news, $event, $index)'><i class="fa fa-trash"></i></button>
+              <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareForm(evento, false, $index)'><i class="fa fa-search"></i></button>
+              <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareDelete(evento, $event, $index)'><i class="fa fa-trash"></i></button>
             </div>
           </td>
         </tr>
-        <tr ng-hide='loadingNews || newsList.length'>
+        <tr ng-hide='loadingEvento || eventoList.length'>
           <td colspan="4">
             <div class="alert alert-warning" role="alert">
               No se encontraron registros
             </div>
           </td>
         </tr>
-        <tr ng-show='loadingNews'>
+        <tr ng-show='loadingEvento'>
           <td colspan="4" class="text-center">
             <h1><i class="fa fa-cog fa-spin text-secondary"></i></h1>
           </td>
@@ -55,27 +55,27 @@
     <button class="btn btn-link" type="button" ng-click='show("list")'>
       Volver
     </button>
-    <div ng-show="news.id" style="display: initial;">
+    <div ng-show="evento.id" style="display: initial;">
       <button class="btn btn-link" type="button" ng-click='editable=!editable'>
         {{editable?'Ver detalles':'Editar'}}
       </button>
-      <h3>{{editable?'Editar News':'Detalles News'}}</h3>
+      <h3>{{editable?'Editar Evento':'Detalles Evento'}}</h3>
     </div>
     
-    <h3 ng-hide='news.id'>Nueva News</h3>
+    <h3 ng-hide='evento.id'>Nuevo Evento</h3>
     <form name="form" novalidate class="needs-validation">
       <div class="form-row">
 
         <div class="form-group col-md-6">
           <label for="empresa_id">Empresa</label>
-          <select class="custom-select {{form.empresa_id.$valid?'is-valid':'is-invalid'}}" name="empresa_id" ng-model="news.empresa_id" required ng-disabled="!editable" 
+          <select class="custom-select {{form.empresa_id.$valid?'is-valid':'is-invalid'}}" name="empresa_id" ng-model="evento.empresa_id" required ng-disabled="!editable" 
             ng-readonly="!editable" ng-options="iteme.id as iteme.nombre for iteme in empresaList"></select>
           <div class="invalid-feedback" ng-if="form.empresa_id.$error.required"><i class="fa fa-times"></i> Campo Empresa es obligatorio</div> 
         </div>
 
         <div class="form-group col-md-3">
           <label for="fechaini">Fecha de Inicio</label>
-          <input type="text" ng-model="news.fechaini" class="form-control {{form.fechaini.$valid?'is-valid':'is-invalid'}}" name="fechaini" required ng-readonly="!editable">
+          <input type="text" ng-model="evento.fechaini" class="form-control {{form.fechaini.$valid?'is-valid':'is-invalid'}}" name="fechaini" required ng-readonly="!editable">
           <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  
           
           <div class="invalid-feedback" ng-if="form.fechaini.$error.unique"><i class="fa fa-times"></i> El código ya existe</div>  -->
@@ -83,7 +83,7 @@
         </div>
         <div class="form-group col-md-3">
           <label for="fechafin">Fecha Final</label>
-          <input type="text" ng-model="news.fechafin" class="form-control {{form.fechafin.$valid?'is-valid':'is-invalid'}}" name="fechafin" required ng-readonly="!editable">
+          <input type="text" ng-model="evento.fechafin" class="form-control {{form.fechafin.$valid?'is-valid':'is-invalid'}}" name="fechafin" required ng-readonly="!editable">
           <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  
           <div class="invalid-feedback" ng-if="form.fechafin.$error.required"><i class="fa fa-times"></i> El código es obligatorio</div> 
           <div class="invalid-feedback" ng-if="form.fechafin.$error.unique"><i class="fa fa-times"></i> El código ya existe</div>  -->
@@ -93,20 +93,20 @@
 	    <div class="form-row">
         <div class="form-group col-md-4">
           <label for="titulo">Titulo</label>
-          <input type="text" ng-model="news.titulo" class="form-control {{form.titulo.$valid?'is-valid':'is-invalid'}}" name="titulo" required ng-readonly="!editable">
+          <input type="text" ng-model="evento.titulo" class="form-control {{form.titulo.$valid?'is-valid':'is-invalid'}}" name="titulo" required ng-readonly="!editable">
           <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>-->
           <div class="invalid-feedback" ng-if="form.titulo.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
         </div>
    
         <div class="form-group col-md-4">
           <label for="prioridad">Prioridad</label>
-          <select class="custom-select {{form.prioridad.$valid?'is-valid':'is-invalid'}}" name="prioridad" ng-model="news.prioridad" required ng-disabled="!editable" ng-readonly="!editable"
+          <select class="custom-select {{form.prioridad.$valid?'is-valid':'is-invalid'}}" name="prioridad" ng-model="evento.prioridad" required ng-disabled="!editable" ng-readonly="!editable"
              ng-options="item.val as item.des for item in prioridades"></select>
           <div class="invalid-feedback" ng-if="form.prioridad.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div>
         </div>
 		    <div class="form-group col-md-4">
            <label for="estado">Estado</label>
-           <select class="custom-select {{form.estado.$valid?'is-valid':'is-invalid'}}" name="estado" ng-model="news.estado" required ng-disabled="!editable" ng-readonly="!editable"
+           <select class="custom-select {{form.estado.$valid?'is-valid':'is-invalid'}}" name="estado" ng-model="evento.estado" required ng-disabled="!editable" ng-readonly="!editable"
              ng-options="item.val as item.des for item in estados"></select>
            <div class="invalid-feedback" ng-if="form.estado.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
         </div>
@@ -116,14 +116,14 @@
 	    <div class="form-row">
         <div class="form-group col-md-9">
           <label for="descripcion">Descripción</label>
-          <input type="text" ng-model="news.descripcion" class="form-control {{form.descripcion.$valid?'is-valid':'is-invalid'}}" name="descripcion" required ng-readonly="!editable">
+          <input type="text" ng-model="evento.descripcion" class="form-control {{form.descripcion.$valid?'is-valid':'is-invalid'}}" name="descripcion" required ng-readonly="!editable">
           <!--div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  -->
           <div class="invalid-feedback" ng-if="form.descripcion.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
         </div>
       
 	      <div class="form-group col-md-3">
           <label for="likes">Likes</label>
-          <input type="text" ng-model="news.likes" class="form-control {{form.likes.$valid?'is-valid':'is-invalid'}}" name="likes" required ng-readonly="!editable">
+          <input type="text" ng-model="evento.likes" class="form-control {{form.likes.$valid?'is-valid':'is-invalid'}}" name="likes" required ng-readonly="!editable">
           <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  -->
           <div class="invalid-feedback" ng-if="form.likes.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
         </div>
@@ -134,7 +134,7 @@
 	    <div class="form-row">
         <div class="form-group col-md-12">
            <label for="resumen">Resumen</label>
-           <input type="text" ng-model="news.resumen" class="form-control {{form.resumen.$valid?'is-valid':'is-invalid'}}" name="resumen" required ng-readonly="!editable">
+           <input type="text" ng-model="evento.resumen" class="form-control {{form.resumen.$valid?'is-valid':'is-invalid'}}" name="resumen" required ng-readonly="!editable">
            <!--div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  -->
            <div class="invalid-feedback" ng-if="form.resumen.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
         </div>
@@ -143,7 +143,7 @@
       <div class="form-row">
         <div class="form-group col-md-12">
           <label for="rutafoto">Ruta de la foto</label>
-          <input type="text" ng-model="news.rutafoto" class="form-control {{form.rutafoto.$valid?'is-valid':'is-invalid'}}" name="rutafoto" required ng-readonly="!editable">
+          <input type="text" ng-model="evento.rutafoto" class="form-control {{form.rutafoto.$valid?'is-valid':'is-invalid'}}" name="rutafoto" required ng-readonly="!editable">
           <!--div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  -->
           <div class="invalid-feedback" ng-if="form.rutafoto.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
         </div>
