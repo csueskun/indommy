@@ -30,6 +30,7 @@ app.controller('grupoempresaController', function($scope, apiInterface, snackbar
   function loadGrupoEmpresa(){
     $scope.loadingGrupoEmpresa = true;
     let success = data=>{
+      console.log(data)
       if(data.status == 200){
         $scope.grupoempresaList = data.data.data;
         $scope.loadingGrupoEmpresa = false;
