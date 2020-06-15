@@ -23,10 +23,10 @@ app.controller('grupoempresaController', function($scope, apiInterface, snackbar
     {des: '10', val: 10}
   ]
 
+  loadGrupoEmpresa();
   loadEmpresa();
   loadGrupo();
-  loadGrupoEmpresa();
-
+ 
   function loadGrupoEmpresa(){
     $scope.loadingGrupoEmpresa = true;
     let success = data=>{

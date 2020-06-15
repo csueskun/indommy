@@ -23,19 +23,19 @@
           
 		      <td>
             <div class="btn-group" role="group" aria-label="Basic example">
-              <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareForm(grupo, false, $index)'><i class="fa fa-search"></i></button>
-              <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareDelete(grupo, $event, $index)'><i class="fa fa-trash"></i></button>
+              <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareForm(grupoempresa, false, $index)'><i class="fa fa-search"></i></button>
+              <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareDelete(grupoempresa, $event, $index)'><i class="fa fa-trash"></i></button>
             </div>
           </td>
         </tr>
-        <tr ng-hide='loadingGrupos || grupoList.length'>
+        <tr ng-hide='loadingGrupoEmpresa || grupoempresasList.length'>
           <td colspan="4">
             <div class="alert alert-warning" role="alert">
               No se encontraron registros
             </div>
           </td>
         </tr>
-        <tr ng-show='loadingGrupos'>
+        <tr ng-show='loadingGrupoEmpresa'>
           <td colspan="4" class="text-center">
             <h1><i class="fa fa-cog fa-spin text-secondary"></i></h1>
           </td>
@@ -48,13 +48,13 @@
     <button class="btn btn-link" type="button" ng-click='show("list")'>
       Volver
     </button>
-    <div ng-show="grupo.id" style="display: initial;">
+    <div ng-show="grupoempresa.id" style="display: initial;">
       <button class="btn btn-link" type="button" ng-click='editable=!editable'>
         {{editable?'Ver detalles':'Editar'}}
       </button>
       <h3>{{editable?'Editar Grupo Empresa':'Detalles Grupo Empresa'}}</h3>
     </div>
-    <h3 ng-hide='grupo.id'>Nuevo Grupo Empresa</h3>
+    <h3 ng-hide='grupoempresa.id'>Nuevo Grupo Empresa</h3>
     <form name="form" novalidate class="needs-validation">
       <div class="form-row">
 
