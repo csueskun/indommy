@@ -1,9 +1,16 @@
 app.controller('empresaController', function($scope, apiInterface, snackbar) {
   $scope.empresaList = [];
   $scope.ciudadList = [];
+  $scope.pagination = {per_page: 12};
+  $scope.paginationForm = {};
 
   const apiName = 'empresa';
   
+  $scope.perPageOptions = [
+    {des: '6', val: 6},
+    {des: '12', val: 12},
+    {des: '24', val: 24},
+  ]
   $scope.estados = [
     {des: 'Inactivo', val: 0},
     {des: 'Activo', val: 1}
@@ -30,14 +37,24 @@ app.controller('empresaController', function($scope, apiInterface, snackbar) {
     $scope.loadingEmpresas = true;
     let success = data=>{
       if(data.status == 200){
-        $scope.empresaList = data.data.data;
+        $scope.empresaList = data.data.data.data;
+        $scope.pagination = data.data.data.pagination;
         $scope.loadingEmpresas = false;
       }};
     let error = error=>{
       console.log(error);
       $scope.loadingEmpresas = false;
     };
-    apiInterface.get(apiName, {}, success, error);
+    apiInterface.get('paginated/empresa', {params: $scope.pagination}, success, error);
+  }
+
+  $scope.setPaginationPage = function(page){
+    $scope.pagination.current_page = page;
+    loadEmpresas();
+  }
+  $scope.setPerPage = function(){
+    $scope.pagination.current_page = 1;
+    loadEmpresas();
   }
 
   function loadCiudades(){

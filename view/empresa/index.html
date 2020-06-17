@@ -16,7 +16,7 @@
       </thead>
       <tbody>
         <tr ng-repeat='empresa in empresaList'>
-          <td>{{$index + 1}}</td>
+          <td>{{$index + 1 + (pagination.per_page * (pagination.current_page - 1))}}</td>
 		      <td>{{empresa.codemp}}</td>
           <td>{{empresa.nombre}}</td>
           <td>{{empresa.descripcion}}</td>
@@ -29,20 +29,21 @@
             </div>
           </td>
         </tr>
-        <tr ng-hide='loadingEmpresas || empresaList.length'>
-          <td colspan="4">
+        <tr ng-show='!loadingEmpresas && !empresaList.length'>
+          <td colspan="7">
             <div class="alert alert-warning" role="alert">
               No se encontraron registros
             </div>
           </td>
         </tr>
         <tr ng-show='loadingEmpresas'>
-          <td colspan="4" class="text-center">
+          <td colspan="7" class="text-center">
             <h1><i class="fa fa-cog fa-spin text-secondary"></i></h1>
           </td>
         </tr>
       </tbody>
     </table>
+    <div class="col-md-12" ng-include='"/view/pagination.html"'></div>
   </div>
 
   <div class="collapse" id="form">

@@ -1,0 +1,41 @@
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+    <li class="page-item disabled" ng-class="{'disabled': pagination.current_page === 1}">
+      <button class="page-link" tabindex="-1" ng-click="setPaginationPage(pagination.current_page-1)">Anterior</button>
+    </li>
+    <li class="page-item" ng-click="setPaginationPage(1)" ng-if="pagination.current_page - 3 > 1">
+      <button class="page-link">1 ...</button>
+    </li>
+    <li 
+      class="page-item" ng-class="{'active': pagination.current_page === $index + pagination.current_page - 3}" 
+      ng-click="setPaginationPage($index + pagination.current_page - 3)" ng-if="($index + pagination.current_page - 3) > 0 && ($index + pagination.current_page - 3) <= pagination.last_page"
+      ng-repeat="n in [].constructor(7) track by $index">
+      <button class="page-link">{{ $index + pagination.current_page - 3 }}</button>
+    </li>
+    <li class="page-item" ng-click="setPaginationPage(pagination.last_page)" ng-if="pagination.current_page + 3 < pagination.last_page">
+      <button class="page-link">... {{ pagination.last_page }}</button>
+    </li>
+    <li class="page-item" ng-class="{'disabled': pagination.current_page === pagination.last_page}">
+      <button class="page-link" ng-click="setPaginationPage(pagination.current_page+1)">Siguiente</button>
+    </li>
+  </ul>
+  <form name="form" ng-submit="setPaginationPage(paginationForm.page)" novalidate class="needs-validation">
+    <div class="row justify-content-md-center">
+      <div class="form-group col-sm-auto">
+        <div class="input-group">
+          <label for="page">Por página:</label>
+          &nbsp;
+          <select class="custom-select" name="prioridad" ng-model="pagination.per_page" ng-change="setPerPage()" ng-options="item.val as item.des for item in perPageOptions">
+          </select>
+          &nbsp;
+          <label for="page">Ir a página:</label>
+          &nbsp;
+          <input type="number" name="page" ng-model="paginationForm.page" class="form-control">
+          <div class="input-group-append">
+            <button class="btn btn-secondary">Go</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</nav>
