@@ -41,6 +41,32 @@ app.controller('productoController', function($scope, apiInterface, snackbar) {
   loadTipoproducto();
   loadTipocategoria();
 
+  function loadProducto(){
+    $scope.loadingProducto = true;
+    let success = data=>{
+      if(data.status == 200){
+        $scope.productoList = data.data.data;
+        $scope.pagination = data.data.data.pagination;
+        $scope.loadingProducto = false;
+      }};
+    let error = error=>{
+      console.log(error);
+      $scope.loadingProducto = false;
+    };
+    apiInterface.get('paginated/producto', {params: $scope.pagination}, success, error);
+  }
+
+  $scope.setPaginationPage = function(page){
+    $scope.pagination.current_page = page;
+    loadProducto();
+  }
+  $scope.setPerPage = function(){
+    $scope.pagination.current_page = 1;
+    loadProducto();
+  }
+
+
+
   function loadTipocategoria(){
     $scope.loadingProducto = true;
     let success = data=>{
@@ -81,30 +107,6 @@ app.controller('productoController', function($scope, apiInterface, snackbar) {
       $scope.loadingProducto = false;
     };
     apiInterface.get('empresa', {}, success, error);
-  }
-
-  function loadProducto(){
-    $scope.loadingProducto = true;
-    let success = data=>{
-      if(data.status == 200){
-        $scope.productoList = data.data.data;
-        $scope.pagination = data.data.data.pagination;
-        $scope.loadingProducto = false;
-      }};
-    let error = error=>{
-      console.log(error);
-      $scope.loadingProducto = false;
-    };
-    apiInterface.get('paginated/producto', {params: $scope.pagination}, success, error);
-  }
-
-  $scope.setPaginationPage = function(page){
-    $scope.pagination.current_page = page;
-    loadProducto();
-  }
-  $scope.setPerPage = function(){
-    $scope.pagination.current_page = 1;
-    loadProducto();
   }
 
 

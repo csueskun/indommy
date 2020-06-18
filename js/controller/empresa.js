@@ -1,15 +1,15 @@
 app.controller('empresaController', function($scope, apiInterface, snackbar) {
   $scope.empresaList = [];
   $scope.ciudadList = [];
-  $scope.pagination = {per_page: 12};
+  $scope.pagination = {per_page: 20};
   $scope.paginationForm = {};
 
   const apiName = 'empresa';
   
   $scope.perPageOptions = [
-    {des: '6', val: 6},
-    {des: '12', val: 12},
-    {des: '24', val: 24},
+    {des: '6', val: 10},
+    {des: '12', val: 20},
+    {des: '24', val: 50},
   ]
   $scope.estados = [
     {des: 'Inactivo', val: 0},
