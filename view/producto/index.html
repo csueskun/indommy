@@ -19,7 +19,7 @@
       </thead>
       <tbody>
         <tr ng-repeat='producto in productoList'>
-          <td>{{$index + 1}}</td>
+          <td>{{$index + 1 + (pagination.per_page * (pagination.current_page - 1))}}</td>
 		      <td>{{producto.codigo}}</td>
           <td>{{producto.descripcion}}</td>    
           <td>{{producto.empresa.nombre}}</td>
@@ -46,6 +46,7 @@
         </tr>
       </tbody>
     </table>
+    <div class="col-md-12" ng-include='"/view/pagination.html"'></div>
   </div>
 
   <div class="collapse" id="form">

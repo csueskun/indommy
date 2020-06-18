@@ -4,7 +4,18 @@ app.controller('productoController', function($scope, apiInterface, snackbar) {
   $scope.tipoproductoList = [];
   $scope.tipocategoriaList = [];
 
+  $scope.pagination = {per_page: 10};
+  $scope.paginationForm = {};
+
+
+
   const apiName = 'producto';
+
+  $scope.perPageOptions = [
+    {des: '10', val: 10},
+    {des: '20', val: 20},
+    {des: '50', val: 50},
+  ]
 
   $scope.estados = [
     {des: 'Inactivo', val: 0},
@@ -77,14 +88,25 @@ app.controller('productoController', function($scope, apiInterface, snackbar) {
     let success = data=>{
       if(data.status == 200){
         $scope.productoList = data.data.data;
+        $scope.pagination = data.data.data.pagination;
         $scope.loadingProducto = false;
       }};
     let error = error=>{
       console.log(error);
       $scope.loadingProducto = false;
     };
-    apiInterface.get(apiName, {}, success, error);
+    apiInterface.get('paginated/producto', {params: $scope.pagination}, success, error);
   }
+
+  $scope.setPaginationPage = function(page){
+    $scope.pagination.current_page = page;
+    loadProducto();
+  }
+  $scope.setPerPage = function(){
+    $scope.pagination.current_page = 1;
+    loadProducto();
+  }
+
 
   $scope.show = function(section){
     $('.collapse.show').collapse('toggle');
