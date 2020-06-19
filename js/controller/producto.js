@@ -7,8 +7,6 @@ app.controller('productoController', function($scope, apiInterface, snackbar) {
   $scope.pagination = {per_page: 10};
   $scope.paginationForm = {};
 
-
-
   const apiName = 'producto';
 
   $scope.perPageOptions = [
@@ -45,7 +43,7 @@ app.controller('productoController', function($scope, apiInterface, snackbar) {
     $scope.loadingProducto = true;
     let success = data=>{
       if(data.status == 200){
-        $scope.productoList = data.data.data;
+        $scope.productoList = data.data.data.data;
         $scope.pagination = data.data.data.pagination;
         $scope.loadingProducto = false;
       }};

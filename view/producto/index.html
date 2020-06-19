@@ -32,15 +32,15 @@
             </div>
           </td>
         </tr>
-        <tr ng-hide='loadingProducto || productoList.length'>
-          <td colspan="4">
+        <tr ng-show='!loadingProducto && !productoList.length'>
+          <td colspan="7">
             <div class="alert alert-warning" role="alert">
               No se encontraron registros
             </div>
           </td>
         </tr>
         <tr ng-show='loadingProducto'>
-          <td colspan="4" class="text-center">
+          <td colspan="7" class="text-center">
             <h1><i class="fa fa-cog fa-spin text-secondary"></i></h1>
           </td>
         </tr>
