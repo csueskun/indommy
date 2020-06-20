@@ -7,10 +7,11 @@ app.controller('empresaController', function($scope, apiInterface, snackbar) {
   const apiName = 'empresa';
   
   $scope.perPageOptions = [
-    {des: '6', val: 10},
-    {des: '12', val: 20},
-    {des: '24', val: 50},
+    {des: '10', val: 10},
+    {des: '20', val: 20},
+    {des: '50', val: 50},
   ]
+  
   $scope.estados = [
     {des: 'Inactivo', val: 0},
     {des: 'Activo', val: 1}

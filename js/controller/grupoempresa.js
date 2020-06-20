@@ -2,9 +2,18 @@ app.controller('grupoempresaController', function($scope, apiInterface, snackbar
   $scope.grupoempresaList = [];
   $scope.empresaList = [];
   $scope.grupoList = [];
+  $scope.pagination = {per_page: 20};
+  $scope.paginationForm = {};
+
 
   const apiName = 'grupoempresa';
   
+  $scope.perPageOptions = [
+    {des: '10', val: 10},
+    {des: '20', val: 20},
+    {des: '50', val: 50},
+  ]
+
   $scope.estados = [
     {des: 'Inactivo', val: 0},
     {des: 'Activo', val: 1}
@@ -33,13 +42,23 @@ app.controller('grupoempresaController', function($scope, apiInterface, snackbar
       console.log(data)
       if(data.status == 200){
         $scope.grupoempresaList = data.data.data;
+        $scope.pagination = data.data.data.pagination;
         $scope.loadingGrupoEmpresa = false;
       }};
     let error = error=>{
       console.log(error);
       $scope.loadingGrupoEmpresa = false;
     };
-    apiInterface.get(apiName, {}, success, error);
+    apiInterface.get('paginated/grupoempresa', {params: $scope.pagination}, success, error);
+  }
+
+  $scope.setPaginationPage = function(page){
+    $scope.pagination.current_page = page;
+    loadGrupoEmpresa();
+  }
+  $scope.setPerPage = function(){
+    $scope.pagination.current_page = 1;
+    loadGrupoEmpresa();
   }
   
   function loadGrupo(){

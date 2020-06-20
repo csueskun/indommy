@@ -15,7 +15,7 @@
       </thead>
       <tbody>
         <tr ng-repeat='grupoempresa in grupoempresaList'>
-          <td>{{$index + 1}}</td>
+          <td>{{$index + 1 + (pagination.per_page * (pagination.current_page - 1))}}</td>
           <td>{{grupoempresa.empresa.nombre}}</td>
           <td>{{grupoempresa.grupo.descripcion}}</td>
           <td>{{grupoempresa.estado}}</td>
@@ -42,6 +42,7 @@
         </tr>
       </tbody>
     </table>
+    <div class="col-md-12" ng-include='"/view/pagination.html"'></div>
   </div>
 
   <div class="collapse" id="form">
