@@ -28,15 +28,15 @@
             </div>
           </td>
         </tr>
-        <tr ng-hide='loadingGrupoEmpresa || grupoempresasList.length'>
-          <td colspan="4">
+        <tr ng-hide='loadingGrupoEmpresa || grupoempresaList.length'>
+          <td colspan="6">
             <div class="alert alert-warning" role="alert">
               No se encontraron registros
             </div>
           </td>
         </tr>
         <tr ng-show='loadingGrupoEmpresa'>
-          <td colspan="4" class="text-center">
+          <td colspan="6" class="text-center">
             <h1><i class="fa fa-cog fa-spin text-secondary"></i></h1>
           </td>
         </tr>
@@ -60,9 +60,13 @@
       <div class="form-row">
 
         <div class="form-group col-md-6">
-          <label for="empresa_id">Empresa</label>
-          <select class="custom-select {{form.empresa_id.$valid?'is-valid':'is-invalid'}}" name="empresa_id" ng-model="grupoempresa.empresa_id" required ng-disabled="!editable" 
-            ng-readonly="!editable" ng-options="iteme.id as iteme.nombre for iteme in empresaList"></select>
+          <label for="empresa_id">Empresa: {{grupoempresa.empresa_id}}</label>
+          <div class="input-group">
+            <input type="text" name="_empresa_id" ng-model="grupoempresa._empresa_id" required class="form-control {{form._empresa_id.$valid?'is-valid':'is-invalid'}}" readonly>
+            <div class="input-group-append" ng-if="editable">
+              <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#modalBuscarEmpresa"><i class="fa fa-search"></i></button>
+            </div>
+          </div>
           <div class="invalid-feedback" ng-if="form.empresa_id.$error.required"><i class="fa fa-times"></i> Campo es obligatorio</div> 
         </div>
 		  
@@ -119,6 +123,9 @@
       <button type="button" class="btn btn-link" data-dismiss="toast" aria-label="Close">Cancelar</button>
     </div>
   </div>
+
+
+  <div class="col-md-12" ng-include='"/view/empresa/modal_buscar.html"'></div>
 
   
 
