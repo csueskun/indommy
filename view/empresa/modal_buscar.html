@@ -30,7 +30,7 @@
                     </thead>
                     <tbody>
                         <tr style="cursor: pointer;" ng-repeat='empresa in empresaList' ng-click="elegirEmpresaFromModal(empresa.id, empresa.nombre)">
-                            <td>{{$index + 1 + (pagination.per_page * (pagination.current_page - 1))}}</td>
+                            <td>{{$index + 1 + (empresaPagination.per_page * (empresaPagination.current_page - 1))}}</td>
                             <td>{{empresa.codemp}}</td>
                             <td>{{empresa.nombre}}</td>
                         </tr>
