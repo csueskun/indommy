@@ -514,7 +514,6 @@
       }
       if (this.linkField) {
         $('#' + this.linkField).val(this.getFormattedDate(this.linkFormat));
-        $('#' + this.linkField).attr('iso-date', formatted);
       }
       var udfb = $('#udfb');
       if(udfb.length){

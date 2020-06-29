@@ -142,7 +142,9 @@ app.controller('ofertaController', function($scope, apiInterface, snackbar) {
 
   $scope.updateDateField = function(){
     $scope.oferta.fechaini = $('#fechainiPicker>input').val();
+    $scope.oferta._fechaini = $('#_fechaini').val();
     $scope.oferta.fechafin = $('#fechafinPicker>input').val();
+    $scope.oferta._fechafin = $('#_fechafin').val();
   }
 
 
