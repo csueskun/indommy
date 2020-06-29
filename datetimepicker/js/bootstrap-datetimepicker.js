@@ -522,6 +522,7 @@
       if(udfb.length){
         udfb.click();
       }
+      this.hide();
     },
 
     getFormattedDate: function (format) {
