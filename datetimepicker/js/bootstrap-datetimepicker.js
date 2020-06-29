@@ -513,7 +513,8 @@
         this.element.val(formatted);
       }
       if (this.linkField) {
-        var linkFormated = this.getFormattedDate(this.linkFormat);
+        // var linkFormated = this.getFormattedDate(this.linkFormat);
+        var linkFormated = formatDateFromIso(formatted);
         $('#' + this.linkField).val(linkFormated);
         $('#' + this.linkField).attr('link-formated', linkFormated);
       }
