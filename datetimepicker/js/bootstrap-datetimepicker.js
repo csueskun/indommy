@@ -513,7 +513,9 @@
         this.element.val(formatted);
       }
       if (this.linkField) {
-        $('#' + this.linkField).val(this.getFormattedDate(this.linkFormat));
+        var linkFormated = this.getFormattedDate(this.linkFormat);
+        $('#' + this.linkField).val(linkFormated);
+        $('#' + this.linkField).attr('link-formated', linkFormated);
       }
       var udfb = $('#udfb');
       if(udfb.length){
