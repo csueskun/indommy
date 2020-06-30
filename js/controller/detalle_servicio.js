@@ -1,12 +1,12 @@
-app.controller('grupoempresaController', function($scope, apiInterface, snackbar) {
-  $scope.grupoempresaList = [];
+app.controller('detalle_servicioController', function($scope, apiInterface, snackbar) {
+  $scope.detalle_servicioList = [];
   $scope.empresaList = [];
-  $scope.grupoList = [];
+  $scope.servicioList = [];
   $scope.pagination = {per_page: 20};
   $scope.paginationForm = {};
 
 
-  const apiName = 'grupoempresa';
+  const apiName = 'detalle_servicio';
   
   $scope.perPageOptions = [
     {des: '10', val: 10},
@@ -32,47 +32,47 @@ app.controller('grupoempresaController', function($scope, apiInterface, snackbar
     {des: '10', val: 10}
   ]
 
-  loadGrupoEmpresa();
+  loadDetalle_Servicio();
   loadEmpresa();
-  loadGrupo();
+  loadServicio();
  
-  function loadGrupoEmpresa(){
-    $scope.loadingGrupoEmpresa = true;
+  function loadDetalle_Servicio(){
+    $scope.loadingDetalle_Servicio = true;
     let success = data=>{
       console.log(data)
       if(data.status == 200){
-        $scope.grupoempresaList = data.data.data.data;
+        $scope.detalle_servicioList = data.data.data.data;
         $scope.pagination = data.data.data.pagination;
-        $scope.loadingGrupoEmpresa = false;
+        $scope.loadingDetalle_Servicio = false;
       }};
     let error = error=>{
       console.log(error);
-      $scope.loadingGrupoEmpresa = false;
+      $scope.loadingDetalle_Servicio = false;
     };
-    apiInterface.get('paginated/grupoempresa', {params: $scope.pagination}, success, error);
+    apiInterface.get('paginated/detalle_servicio', {params: $scope.pagination}, success, error);
   }
 
   $scope.setPaginationPage = function(page){
     $scope.pagination.current_page = page;
-    loadGrupoEmpresa();
+    loadDetalle_Servicio();
   }
   $scope.setPerPage = function(){
     $scope.pagination.current_page = 1;
-    loadGrupoEmpresa();
+    loadDetalle_Servicio();
   }
   
-  function loadGrupo(){
-    $scope.loadingGrupoEmpresa = true;
+  function loadServicio(){
+    $scope.loadingDetalle_Servicio = true;
     let success = data=>{
       if(data.status == 200){
         $scope.grupoList = data.data.data;
-        $scope.loadingGrupoEmpresa = false;
+        $scope.loadingDetalle_Servicio = false;
       }};
     let error = error=>{
       console.log(error);
-      $scope.loadingGrupoEmpresa = false;
+      $scope.loadingDetalle_Servicio = false;
     };
-    apiInterface.get('grupo', {}, success, error);
+    apiInterface.get('servicio', {}, success, error);
   }
 
   function loadEmpresa(){
@@ -94,9 +94,9 @@ app.controller('grupoempresaController', function($scope, apiInterface, snackbar
     $('.collapse#'+section).collapse('toggle');
   }
 
-  $scope.prepareDelete = function(grupoempresa, event, index){
-    $scope.grupoempresaIndex = index;
-    $scope.grupoempresa = Object.assign({}, grupoempresa);
+  $scope.prepareDelete = function(detalle_servicio, event, index){
+    $scope.detalle_servicioIndex = index;
+    $scope.detalle_servicio = Object.assign({}, detalle_servicio);
     showToast('.toast.delete', event.clientY - 40);
   }
 
@@ -105,7 +105,7 @@ app.controller('grupoempresaController', function($scope, apiInterface, snackbar
     let success = data=>{
       if(data.status == 200){
         snackbar.green('Se ha borrado el registro.');
-        $scope.grupoempresaList.splice($scope.grupoempresaIndex, 1);
+        $scope.detalle_servicioList.splice($scope.detalle_servicioIndex, 1);
       }
       hideToast('.toast.delete');
       $scope.saving = false;
@@ -115,13 +115,13 @@ app.controller('grupoempresaController', function($scope, apiInterface, snackbar
       $scope.saving = false;
       console.log(error);
     };
-    apiInterface.delete(apiName+'/'+$scope.grupoempresa.id, {}, success, error);
+    apiInterface.delete(apiName+'/'+$scope.detalle_servicio.id, {}, success, error);
   }
 
-  $scope.prepareForm = function(grupoempresa={}, editable=true, index){
-    $scope.grupoempresaIndex = index;
+  $scope.prepareForm = function(detalle_servicio={}, editable=true, index){
+    $scope.detalle_servicioIndex = index;
     $scope.editable = editable;
-    $scope.grupoempresa = Object.assign({}, grupoempresa);
+    $scope.detalle_servicio = Object.assign({}, detalle_servicio);
     $scope.show('form');
   }
 
@@ -131,14 +131,14 @@ app.controller('grupoempresaController', function($scope, apiInterface, snackbar
         snackbar.green('Guardado exitosamente.');
       }
       $scope.saving = false;
-      if($scope.grupoempresa.id){
+      if($scope.detalle_servicio.id){
         $scope.editable = false;
       }
       else{
-        $scope.grupoempresa = Object.assign({}, {});
+        $scope.detalle_servicio = Object.assign({}, {});
         $scope.form.$setPristine();
       }
-      loadGrupoEmpresa();
+      loadDetalle_Servicio();
     };
     let error = error=>{
       snackbar.red('Se presentó un error al guardar.');
@@ -150,11 +150,11 @@ app.controller('grupoempresaController', function($scope, apiInterface, snackbar
       $scope.saving = false;
     };
     $scope.saving = true;
-    if($scope.grupoempresa.id){
-      apiInterface.put(apiName+'/'+$scope.grupoempresa.id, $scope.grupoempresa, {}, success, error);
+    if($scope.detalle_servicio.id){
+      apiInterface.put(apiName+'/'+$scope.detalle_servicio.id, $scope.detalle_servicio, {}, success, error);
     }
     else{
-      apiInterface.post(apiName, $scope.grupoempresa, {}, success, error);
+      apiInterface.post(apiName, $scope.detalle_servicio, {}, success, error);
     }
   }
 
