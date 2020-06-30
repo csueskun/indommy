@@ -96,6 +96,14 @@ app.controller('ofertaController', function($scope, apiInterface, snackbar) {
     $scope.ofertaIndex = index;
     $scope.editable = editable;
     $scope.oferta = Object.assign({}, oferta);
+    if($scope.oferta.fechaini){
+      $('#fechainiPicker>input').val($scope.oferta.fechaini);
+      $scope.oferta._fechaini = formatDateFromIso($scope.oferta.fechaini);
+    }
+    if($scope.oferta.fechafin){
+      $('#fechafinPicker>input').val($scope.oferta.fechafin);
+      $scope.oferta._fechafin = formatDateFromIso($scope.oferta.fechafin);
+    }
     $scope.show('form');
   }
 
@@ -131,6 +139,14 @@ app.controller('ofertaController', function($scope, apiInterface, snackbar) {
       apiInterface.post(apiName, $scope.oferta, {}, success, error);
     }
   }
+
+  $scope.updateDateField = function(){
+    $scope.oferta.fechaini = $('#fechainiPicker>input').val();
+    $scope.oferta._fechaini = $('#_fechaini').val();
+    $scope.oferta.fechafin = $('#fechafinPicker>input').val();
+    $scope.oferta._fechafin = $('#_fechafin').val();
+  }
+
 
   function updateFormValidation(){
     const keys = Object.keys($scope.formErrors);

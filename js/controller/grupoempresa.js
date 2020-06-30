@@ -3,6 +3,7 @@ app.controller('grupoempresaController', function($scope, apiInterface, snackbar
   $scope.empresaList = [];
   $scope.grupoList = [];
   $scope.pagination = {per_page: 20};
+  $scope.empresaPagination = {per_page: 10};
   $scope.paginationForm = {};
 
 
@@ -39,7 +40,6 @@ app.controller('grupoempresaController', function($scope, apiInterface, snackbar
   function loadGrupoEmpresa(){
     $scope.loadingGrupoEmpresa = true;
     let success = data=>{
-      console.log(data)
       if(data.status == 200){
         $scope.grupoempresaList = data.data.data.data;
         $scope.pagination = data.data.data.pagination;
@@ -76,17 +76,33 @@ app.controller('grupoempresaController', function($scope, apiInterface, snackbar
   }
 
   function loadEmpresa(){
-    $scope.loadingGrupoEmpresa = true;
+    $scope.loadingEmpresaModal = true;
     let success = data=>{
+      console.log(data)
       if(data.status == 200){
-        $scope.empresaList = data.data.data;
-        $scope.loadingGrupoEmpresa = false;
+        $scope.empresaList = data.data.data.data;
+        $scope.empresaPagination = data.data.data.pagination;
+        $scope.loadingEmpresaModal = false;
       }};
     let error = error=>{
       console.log(error);
-      $scope.loadingGrupoEmpresa = false;
+      $scope.loadingEmpresaModal = false;
     };
-    apiInterface.get('empresa', {}, success, error);
+    apiInterface.get('paginated/empresa', {params: $scope.empresaPagination}, success, error);
+  }
+
+  $scope.searchEmpresaFromModal = function(){
+    loadEmpresa();
+  }
+  $scope.setEmpresaPaginationPage = function(page){
+    $scope.empresaPagination.current_page = page;
+    loadEmpresa();
+  }
+
+  $scope.elegirEmpresaFromModal = function(id, nombre){
+    $("#modalBuscarEmpresa").modal('hide');
+    $scope.grupoempresa.empresa_id = id;
+    $scope.grupoempresa._empresa_id = nombre;
   }
 
   $scope.show = function(section){
@@ -122,6 +138,9 @@ app.controller('grupoempresaController', function($scope, apiInterface, snackbar
     $scope.grupoempresaIndex = index;
     $scope.editable = editable;
     $scope.grupoempresa = Object.assign({}, grupoempresa);
+    if($scope.grupoempresa.empresa){
+      $scope.grupoempresa._empresa_id = $scope.grupoempresa.empresa.nombre;
+    }
     $scope.show('form');
   }
 

@@ -96,20 +96,27 @@
       <div class="form-row">
         <div class="form-group col-md-3">
           <label for="fechaini">Fecha de Inicio</label>
-          <input type="text" ng-model="oferta.fechaini" class="form-control {{form.fechaini.$valid?'is-valid':'is-invalid'}}" name="fechaini" required ng-readonly="!editable">
-          <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  
-        
-          <div class="invalid-feedback" ng-if="form.fechaini.$error.unique"><i class="fa fa-times"></i> El código ya existe</div>  -->
-          <div class="invalid-feedback" ng-if="form.fechaini.$error.required"><i class="fa fa-times"></i> La Fecha Inicial es obligatorio</div> 
+          <div class="input-group">
+            <input type="text" id='_fechaini' ng-model='oferta._fechaini' class="form-control {{form._fechaini.$valid?'is-valid':'is-invalid'}}" required name="_fechaini" readonly>
+            <div class="input-group-append" ng-if="editable">
+              <button class="btn btn-sm btn-success" onclick="$('#fechainiPicker').datetimepicker('show')"><i class="fa fa-calendar-day"></i></button>
+            </div>
+            <div class="invalid-feedback" ng-if="form._fechaini.$error.required"><i class="fa fa-times"></i> La Fecha Inicial es obligatorio</div> 
+          </div>
+          <div class="datetimepicker" data-link-field="_fechaini" id="fechainiPicker"><input type="hidden"></div>  
         </div>
       
+        
         <div class="form-group col-md-3">
-          <label for="fechafin">Fecha Final</label>
-          <input type="text" ng-model="oferta.fechafin" class="form-control {{form.fechafin.$valid?'is-valid':'is-invalid'}}" name="fechafin" required ng-readonly="!editable">
-          <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  
-          <div class="invalid-feedback" ng-if="form.fechafin.$error.unique"><i class="fa fa-times"></i> La Fecha Final ya existe</div>--> 
-            <div class="invalid-feedback" ng-if="form.fechafin.$error.required"><i class="fa fa-times"></i> El campo es obligatorio</div>
-            
+          <label for="fechafin">Fecha de Inicio</label>
+          <div class="input-group">
+            <input type="text" id='_fechafin' ng-model='oferta._fechafin' class="form-control {{form._fechafin.$valid?'is-valid':'is-invalid'}}" required name="_fechafin" readonly>
+            <div class="input-group-append" ng-if="editable">
+              <button class="btn btn-sm btn-success" onclick="$('#fechafinPicker').datetimepicker('show')"><i class="fa fa-calendar-day"></i></button>
+            </div>
+            <div class="invalid-feedback" ng-if="form._fechafin.$error.required"><i class="fa fa-times"></i> La Fecha Final es obligatorio</div> 
+          </div>
+          <div class="datetimepicker" data-link-field="_fechafin" id="fechafinPicker"><input type="hidden"></div>  
         </div>
 
         <div class="form-group col-md-3">
@@ -182,5 +189,6 @@
       <button type="button" class="btn btn-link" data-dismiss="toast" aria-label="Close">Cancelar</button>
     </div>
   </div>
+  <button id="udfb" ng-click="updateDateField()" style="display: none;"></button>
 
 </div>

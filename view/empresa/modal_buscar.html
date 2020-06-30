@@ -1,0 +1,76 @@
+<div class="modal fade" id="modalBuscarEmpresa" tabindex="-1" role="dialog" aria-labelledby="buscarEmpresa" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="buscarEmpresa">Elegir empresa</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form name="buscarEmpresaForm" ng-submit="searchEmpresaFromModal()" novalidate class="needs-validation">
+                    <div class="form-group col-md-12">
+                        <div class="input-group text-center">
+                            <input type="text" name="nombe" ng-model="empresaPagination.nombre" style="width: 80%">
+                            <div class="input-group-append">
+                                <button ng-disabled="loadingEmpresaModal" type="submit" class="btn btn-sm btn-success">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <table class="table table-sm table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Código</th>
+                            <th scope="col">Nombre</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="cursor: pointer;" ng-repeat='empresa in empresaList' ng-click="elegirEmpresaFromModal(empresa.id, empresa.nombre)">
+                            <td>{{$index + 1 + (empresaPagination.per_page * (empresaPagination.current_page - 1))}}</td>
+                            <td>{{empresa.codemp}}</td>
+                            <td>{{empresa.nombre}}</td>
+                        </tr>
+                        <tr ng-show='!loadingEmpresas && !empresaList.length'>
+                            <td colspan="3">
+                                <div class="alert alert-warning" role="alert">
+                                    No se encontraron registros
+                                </div>
+                            </td>
+                        </tr>
+                        <tr ng-show='loadingEmpresas'>
+                            <td colspan="3" class="text-center">
+                                <h1><i class="fa fa-cog fa-spin text-secondary"></i></h1>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                      <li class="page-item disabled" ng-class="{'disabled': empresaPagination.current_page === 1}">
+                        <button class="page-link" tabindex="-1" ng-click="setEmpresaPaginationPage(empresaPagination.current_page-1)">Anterior</button>
+                      </li>
+                      <li class="page-item" ng-click="setEmpresaPaginationPage(1)" ng-if="empresaPagination.current_page - 3 > 1">
+                        <button class="page-link">1 ...</button>
+                      </li>
+                      <li 
+                        class="page-item" ng-class="{'active': empresaPagination.current_page === $index + empresaPagination.current_page - 3}" 
+                        ng-click="setEmpresaPaginationPage($index + empresaPagination.current_page - 3)" ng-if="($index + empresaPagination.current_page - 3) > 0 && ($index + empresaPagination.current_page - 3) <= empresaPagination.last_page"
+                        ng-repeat="n in [].constructor(7) track by $index">
+                        <button class="page-link">{{ $index + empresaPagination.current_page - 3 }}</button>
+                      </li>
+                      <li class="page-item" ng-click="setEmpresaPaginationPage(empresaPagination.last_page)" ng-if="empresaPagination.current_page + 3 < empresaPagination.last_page">
+                        <button class="page-link">... {{ empresaPagination.last_page }}</button>
+                      </li>
+                      <li class="page-item" ng-class="{'disabled': empresaPagination.current_page === empresaPagination.last_page}">
+                        <button class="page-link" ng-click="setEmpresaPaginationPage(empresaPagination.current_page+1)">Siguiente</button>
+                      </li>
+                    </ul>
+                  </nav>
+            </div>
+        </div>
+    </div>
+</div>
