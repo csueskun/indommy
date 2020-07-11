@@ -4,6 +4,16 @@ app.controller('newsController', function($scope, apiInterface, snackbar) {
 
   const apiName = 'news';
 
+  $scope.pagination = {per_page: 20};
+  $scope.empresaPagination = {per_page: 10};
+  $scope.paginationForm = {};
+
+  $scope.perPageOptions = [
+    {des: '10', val: 10},
+    {des: '20', val: 20},
+    {des: '50', val: 50},
+  ]
+
   $scope.estados = [
     {des: 'Inactivo', val: 0},
     {des: 'Activo', val: 1}   
@@ -30,30 +40,57 @@ app.controller('newsController', function($scope, apiInterface, snackbar) {
     $scope.loadingNews = true;
     let success = data=>{
       if(data.status == 200){
-        $scope.newsList = data.data.data;
+        $scope.newsList = data.data.data.data;
+        $scope.pagination = data.data.data.pagination;
         $scope.loadingNews = false;
       }};
     let error = error=>{
       console.log(error);
       $scope.loadingNews = false;
     };
-    apiInterface.get(apiName, {}, success, error);
+    apiInterface.get('paginated/news', {params: $scope.pagination}, success, error);
   }
 
+  //paginacion
+  $scope.setPaginationPage = function(page){
+    $scope.pagination.current_page = page;
+    loadNews();
+  }
+  $scope.setPerPage = function(){
+    $scope.pagination.current_page = 1;
+    loadNews();
+  }
+
+  //modal de empresa
   function loadEmpresas(){
     $scope.loadingNews = true;
     let success = data=>{
       if(data.status == 200){
-        $scope.empresaList = data.data.data;
+        $scope.empresaList = data.data.data.data;
+        $scope.empresaPagination = data.data.data.pagination;
         $scope.loadingNews = false;
       }};
     let error = error=>{
       console.log(error);
       $scope.loadingNews = false;
     };
-    apiInterface.get('empresa', {}, success, error);
+    apiInterface.get('paginated/empresa', {params: $scope.empresaPagination}, success, error);
   }
 
+  $scope.searchEmpresaFromModal = function(){
+    loadEmpresa();
+  }
+  $scope.setEmpresaPaginationPage = function(page){
+    $scope.empresaPagination.current_page = page;
+    loadEmpresa();
+  }
+
+  $scope.elegirEmpresaFromModal = function(id, nombre){
+    $("#modalBuscarEmpresa").modal('hide');
+    $scope.news.empresa_id = id;
+    $scope.news._empresa_id = nombre;
+  }
+  //fin de modal de empresa
 
   $scope.show = function(section){
     $('.collapse.show').collapse('toggle');
@@ -88,6 +125,17 @@ app.controller('newsController', function($scope, apiInterface, snackbar) {
     $scope.newsIndex = index;
     $scope.editable = editable;
     $scope.news = Object.assign({}, news);
+    if($scope.news.fechaini){
+      $('#fechainiPicker>input').val($scope.news.fechaini);
+      $scope.news._fechaini = formatDateFromIso($scope.news.fechaini);
+    }
+    if($scope.news.fechafin){
+      $('#fechafinPicker>input').val($scope.news.fechafin);
+      $scope.news._fechafin = formatDateFromIso($scope.news.fechafin);
+    }
+    if($scope.news.empresa){
+      $scope.news._empresa_id = $scope.news.empresa.nombre;
+    }
     $scope.show('form');
   }
 
@@ -124,10 +172,19 @@ app.controller('newsController', function($scope, apiInterface, snackbar) {
     }
   }
 
+  $scope.updateDateField = function(){
+    $scope.news.fechaini = $('#fechainiPicker>input').val();
+    $scope.news._fechaini = $('#_fechaini').val();
+    $scope.news.fechafin = $('#fechafinPicker>input').val();
+    $scope.news._fechafin = $('#_fechafin').val();
+  }
+
+
   function updateFormValidation(){
     const keys = Object.keys($scope.formErrors);
     keys.forEach(k=>{
       $scope.form[k].$setValidity('unique', false);
     })
+    console.log($scope.formErrors);
   }
 });

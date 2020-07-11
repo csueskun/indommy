@@ -62,11 +62,11 @@ app.controller('ofertaController', function($scope, apiInterface, snackbar) {
   //paginacion
   $scope.setPaginationPage = function(page){
     $scope.pagination.current_page = page;
-    loadGrupoEmpresa();
+    loadOferta();
   }
   $scope.setPerPage = function(){
     $scope.pagination.current_page = 1;
-    loadGrupoEmpresa();
+    loadOferta();
   }
 
    //modal de empresa
