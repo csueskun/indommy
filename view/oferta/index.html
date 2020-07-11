@@ -84,7 +84,7 @@
           <div class="invalid-feedback" ng-if="form.empresa_id.$error.required"><i class="fa fa-times"></i> Campo es obligatorio</div> 
         </div>
         
-        <div class="form-group col-md-3">
+        <div class="form-group col-md-6">
           <label for="tipo">Tipo Oferta</label>
           <select class="custom-select {{form.tipo.$valid?'is-valid':'is-invalid'}}" name="tipo" ng-model="oferta.tipo" required ng-disabled="!editable" ng-readonly="!editable"
              ng-options="itemo.val as itemo.des for itemo in tiposoferta"></select>
