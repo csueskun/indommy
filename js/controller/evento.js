@@ -2,7 +2,18 @@ app.controller('eventoController', function($scope, apiInterface, snackbar) {
   $scope.eventoList = [];
   $scope.empresaList = [];
 
+  $scope.pagination = {per_page: 20};
+  $scope.empresaPagination = {per_page: 10};
+  $scope.paginationForm = {};
+
+
   const apiName = 'evento';
+
+  $scope.perPageOptions = [
+    {des: '10', val: 10},
+    {des: '20', val: 20},
+    {des: '50', val: 50},
+  ]
 
   $scope.estados = [
     {des: 'Inactivo', val: 0},
@@ -30,29 +41,59 @@ app.controller('eventoController', function($scope, apiInterface, snackbar) {
     $scope.loadingEvento = true;
     let success = data=>{
       if(data.status == 200){
-        $scope.eventoList = data.data.data;
+        $scope.eventoList = data.data.data.data;
+        $scope.pagination = data.data.data.pagination;
         $scope.loadingEvento = false;
       }};
     let error = error=>{
       console.log(error);
       $scope.loadingEvento = false;
     };
-    apiInterface.get(apiName, {}, success, error);
+    apiInterface.get('paginated/evento', {params: $scope.pagination}, success, error);
   }
 
-  function loadEmpresas(){
-    $scope.loadingEvento = true;
+  //paginacion
+  $scope.setPaginationPage = function(page){
+    $scope.pagination.current_page = page;
+    loadEvento();
+  }
+  $scope.setPerPage = function(){
+    $scope.pagination.current_page = 1;
+    loadEvento();
+  }
+
+  //modal de empresa
+   function loadEmpresa(){
+    $scope.loadingEmpresaModal = true;
     let success = data=>{
+      console.log(data)
       if(data.status == 200){
-        $scope.empresaList = data.data.data;
-        $scope.loadingEvento = false;
+        $scope.empresaList = data.data.data.data;
+        $scope.empresaPagination = data.data.data.pagination;
+        $scope.loadingEmpresaModal = false;
       }};
     let error = error=>{
       console.log(error);
-      $scope.loadingEvento = false;
+      $scope.loadingEmpresaModal = false;
     };
-    apiInterface.get('empresa', {}, success, error);
+    apiInterface.get('paginated/empresa', {params: $scope.empresaPagination}, success, error);
   }
+
+  $scope.searchEmpresaFromModal = function(){
+    loadEmpresa();
+  }
+  $scope.setEmpresaPaginationPage = function(page){
+    $scope.empresaPagination.current_page = page;
+    loadEmpresa();
+  }
+
+  $scope.elegirEmpresaFromModal = function(id, nombre){
+    $("#modalBuscarEmpresa").modal('hide');
+    $scope.evento.empresa_id = id;
+    $scope.evento._empresa_id = nombre;
+  }
+  //fin de modal de empresa
+
 
 
   $scope.show = function(section){
@@ -88,6 +129,17 @@ app.controller('eventoController', function($scope, apiInterface, snackbar) {
     $scope.eventoIndex = index;
     $scope.editable = editable;
     $scope.evento = Object.assign({}, evento);
+    if($scope.evento.fechaini){
+      $('#fechainiPicker>input').val($scope.evento.fechaini);
+      $scope.evento._fechaini = formatDateFromIso($scope.evento.fechaini);
+    }
+    if($scope.evento.fechafin){
+      $('#fechafinPicker>input').val($scope.evento.fechafin);
+      $scope.evento._fechafin = formatDateFromIso($scope.evento.fechafin);
+    }
+    if($scope.evento.empresa){
+      $scope.evento._empresa_id = $scope.evento.empresa.nombre;
+    }
     $scope.show('form');
   }
 
@@ -122,6 +174,13 @@ app.controller('eventoController', function($scope, apiInterface, snackbar) {
     else{
       apiInterface.post(apiName, $scope.evento, {}, success, error);
     }
+  }
+
+  $scope.updateDateField = function(){
+    $scope.evento.fechaini = $('#fechainiPicker>input').val();
+    $scope.evento._fechaini = $('#_fechaini').val();
+    $scope.evento.fechafin = $('#fechafinPicker>input').val();
+    $scope.evento._fechafin = $('#_fechafin').val();
   }
 
   function updateFormValidation(){

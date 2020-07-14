@@ -1,41 +1,40 @@
 <div>
   <div class="collapse show" id="list">
-    <p>Asociación de Empresas y Grupos <button type="button" class="btn btn-link" ng-click='prepareForm()'>Nueva</button></p>
+    <p>Empresas y Servicios <button type="button" class="btn btn-link" ng-click='prepareForm()'>Nueva</button></p>
 
     <table class="table table-sm">
       <thead>
         <tr>
           <th scope="col">#</th>
           <th scope="col">Empresa</th>
-          <th scope="col">Grupo</th>
+          <th scope="col">Servicio</th>
           <th scope="col">Estado</th>
-          <th scope="col">Prioridad</th>
+          
           <th scope="col">Acción</th>
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat='grupoempresa in grupoempresaList'>
+        <tr ng-repeat='detalle_servicio in detalle_servicioList'>
           <td>{{$index + 1 + (pagination.per_page * (pagination.current_page - 1))}}</td>
-          <td>{{grupoempresa.empresa.nombre}}</td>
-          <td>{{grupoempresa.grupo.descripcion}}</td>
-          <td>{{grupoempresa.estado}}</td>
-          <td>{{grupoempresa.prioridad}} </td>
+          <td>{{detalle_servicio.empresa.nombre}}</td>
+          <td>{{detalle_servicio.servicio.descripcion}}</td>
+          <td>{{detalle_servicio.estado}}</td>
           
 		      <td>
             <div class="btn-group" role="group" aria-label="Basic example">
-              <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareForm(grupoempresa, false, $index)'><i class="fa fa-search"></i></button>
-              <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareDelete(grupoempresa, $event, $index)'><i class="fa fa-trash"></i></button>
+              <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareForm(detalle_servicio, false, $index)'><i class="fa fa-search"></i></button>
+              <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareDelete(detalle_servicio, $event, $index)'><i class="fa fa-trash"></i></button>
             </div>
           </td>
         </tr>
-        <tr ng-hide='loadingGrupoEmpresa || grupoempresasList.length'>
+        <tr ng-hide='loadingDetalle_Servicio || detalleservicioList.length'>
           <td colspan="6">
             <div class="alert alert-warning" role="alert">
               No se encontraron registros
             </div>
           </td>
         </tr>
-        <tr ng-show='loadingGrupoEmpresa'>
+        <tr ng-show='loadingDetalle_Servicio'>
           <td colspan="6" class="text-center">
             <h1><i class="fa fa-cog fa-spin text-secondary"></i></h1>
           </td>
@@ -49,28 +48,32 @@
     <button class="btn btn-link" type="button" ng-click='show("list")'>
       Volver
     </button>
-    <div ng-show="grupoempresa.id" style="display: initial;">
+    <div ng-show="detalle_servicio.id" style="display: initial;">
       <button class="btn btn-link" type="button" ng-click='editable=!editable'>
         {{editable?'Ver detalles':'Editar'}}
       </button>
-      <h3>{{editable?'Editar Grupo Empresa':'Detalles Grupo Empresa'}}</h3>
+      <h3>{{editable?'Editar Servicios Empresa':'Detalles Servicios Empresa'}}</h3>
     </div>
-    <h3 ng-hide='grupoempresa.id'>Nuevo Grupo Empresa</h3>
+    <h3 ng-hide='detalle_servicio.id'>Nuevo Grupo Empresa</h3>
     <form name="form" novalidate class="needs-validation">
       <div class="form-row">
 
         <div class="form-group col-md-6">
           <label for="empresa_id">Empresa</label>
-          <select class="custom-select {{form.empresa_id.$valid?'is-valid':'is-invalid'}}" name="empresa_id" ng-model="grupoempresa.empresa_id" required ng-disabled="!editable" 
-            ng-readonly="!editable" ng-options="iteme.id as iteme.nombre for iteme in empresaList"></select>
+          <div class="input-group">
+            <input type="text" name="_empresa_id" ng-model="detalle_servicio._empresa_id" required class="form-control {{form._empresa_id.$valid?'is-valid':'is-invalid'}}" readonly>
+            <div class="input-group-append" ng-if="editable">
+              <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#modalBuscarEmpresa"><i class="fa fa-search"></i></button>
+            </div>
+          </div>
           <div class="invalid-feedback" ng-if="form.empresa_id.$error.required"><i class="fa fa-times"></i> Campo es obligatorio</div> 
         </div>
 		  
 		    <div class="form-group col-md-6">
-          <label for="grupo_id">Grupo</label>
-          <select class="custom-select {{form.grupo_id.$valid?'is-valid':'is-invalid'}}" name="grupo_id" ng-model="grupoempresa.grupo_id" required ng-disabled="!editable" 
-            ng-readonly="!editable" ng-options="itemg.id as itemg.descripcion for itemg in grupoList"></select>
-          <div class="invalid-feedback" ng-if="form.grupo_id.$error.required"><i class="fa fa-times"></i> Campo es obligatorio</div> 
+          <label for="servicio_id">Servicio</label>
+          <select class="custom-select {{form.servicio_id.$valid?'is-valid':'is-invalid'}}" name="servicio_id" ng-model="detalle_servicio.servicio_id" required ng-disabled="!editable" 
+            ng-readonly="!editable" ng-options="items.id as items.descripcion for items in servicioList"></select>
+          <div class="invalid-feedback" ng-if="form.servicio_id.$error.required"><i class="fa fa-times"></i> Campo es obligatorio</div> 
         </div>
         
       </div>
@@ -80,17 +83,11 @@
 
       <div class="form-group col-md-6">
         <label for="estado">Estado</label>
-        <select class="custom-select {{form.estado.$valid?'is-valid':'is-invalid'}}" name="estado" ng-model="grupoempresa.estado" required ng-disabled="!editable" ng-readonly="!editable"
+        <select class="custom-select {{form.estado.$valid?'is-valid':'is-invalid'}}" name="estado" ng-model="detalle_servicio.estado" required ng-disabled="!editable" ng-readonly="!editable"
           ng-options="item.val as item.des for item in estados"></select>
         <div class="invalid-feedback" ng-if="form.estado.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
       </div>
 
-      <div class="form-group col-md-6">
-          <label for="prioridad">Prioridad</label>
-          <select class="custom-select {{form.estado.$valid?'is-valid':'is-invalid'}}" name="prioridad" ng-model="grupoempresa.prioridad" required ng-disabled="!editable" ng-readonly="!editable"
-            ng-options="itemp.val as itemp.des for itemp in prioridades"></select>
-          <div class="invalid-feedback" ng-if="form.prioridad.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
-      </div>
     </div>
 	  
 	  
@@ -120,7 +117,8 @@
     </div>
   </div>
 
-  
+  <button id="udfb" ng-click="updateDateField()" style="display: none;"></button>
+  <div class="col-md-12" ng-include='"/view/empresa/modal_buscar.html"'></div>
 
 
 </div>

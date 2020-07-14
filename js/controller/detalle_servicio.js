@@ -2,7 +2,9 @@ app.controller('detalle_servicioController', function($scope, apiInterface, snac
   $scope.detalle_servicioList = [];
   $scope.empresaList = [];
   $scope.servicioList = [];
+  
   $scope.pagination = {per_page: 20};
+  $scope.empresaPagination = {per_page: 10};
   $scope.paginationForm = {};
 
 
@@ -65,7 +67,7 @@ app.controller('detalle_servicioController', function($scope, apiInterface, snac
     $scope.loadingDetalle_Servicio = true;
     let success = data=>{
       if(data.status == 200){
-        $scope.grupoList = data.data.data;
+        $scope.servicioList = data.data.data;
         $scope.loadingDetalle_Servicio = false;
       }};
     let error = error=>{
@@ -75,20 +77,37 @@ app.controller('detalle_servicioController', function($scope, apiInterface, snac
     apiInterface.get('servicio', {}, success, error);
   }
 
-  function loadEmpresa(){
-    $scope.loadingGrupoEmpresa = true;
-    let success = data=>{
-      if(data.status == 200){
-        $scope.empresaList = data.data.data;
-        $scope.loadingGrupoEmpresa = false;
-      }};
-    let error = error=>{
-      console.log(error);
-      $scope.loadingGrupoEmpresa = false;
-    };
-    apiInterface.get('empresa', {}, success, error);
-  }
+//modal de empresa
+function loadEmpresa(){
+  $scope.loadingEmpresaModal = true;
+  let success = data=>{
+    console.log(data)
+    if(data.status == 200){
+      $scope.empresaList = data.data.data.data;
+      $scope.empresaPagination = data.data.data.pagination;
+      $scope.loadingEmpresaModal = false;
+    }};
+  let error = error=>{
+    console.log(error);
+    $scope.loadingEmpresaModal = false;
+  };
+  apiInterface.get('paginated/empresa', {params: $scope.empresaPagination}, success, error);
+}
 
+$scope.searchEmpresaFromModal = function(){
+  loadEmpresa();
+}
+$scope.setEmpresaPaginationPage = function(page){
+  $scope.empresaPagination.current_page = page;
+  loadEmpresa();
+}
+
+$scope.elegirEmpresaFromModal = function(id, nombre){
+  $("#modalBuscarEmpresa").modal('hide');
+  $scope.detalle_servicio.empresa_id = id;
+  $scope.detalle_servicio._empresa_id = nombre;
+}
+//fin de modal de empresa
   $scope.show = function(section){
     $('.collapse.show').collapse('toggle');
     $('.collapse#'+section).collapse('toggle');
@@ -122,6 +141,9 @@ app.controller('detalle_servicioController', function($scope, apiInterface, snac
     $scope.detalle_servicioIndex = index;
     $scope.editable = editable;
     $scope.detalle_servicio = Object.assign({}, detalle_servicio);
+    if($scope.detalle_servicio.empresa){
+      $scope.detalle_servicio._empresa_id = $scope.detalle_servicio.empresa.nombre;
+    }
     $scope.show('form');
   }
 
