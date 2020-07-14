@@ -2,18 +2,27 @@ app.controller('ofertaController', function($scope, apiInterface, snackbar) {
   $scope.ofertaList = [];
   $scope.empresaList = [];
 
+  $scope.pagination = {per_page: 20};
+  $scope.empresaPagination = {per_page: 10};
+  $scope.paginationForm = {};
+
   const apiName = 'oferta';
 
-  $scope.tiposoferta = [
-    {des: '2x1', val: 0},
-    {des: '3x2', val: 1},
-    {des: 'Promoción día de la Madre', val: 2},
-    {des: 'Promoción día del Padre', val: 3},
-    {des: 'Viernes Negro', val: 4},
-    {des: 'Navidad', val: 5}
+  $scope.perPageOptions = [
+    {des: '10', val: 10},
+    {des: '20', val: 20},
+    {des: '50', val: 50},
   ]
 
-  
+  $scope.tiposoferta = [
+    {des: '2x1', val: '0'},
+    {des: '3x2', val: '1'},
+    {des: 'Promoción día de la Madre', val: '2'},
+    {des: 'Promoción día del Padre', val: '3'},
+    {des: 'Viernes Negro', val: '4'},
+    {des: 'Navidad', val: '5'}
+  ]
+
   $scope.estados = [
     {des: 'Inactivo', val: 0},
     {des: 'Activo', val: 1}   
@@ -33,35 +42,64 @@ app.controller('ofertaController', function($scope, apiInterface, snackbar) {
   ]
 
   loadOferta();
-  loadEmpresas();
+  loadEmpresa();
 
   function loadOferta(){
     $scope.loadingOferta = true;
     let success = data=>{
       if(data.status == 200){
-        $scope.ofertaList = data.data.data;
+        $scope.ofertaList = data.data.data.data;
+        $scope.pagination = data.data.data.pagination;
         $scope.loadingOferta = false;
       }};
     let error = error=>{
       console.log(error);
       $scope.loadingOferta = false;
     };
-    apiInterface.get(apiName, {}, success, error);
+    apiInterface.get('paginated/oferta', {params: $scope.pagination}, success, error);
+  }
+  
+  //paginacion
+  $scope.setPaginationPage = function(page){
+    $scope.pagination.current_page = page;
+    loadOferta();
+  }
+  $scope.setPerPage = function(){
+    $scope.pagination.current_page = 1;
+    loadOferta();
   }
 
-  function loadEmpresas(){
-    $scope.loadingOferta = true;
+   //modal de empresa
+  function loadEmpresa(){
+    $scope.loadingEmpresaModal = true;
     let success = data=>{
+      console.log(data)
       if(data.status == 200){
-        $scope.empresaList = data.data.data;
-        $scope.loadingOferta = false;
+        $scope.empresaList = data.data.data.data;
+        $scope.empresaPagination = data.data.data.pagination;
+        $scope.loadingEmpresaModal = false;
       }};
     let error = error=>{
       console.log(error);
-      $scope.loadingOferta = false;
+      $scope.loadingEmpresaModal = false;
     };
-    apiInterface.get('empresa', {}, success, error);
+    apiInterface.get('paginated/empresa', {params: $scope.empresaPagination}, success, error);
   }
+
+  $scope.searchEmpresaFromModal = function(){
+    loadEmpresa();
+  }
+  $scope.setEmpresaPaginationPage = function(page){
+    $scope.empresaPagination.current_page = page;
+    loadEmpresa();
+  }
+
+  $scope.elegirEmpresaFromModal = function(id, nombre){
+    $("#modalBuscarEmpresa").modal('hide');
+    $scope.oferta.empresa_id = id;
+    $scope.oferta._empresa_id = nombre;
+  }
+  //fin de modal de empresa
 
   $scope.show = function(section){
     $('.collapse.show').collapse('toggle');
@@ -104,6 +142,9 @@ app.controller('ofertaController', function($scope, apiInterface, snackbar) {
       $('#fechafinPicker>input').val($scope.oferta.fechafin);
       $scope.oferta._fechafin = formatDateFromIso($scope.oferta.fechafin);
     }
+    if($scope.oferta.empresa){
+      $scope.oferta._empresa_id = $scope.oferta.empresa.nombre;
+    }
     $scope.show('form');
   }
 
@@ -122,6 +163,7 @@ app.controller('ofertaController', function($scope, apiInterface, snackbar) {
       }
       loadOferta();
     };
+
     let error = error=>{
       snackbar.red('Se presentó un error al guardar.');
       console.log(error);
@@ -131,6 +173,7 @@ app.controller('ofertaController', function($scope, apiInterface, snackbar) {
       }
       $scope.saving = false;
     };
+
     $scope.saving = true;
     if($scope.oferta.id){
       apiInterface.put(apiName+'/'+$scope.oferta.id, $scope.oferta, {}, success, error);

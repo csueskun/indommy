@@ -12,11 +12,11 @@
     <link rel="stylesheet" href="/css/css.css">
     <link rel="stylesheet" href="/datetimepicker/css/bootstrap-datetimepicker.min.css" />
 
-    <title>BagGo! Administrador</title>
+    <title>Uplace Administrador</title>
   </head>
   <body ng-app="myApp">
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-      <a class="navbar-brand" href="#">BagGo Administrador</a>
+      <a class="navbar-brand" href="#">Uplace Administrador</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -24,28 +24,30 @@
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="/">Inicio <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle prevent-default" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">TABLAS BÁSICAS</a>
             <div class="dropdown-menu" aria-labelledby="dropdown01">
               <a class="dropdown-item" href="#!empresa">Empresas</a>
-              <a class="dropdown-item" href="#!atencion">Atención</a>
-              <a class="dropdown-item" href="#!evento">Eventos</a>
-              <a class="dropdown-item" href="#!oferta">Ofertas</a>
-              <a class="dropdown-item" href="#!news">Noticias</a>
-              <a class="dropdown-item" href="#!feedback">Retroalimentación</a>
+              <a class="dropdown-item" href="#!grupoempresa">Grupos por Empresa</a>
+              <a class="dropdown-item" href="#!detalle_servicio">Servicios por Empresa</a>
+              <a class="dropdown-item" href="#!atencion">Horarios de Atención</a>
+              <a class="dropdown-item" href="#!evento">Eventos por Empresa</a>
+              <a class="dropdown-item" href="#!oferta">Ofertas por Empresa</a>
+              <a class="dropdown-item" href="#!news">Noticias por Empresa</a>
+              <a class="dropdown-item" href="#!feedback">Calificación por Empresa</a>
               <a class="dropdown-item" href="#">_</a>
-              <a class="dropdown-item" href="#!grupoempresa">Empresas por Grupo</a>
+              
               <a class="dropdown-item" href="#!producto">Productos</a>
               <a class="dropdown-item" href="#!servicio">Servicios</a>
               <a class="dropdown-item" href="#">_</a>
-              <a class="dropdown-item" href="#!ciudad">Ciudades</a>
+              
               <a class="dropdown-item" href="#!clase">Clases</a>
               <a class="dropdown-item" href="#!grupo">Grupos</a>
               <a class="dropdown-item" href="#!tipocategoria">Categorías</a>
               <a class="dropdown-item" href="#!tipoproducto">Tipo Productos</a>
-            
+              <a class="dropdown-item" href="#!ciudad">Ciudades</a>
 			      </div>
           </li>
         </ul>
@@ -90,6 +92,7 @@
     <script src="/js/controller/atencion.js"></script>
     
     <script src="/js/controller/grupoempresa.js"></script>
+    <script src="/js/controller/detalle_servicio.js"></script>
   </body>
   
 </html>

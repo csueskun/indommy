@@ -1,6 +1,5 @@
 <div>
 
-
   <div class="collapse show" id="list">
     <p>OFERTAS <button type="button" class="btn btn-link" ng-click='prepareForm()'>Nueva</button></p>
 
@@ -67,14 +66,25 @@
     <form name="form" novalidate class="needs-validation">
       <div class="form-row">
 
-        <div class="form-group col-md-9">
+        <!--<div class="form-group col-md-9">
           <label for="empresa_id">Empresa</label>
           <select class="custom-select {{form.empresa_id.$valid?'is-valid':'is-invalid'}}" name="empresa_id" ng-model="oferta.empresa_id" required ng-disabled="!editable" 
             ng-readonly="!editable" ng-options="iteme.id as iteme.nombre for iteme in empresaList"></select>
           <div class="invalid-feedback" ng-if="form.empresa_id.$error.required"><i class="fa fa-times"></i> Campo Empresa es obligatorio</div> 
+        </div>-->
+
+        <div class="form-group col-md-6">
+          <label for="empresa_id">Empresa</label>
+          <div class="input-group">
+            <input type="text" name="_empresa_id" ng-model="oferta._empresa_id" required class="form-control {{form._empresa_id.$valid?'is-valid':'is-invalid'}}" readonly>
+            <div class="input-group-append" ng-if="editable">
+              <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#modalBuscarEmpresa"><i class="fa fa-search"></i></button>
+            </div>
+          </div>
+          <div class="invalid-feedback" ng-if="form.empresa_id.$error.required"><i class="fa fa-times"></i> Campo es obligatorio</div> 
         </div>
         
-        <div class="form-group col-md-3">
+        <div class="form-group col-md-6">
           <label for="tipo">Tipo Oferta</label>
           <select class="custom-select {{form.tipo.$valid?'is-valid':'is-invalid'}}" name="tipo" ng-model="oferta.tipo" required ng-disabled="!editable" ng-readonly="!editable"
              ng-options="itemo.val as itemo.des for itemo in tiposoferta"></select>
@@ -108,7 +118,7 @@
       
         
         <div class="form-group col-md-3">
-          <label for="fechafin">Fecha de Inicio</label>
+          <label for="fechafin">Fecha Final</label>
           <div class="input-group">
             <input type="text" id='_fechafin' ng-model='oferta._fechafin' class="form-control {{form._fechafin.$valid?'is-valid':'is-invalid'}}" required name="_fechafin" readonly>
             <div class="input-group-append" ng-if="editable">
@@ -190,5 +200,5 @@
     </div>
   </div>
   <button id="udfb" ng-click="updateDateField()" style="display: none;"></button>
-
+  <div class="col-md-12" ng-include='"/view/empresa/modal_buscar.html"'></div>
 </div>
