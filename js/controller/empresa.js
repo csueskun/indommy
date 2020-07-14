@@ -148,4 +148,8 @@ app.controller('empresaController', function($scope, apiInterface, snackbar) {
       $scope.form[k].$setValidity('unique', false);
     })
   }
+  
+  $scope.searchEmpresas = function(){
+    loadEmpresas();
+  }
 });
