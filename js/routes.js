@@ -23,6 +23,16 @@ function routes($routeProvider) {
     templateUrl : "/view/grupo/index.html",
     controller: 'grupoController'
   })
+  .when("/detalle_servicio", {
+    templateUrl : "/view/detalle_servicio/index.html",
+    controller: 'detalle_servicioController'
+  })
+ 
+  .when("/evento", {
+    templateUrl : "/view/evento/index.html",
+    controller: 'eventoController'
+  })
+ 
   .when("/oferta", {
     templateUrl : "/view/oferta/index.html",
     controller: 'ofertaController'
