@@ -27,7 +27,7 @@
             </div>
           </td>
         </tr>
-        <tr ng-hide='loadingDetalle_Servicio || detalleservicioList.length'>
+        <tr ng-hide='loadingDetalle_Servicio || detalle_servicioList.length'>
           <td colspan="6">
             <div class="alert alert-warning" role="alert">
               No se encontraron registros
@@ -52,9 +52,9 @@
       <button class="btn btn-link" type="button" ng-click='editable=!editable'>
         {{editable?'Ver detalles':'Editar'}}
       </button>
-      <h3>{{editable?'Editar Servicios Empresa':'Detalles Servicios Empresa'}}</h3>
+      <h3>{{editable?'Editar Servicios Empresa':'Detalle Servicios Empresa'}}</h3>
     </div>
-    <h3 ng-hide='detalle_servicio.id'>Nuevo Grupo Empresa</h3>
+    <h3 ng-hide='detalle_servicio.id'>Nuevo Servicio Empresa</h3>
     <form name="form" novalidate class="needs-validation">
       <div class="form-row">
 
@@ -100,11 +100,7 @@
       </div>
 
     </form>
-
-
   </div>
-
-  
 
   <div role="alert" aria-live="assertive" aria-atomic="true" class="toast delete hide" data-autohide="false">
     <div class="toast-header">

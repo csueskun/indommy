@@ -63,7 +63,7 @@ app.controller('eventoController', function($scope, apiInterface, snackbar) {
   }
 
   //modal de empresa
-   function loadEmpresa(){
+   function loadEmpresas(){
     $scope.loadingEmpresaModal = true;
     let success = data=>{
       console.log(data)
@@ -80,11 +80,11 @@ app.controller('eventoController', function($scope, apiInterface, snackbar) {
   }
 
   $scope.searchEmpresaFromModal = function(){
-    loadEmpresa();
+    loadEmpresas();
   }
   $scope.setEmpresaPaginationPage = function(page){
     $scope.empresaPagination.current_page = page;
-    loadEmpresa();
+    loadEmpresas();
   }
 
   $scope.elegirEmpresaFromModal = function(id, nombre){
