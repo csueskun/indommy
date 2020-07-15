@@ -4,6 +4,15 @@
   <div class="collapse show" id="list">
     <p>NOTICIAS <button type="button" class="btn btn-link" ng-click='prepareForm()'>Nueva</button></p>
 
+    <div class="col-md-4 float-right mb-2 mb2">
+      <div class="input-group">
+        <input type="text" ng-model='pagination.nombre' class="form-control" required name="search">
+        <div class="input-group-append">
+          <button class="btn btn-sm btn-secondary" ng-click="searchEmpresas()"><i class="fa fa-search"></i></button>
+        </div>
+      </div>
+    </div>
+    
     <table class="table table-sm">
       <thead>
         <tr>

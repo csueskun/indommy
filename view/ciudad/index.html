@@ -77,7 +77,7 @@
       <div class="form-group col-md-4">
         <label for="estado">Estado</label>
         <select class="custom-select {{form.estado.$valid?'is-valid':'is-invalid'}}" name="estado" ng-model="ciudad.estado" required ng-disabled="!editable" ng-readonly="!editable"
-          ng-options="item.val as item.des for item in estados"></select>
+          ng-options="items.val as items.des for items in estados"></select>
         <div class="invalid-feedback" ng-if="form.estado.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
       </div>
 

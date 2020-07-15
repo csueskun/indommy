@@ -4,6 +4,15 @@
   <div class="collapse show" id="list">
     <p>PRODUCTO <button type="button" class="btn btn-link" ng-click='prepareForm()'>Nueva</button></p>
 
+    <div class="col-md-4 float-right mb-2 mb2">
+      <div class="input-group">
+        <input type="text" ng-model='pagination.nombre' class="form-control" required name="search">
+        <div class="input-group-append">
+          <button class="btn btn-sm btn-secondary" ng-click="searchEmpresas()"><i class="fa fa-search"></i></button>
+        </div>
+      </div>
+    </div>
+    
     <table class="table table-sm">
       <thead>
         <tr>
@@ -72,10 +81,15 @@
        
           <div class="form-group col-md-8">
             <label for="empresa_id">Empresa</label>
-            <select class="custom-select {{form.empresa_id.$valid?'is-valid':'is-invalid'}}" name="empresa_id" ng-model="producto.empresa_id" required ng-disabled="!editable" 
-              ng-readonly="!editable" ng-options="iteme.id as iteme.nombre for iteme in empresaList"></select>
+            <div class="input-group">
+              <input type="text" name="_empresa_id" ng-model="producto._empresa_id" required class="form-control {{form._empresa_id.$valid?'is-valid':'is-invalid'}}" readonly>
+              <div class="input-group-append" ng-if="editable">
+                <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#modalBuscarEmpresa"><i class="fa fa-search"></i></button>
+              </div>
+            </div>
             <div class="invalid-feedback" ng-if="form.empresa_id.$error.required"><i class="fa fa-times"></i> Campo es obligatorio</div> 
           </div>
+  
 
       </div>
       
@@ -275,6 +289,6 @@
   </div>
 
   
-
+  <div class="col-md-12" ng-include='"/view/empresa/modal_buscar.html"'></div>
 
 </div>

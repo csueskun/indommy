@@ -4,6 +4,16 @@ app.controller('feedbackController', function($scope, apiInterface, snackbar) {
 
   const apiName = 'feedback';
 
+  $scope.pagination = {per_page: 20};
+  $scope.empresaPagination = {per_page: 10};
+  $scope.paginationForm = {};
+
+  $scope.perPageOptions = [
+    {des: '10', val: 10},
+    {des: '20', val: 20},
+    {des: '50', val: 50},
+  ]
+
   $scope.estados = [
     {des: 'Inactivo', val: 0},
     {des: 'Activo', val: 1}   
@@ -16,30 +26,51 @@ app.controller('feedbackController', function($scope, apiInterface, snackbar) {
     $scope.loadingFeedback = true;
     let success = data=>{
       if(data.status == 200){
-        $scope.feedbackList = data.data.data;
+        $scope.feedbackList = data.data.data.data;
+        $scope.pagination = data.data.data.pagination;
         $scope.loadingFeedback = false;
       }};
     let error = error=>{
       console.log(error);
       $scope.loadingFeedback = false;
     };
-    apiInterface.get(apiName, {}, success, error);
+    apiInterface.get('paginated/feedback', {params: $scope.pagination}, success, error);
   }
 
+   //paginacion
+   $scope.setPaginationPage = function(page){
+    $scope.pagination.current_page = page;
+    loadFeedback();
+  }
+  $scope.setPerPage = function(){
+    $scope.pagination.current_page = 1;
+    loadFeedback();
+  }
+
+  //modal de empresa
   function loadEmpresas(){
-    $scope.loadingFeedback = true;
+    $scope.loadingEmpresaModal = true;
     let success = data=>{
+      console.log(data)
       if(data.status == 200){
-        $scope.empresaList = data.data.data;
-        $scope.loadingFeedback = false;
+        $scope.empresaList = data.data.data.data;
+        $scope.empresaPagination = data.data.data.pagination;
+        $scope.loadingEmpresaModal = false;
       }};
     let error = error=>{
       console.log(error);
-      $scope.loadingFeedback = false;
+      $scope.loadingEmpresaModal = false;
     };
-    apiInterface.get('empresa', {}, success, error);
+    apiInterface.get('paginated/empresa', {params: $scope.empresaPagination}, success, error);
   }
 
+  $scope.searchEmpresaFromModal = function(){
+    loadEmpresas();
+  }
+  $scope.setEmpresaPaginationPage = function(page){
+    $scope.empresaPagination.current_page = page;
+    loadEmpresas();
+  }
 
   $scope.show = function(section){
     $('.collapse.show').collapse('toggle');
@@ -74,6 +105,9 @@ app.controller('feedbackController', function($scope, apiInterface, snackbar) {
     $scope.feedbackIndex = index;
     $scope.editable = editable;
     $scope.feedback = Object.assign({}, feedback);
+    if($scope.feedback.empresa){
+      $scope.feedback._empresa_id = $scope.feedback.empresa.nombre;
+    }
     $scope.show('form');
   }
 
@@ -115,5 +149,9 @@ app.controller('feedbackController', function($scope, apiInterface, snackbar) {
     keys.forEach(k=>{
       $scope.form[k].$setValidity('unique', false);
     })
+  }
+
+  $scope.searchEmpresas = function(){
+    loadFeedback();
   }
 });

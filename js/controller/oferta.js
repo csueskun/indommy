@@ -198,10 +198,10 @@ app.controller('ofertaController', function($scope, apiInterface, snackbar) {
     })
   }
   
-  console.log($scope.formErrors);
+  //console.log($scope.formErrors);
   
   $scope.searchEmpresas = function(){
-    loadEmpresa();
+    loadOferta();
   }
   
 });

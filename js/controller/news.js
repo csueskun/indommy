@@ -20,6 +20,7 @@ app.controller('newsController', function($scope, apiInterface, snackbar) {
   ]
 
   $scope.prioridades = [
+    {des: '0', val: 0},
     {des: '1', val: 1},
     {des: '2', val: 2},
     {des: '3', val: 3},
@@ -78,11 +79,11 @@ app.controller('newsController', function($scope, apiInterface, snackbar) {
   }
 
   $scope.searchEmpresaFromModal = function(){
-    loadEmpresa();
+    loadEmpresas();
   }
   $scope.setEmpresaPaginationPage = function(page){
     $scope.empresaPagination.current_page = page;
-    loadEmpresa();
+    loadEmpresas();
   }
 
   $scope.elegirEmpresaFromModal = function(id, nombre){
@@ -185,6 +186,10 @@ app.controller('newsController', function($scope, apiInterface, snackbar) {
     keys.forEach(k=>{
       $scope.form[k].$setValidity('unique', false);
     })
-    console.log($scope.formErrors);
+    //console.log($scope.formErrors);
+  }
+
+  $scope.searchEmpresas = function(){
+    loadNews();
   }
 });

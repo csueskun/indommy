@@ -4,7 +4,8 @@ app.controller('productoController', function($scope, apiInterface, snackbar) {
   $scope.tipoproductoList = [];
   $scope.tipocategoriaList = [];
 
-  $scope.pagination = {per_page: 10};
+  $scope.pagination = {per_page: 20};
+  $scope.empresaPagination = {per_page: 10};
   $scope.paginationForm = {};
 
   const apiName = 'producto';
@@ -97,15 +98,31 @@ app.controller('productoController', function($scope, apiInterface, snackbar) {
     $scope.loadingProducto = true;
     let success = data=>{
       if(data.status == 200){
-        $scope.empresaList = data.data.data;
+        $scope.empresaList = data.data.data.data;
+        $scope.empresaPagination = data.data.data.pagination;
         $scope.loadingProducto = false;
       }};
     let error = error=>{
       console.log(error);
       $scope.loadingProducto = false;
     };
-    apiInterface.get('empresa', {}, success, error);
+    apiInterface.get('paginated/empresa', {params: $scope.empresaPagination}, success, error);
   }
+
+  $scope.searchEmpresaFromModal = function(){
+    loadEmpresas();
+  }
+  $scope.setEmpresaPaginationPage = function(page){
+    $scope.empresaPagination.current_page = page;
+    loadEmpresas();
+  }
+
+  $scope.elegirEmpresaFromModal = function(id, nombre){
+    $("#modalBuscarEmpresa").modal('hide');
+    $scope.producto.empresa_id = id;
+    $scope.producto._empresa_id = nombre;
+  }
+  //fin de modal de empresa
 
 
   $scope.show = function(section){
@@ -141,6 +158,9 @@ app.controller('productoController', function($scope, apiInterface, snackbar) {
     $scope.productoIndex = index;
     $scope.editable = editable;
     $scope.producto = Object.assign({}, producto);
+    if($scope.producto.empresa){
+      $scope.producto._empresa_id = $scope.producto.empresa.nombre;
+    }
     $scope.show('form');
   }
 
@@ -182,5 +202,9 @@ app.controller('productoController', function($scope, apiInterface, snackbar) {
     keys.forEach(k=>{
       $scope.form[k].$setValidity('unique', false);
     })
+  }
+
+  $scope.searchEmpresas = function(){
+    loaProdcuto();
   }
 });
