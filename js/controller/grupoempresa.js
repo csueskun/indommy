@@ -2,6 +2,7 @@ app.controller('grupoempresaController', function($scope, apiInterface, snackbar
   $scope.grupoempresaList = [];
   $scope.empresaList = [];
   $scope.grupoList = [];
+
   $scope.pagination = {per_page: 20};
   $scope.empresaPagination = {per_page: 10};
   $scope.paginationForm = {};
@@ -182,5 +183,9 @@ app.controller('grupoempresaController', function($scope, apiInterface, snackbar
     keys.forEach(k=>{
       $scope.form[k].$setValidity('unique', false);
     })
+  }
+
+  $scope.searchEmpresas = function(){
+    loadEmpresa();
   }
 });

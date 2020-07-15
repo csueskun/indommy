@@ -196,6 +196,12 @@ app.controller('ofertaController', function($scope, apiInterface, snackbar) {
     keys.forEach(k=>{
       $scope.form[k].$setValidity('unique', false);
     })
-	console.log($scope.formErrors);
   }
+  
+  console.log($scope.formErrors);
+  
+  $scope.searchEmpresas = function(){
+    loadEmpresa();
+  }
+  
 });

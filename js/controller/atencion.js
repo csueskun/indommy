@@ -4,6 +4,16 @@ app.controller('atencionController', function($scope, apiInterface, snackbar) {
 
   const apiName = 'atencion';
 
+  $scope.perPageOptions = [
+    {des: '10', val: 10},
+    {des: '20', val: 20},
+    {des: '50', val: 50},
+  ]
+
+  $scope.pagination = {per_page: 20};
+  $scope.empresaPagination = {per_page: 10};
+  $scope.paginationForm = {};
+
   $scope.estados = [
     {des: 'Inactivo', val: 0},
     {des: 'Activo', val: 1}   
@@ -26,19 +36,46 @@ app.controller('atencionController', function($scope, apiInterface, snackbar) {
     apiInterface.get(apiName, {}, success, error);
   }
 
+  //paginacion
+  $scope.setPaginationPage = function(page){
+    $scope.pagination.current_page = page;
+    loadAtencion();
+  }
+  $scope.setPerPage = function(){
+    $scope.pagination.current_page = 1;
+    loadAtencion();
+  }
+
   function loadEmpresas(){
     $scope.loadingAtencion = true;
     let success = data=>{
       if(data.status == 200){
-        $scope.empresaList = data.data.data;
+        $scope.empresaList = data.data.data.data;
+        $scope.empresaPagination = data.data.data.pagination;
         $scope.loadingAtencion = false;
       }};
     let error = error=>{
       console.log(error);
       $scope.loadingAtencion = false;
     };
-    apiInterface.get('empresa', {}, success, error);
+    apiInterface.get('paginated/empresa', {params: $scope.empresaPagination}, success, error);
   }
+
+  $scope.searchEmpresaFromModal = function(){
+    loadEmpresa();
+  }
+  $scope.setEmpresaPaginationPage = function(page){
+    $scope.empresaPagination.current_page = page;
+    loadEmpresa();
+  }
+
+  $scope.elegirEmpresaFromModal = function(id, nombre){
+    $("#modalBuscarEmpresa").modal('hide');
+    $scope.atencion.empresa_id = id;
+    $scope.atencion._empresa_id = nombre;
+  }
+  //fin de modal de empresa
+
 
   $scope.show = function(section){
     $('.collapse.show').collapse('toggle');
@@ -73,6 +110,9 @@ app.controller('atencionController', function($scope, apiInterface, snackbar) {
     $scope.atencionIndex = index;
     $scope.editable = editable;
     $scope.atencion = Object.assign({}, atencion);
+    if($scope.atencion.empresa){
+      $scope.atencion._empresa_id = $scope.atencion.empresa.nombre;
+    }
     $scope.show('form');
   }
 
@@ -114,5 +154,9 @@ app.controller('atencionController', function($scope, apiInterface, snackbar) {
     keys.forEach(k=>{
       $scope.form[k].$setValidity('unique', false);
     })
+  }
+
+  $scope.searchEmpresas = function(){
+    loadEmpresa();
   }
 });
