@@ -19,6 +19,7 @@ app.controller('empresaController', function($scope, apiInterface, snackbar) {
   ]
 
   $scope.prioridades = [
+    {des: '0', val: 0},
     {des: '1', val: 1},
     {des: '2', val: 2},
     {des: '3', val: 3},
