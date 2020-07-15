@@ -62,11 +62,11 @@ app.controller('atencionController', function($scope, apiInterface, snackbar) {
   }
 
   $scope.searchEmpresaFromModal = function(){
-    loadEmpresa();
+    loadEmpresas();
   }
   $scope.setEmpresaPaginationPage = function(page){
     $scope.empresaPagination.current_page = page;
-    loadEmpresa();
+    loadEmpresas();
   }
 
   $scope.elegirEmpresaFromModal = function(id, nombre){
@@ -157,6 +157,6 @@ app.controller('atencionController', function($scope, apiInterface, snackbar) {
   }
 
   $scope.searchEmpresas = function(){
-    loadEmpresa();
+    loadEmpresas();
   }
 });
