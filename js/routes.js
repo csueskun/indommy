@@ -5,7 +5,8 @@ function routes($routeProvider) {
   })
   .when("/empresa", {
     templateUrl : "/view/empresa/index.html",
-    controller: 'empresaController'
+    controller: 'empresaController',
+    auth: 'perro'
   })
   .when("/clase", {
     templateUrl : "/view/clase/index.html",
@@ -65,5 +66,13 @@ function routes($routeProvider) {
   .when("/tipoproducto", {
     templateUrl : "/view/tipoproducto/index.html",
     controller: 'tipoproductoController'
+  })
+  .when("/new_usuario", {
+    templateUrl : "/view/new_usuario.html",
+    controller: 'loginController'
+  })
+  .when("/login", {
+    templateUrl : "/view/login.html",
+    controller: 'loginController'
   });
 }

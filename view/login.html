@@ -1,0 +1,125 @@
+<div class="container h-100">
+
+  <div class="d-flex justify-content-center h-100" style="padding-top: 100px;">
+    <div class="user_card">
+      <div class="d-flex justify-content-center form_container">
+				<form style="width: 250px;">
+					<div class="container text-center mb-3">
+						<img src="/img/logo_bag.png" class="brand_logo" alt="Logo">
+					</div>
+          <div class="input-group mb-3">
+            <div class="input-group-append">
+              <span class="input-group-text"><i class="fas fa-user"></i></span>
+            </div>
+            <input type="text" name="usuario" ng-model="loginData.usuario" class="form-control input_user" value="" placeholder="usuario">
+          </div>
+          <div class="input-group mb-2">
+            <div class="input-group-append text-white-50">
+              <span class="input-group-text"><i class="fas fa-key"></i></span>
+            </div>
+            <input type="password" name="password" ng-model="loginData.password" class="form-control input_pass" value="" placeholder="contraseña">
+          </div>
+          <div class="alert alert-warning text-center" ng-show="errorData.error">{{errorData.error}}</div>
+          <div class="alert alert-success text-center" ng-show="errorData.success">
+            Bienvenido <i class="fa fa-cog fa-spin"></i>
+          </div>
+          <div class="d-flex justify-content-center login_container">
+            <button type="button" name="button" class="btn btn-dark" ng-click="login()" ng-disabled="loggingIn">
+              <span ng-hide='loggingIn'>
+                <i class="fa fa-sign-in-alt"></i> Iniciar sesión
+              </span>
+              <span ng-show='loggingIn'>
+                <i class="fa fa-cog fa-spin"></i> Iniciando sesión
+              </span>
+            </button>
+          </div>
+        </form>
+      </div>
+  
+      <div class="mt-4">
+        <div class="d-flex justify-content-center links">
+          ¿No tiene cuenta? <a href="/#!/new_usuario" class="ml-2">Regístrese</a>
+        </div>
+        <div class="d-flex justify-content-center links">
+          <a href="#">¿Olvidó su contraseña?</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<style>
+  footer, body>#main-nav{
+    display: none !important;
+  }
+	/* Coded with love by Mutiullah Samim */
+  body,
+		html {
+			margin: 0;
+			padding: 0;
+			height: 100%;
+			/* background: #60a3bc !important; */
+		}
+		.user_card {
+			height: 430px;
+			width: 350px;
+			margin-top: auto;
+			margin-bottom: auto;
+			/* background: #f39c12; */
+			position: relative;
+			display: flex;
+			justify-content: center;
+			flex-direction: column;
+			padding: 10px;
+			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			-webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			-moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			border-radius: 5px;
+
+		}
+		.brand_logo_container {
+			position: absolute;
+			height: 110px;
+			width: 195px;
+			top: 8px;
+			/* border-radius: 50%; */
+			/* background: #60a3bc; */
+			padding: 10px;
+			text-align: center;
+		}
+		.brand_logo {
+			height: 100;
+			/* border-radius: 50%; */
+			border: 2px solid white;
+		}
+		.form_container {
+			margin-top: 20px;
+		}
+		.login_btn {
+			width: 100%;
+			background: #ec3237 !important;
+			color: white !important;
+		}
+		.login_btn:focus {
+			box-shadow: none !important;
+			outline: 0px !important;
+		}
+		.login_container {
+			padding: 0 2rem;
+		}
+		.input-group-text {
+			background: #343a40 !important;
+			color: white !important;
+			border: 0 !important;
+			border-radius: 0.25rem 0 0 0.25rem !important;
+		}
+		.input_user,
+		.input_pass:focus {
+			box-shadow: none !important;
+			outline: 0px !important;
+		}
+		.custom-checkbox .custom-control-input:checked~.custom-control-label::before {
+			background-color: #ec3237 !important;
+		}
+    </style>
