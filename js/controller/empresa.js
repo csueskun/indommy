@@ -187,7 +187,7 @@ app.controller('empresaController', function($scope, apiInterface, snackbar, fil
   };
 
   $scope.prepareImages = function(empresa={}){
-    $scope.empresa = Object.assign({}, empresa);
+    $scope.empresa = empresa;
     $("#modalArchivos").modal('show');
   }
 
