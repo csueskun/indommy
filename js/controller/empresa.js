@@ -1,8 +1,10 @@
-app.controller('empresaController', function($scope, apiInterface, snackbar) {
+app.controller('empresaController', function($scope, apiInterface, snackbar, fileUploadService, $timeout) {
   $scope.empresaList = [];
   $scope.ciudadList = [];
   $scope.pagination = {per_page: 20};
   $scope.paginationForm = {};
+  $scope.imgLocation = apiInterface.getImgUrl();
+  $scope.cache = new Date().getTime();
 
   const apiName = 'empresa';
   
@@ -153,4 +155,40 @@ app.controller('empresaController', function($scope, apiInterface, snackbar) {
   $scope.searchEmpresas = function(){
     loadEmpresas();
   }
+
+
+  $scope.uploadFile = function (empresaId, property) {
+    $scope.saving = true;
+    var file = $scope.myFile;
+    var fileFormData = new FormData();
+    fileFormData.append('file', file);
+    fileFormData.append('property', property);
+    fileFormData.append('location',  'img/empresas');
+    fileFormData.append('id', empresaId);
+
+    var uploadUrl = apiInterface.getApiUrl()+"upload/empresa?api_token="+apiInterface.getApiToken(), //Url of webservice/api/server
+        promise = fileUploadService.uploadFileToUrl(fileFormData, uploadUrl);
+
+    promise.then(function (response) {
+        if(response.status == 200){
+          $scope.empresa[response.data.property] = response.data.saved;
+          $scope.cache = new Date().getTime();
+          $timeout(() => {
+            $scope.saving = false;
+          }, 1000);
+        }
+        else{
+          $scope.saving = false;
+        }
+      }, function () {
+        $scope.serverResponse = 'An error has occurred';
+        $scope.saving = false;
+    })
+  };
+
+  $scope.prepareImages = function(empresa={}){
+    $scope.empresa = Object.assign({}, empresa);
+    $("#modalArchivos").modal('show');
+  }
+
 });

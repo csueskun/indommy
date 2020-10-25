@@ -10,12 +10,15 @@ $(function(){
     fontAwesome: true
   }).on('changeDate', function(ev){
     $("#fechaini").trigger('input');
+  });
 });
-  // $('.glyphicon.icon-arrow-left').addClass('fa fa-chevron-left');
-  // $('.glyphicon.icon-arrow-right').addClass('fa fa-chevron-right');
-  // $('.icon-remove').addClass('fa fa-times');
-  // $('.icon-th').addClass('fa fa-list');
-});
+
+function autoUpload(input){
+  var form = input.closest('form');
+  setTimeout(() => {
+    form.find('.upload-button').click();
+  }, 100);
+}
 
 function paramObjectToString(params){
   let string = '?';

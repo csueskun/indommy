@@ -1,5 +1,5 @@
-const apiUrl = 'http://sgv.h-software.co/';
-const imgUrl = 'http://sgv.h-software.co/img/';
+const apiUrl = 'http://cucuta.uplacecol.com/';
+const imgUrl = 'http://cucuta.uplacecol.com/img/';
 
 class ApiInterface {
   constructor($http) {
@@ -20,6 +20,11 @@ class ApiInterface {
     url = apiUrl+url+paramObjectToString(config.params);
     this.$http.post(url, data, config).then(thenCallback, errorCallback);
   }
+  post2(url, data={}, config={}, thenCallback=()=>{}, errorCallback=()=>{}, finallyCallback=()=>{}) {
+    config.params = { api_token: this.api_token };
+    url = url+paramObjectToString(config.params);
+    this.$http.post(url, data, config).then(thenCallback, errorCallback);
+  }
   put(url, data={}, config={}, thenCallback=()=>{}, errorCallback=()=>{}, finallyCallback=()=>{}) {
     config.params = { api_token: this.api_token };
     url = apiUrl+url+paramObjectToString(config.params);
@@ -29,6 +34,15 @@ class ApiInterface {
     config.params = { api_token: this.api_token };
     url = apiUrl+url+paramObjectToString(config.params);
     this.$http.delete(url, config).then(thenCallback, errorCallback);
+  }
+  getImgUrl(){
+    return imgUrl;
+  }
+  getApiUrl(){
+    return apiUrl;
+  }
+  getApiToken(){
+    return this.api_token;
   }
 
 }

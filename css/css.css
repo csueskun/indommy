@@ -18,3 +18,16 @@ div.toast.delete>div.toast-body>button{
   padding: 0px 4px;
   vertical-align: initial;
 }
+
+.cursor-pointer{
+  cursor: pointer;
+}
+
+.dont-show{
+  visibility: hidden;
+  position: absolute;
+}
+img.upload-gallery-ph{
+  max-width: 200px;
+  max-height: 200px;
+}
