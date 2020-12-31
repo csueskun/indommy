@@ -48,7 +48,6 @@ app.controller('grupoempresaController', function($scope, apiInterface, snackbar
         $scope.loadingGrupoEmpresa = false;
       }};
     let error = error=>{
-      console.log(error);
       $scope.loadingGrupoEmpresa = false;
     };
     apiInterface.get('paginated/grupoempresa', {params: $scope.pagination}, success, error);
@@ -71,7 +70,6 @@ app.controller('grupoempresaController', function($scope, apiInterface, snackbar
         $scope.loadingGrupoEmpresa = false;
       }};
     let error = error=>{
-      console.log(error);
       $scope.loadingGrupoEmpresa = false;
     };
     apiInterface.get('grupo', {}, success, error);
@@ -80,14 +78,12 @@ app.controller('grupoempresaController', function($scope, apiInterface, snackbar
   function loadEmpresa(){
     $scope.loadingEmpresaModal = true;
     let success = data=>{
-      console.log(data)
       if(data.status == 200){
         $scope.empresaList = data.data.data.data;
         $scope.empresaPagination = data.data.data.pagination;
         $scope.loadingEmpresaModal = false;
       }};
     let error = error=>{
-      console.log(error);
       $scope.loadingEmpresaModal = false;
     };
     apiInterface.get('paginated/empresa', {params: $scope.empresaPagination}, success, error);
@@ -131,7 +127,6 @@ app.controller('grupoempresaController', function($scope, apiInterface, snackbar
     let error = error=>{
       snackbar.red('No se ha borrado el registro.');
       $scope.saving = false;
-      console.log(error);
     };
     apiInterface.delete(apiName+'/'+$scope.grupoempresa.id, {}, success, error);
   }
@@ -163,7 +158,6 @@ app.controller('grupoempresaController', function($scope, apiInterface, snackbar
     };
     let error = error=>{
       snackbar.red('Se presentó un error al guardar.');
-      console.log(error);
       if(error.status == 422) {
         $scope.formErrors = error.data;
         updateFormValidation();
