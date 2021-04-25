@@ -1,5 +1,5 @@
-const apiUrl = 'http://api.uplacecol.com/';
-const imgUrl = 'http://api.uplacecol.com/img/';
+const apiUrl = 'http://cucuta.uplacecol.com/';
+const imgUrl = 'http://cucuta.uplacecol.com/img/';
 
 class ApiInterface {
   constructor($http) {

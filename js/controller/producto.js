@@ -1,4 +1,4 @@
-app.controller('productoController', function($scope, apiInterface, snackbar) {
+app.controller('productoController', function($scope, apiInterface, snackbar, fileUploadService, $timeout) {
   $scope.productoList = [];
   $scope.empresaList = [];
   $scope.tipoproductoList = [];
@@ -7,6 +7,8 @@ app.controller('productoController', function($scope, apiInterface, snackbar) {
   $scope.pagination = {per_page: 20};
   $scope.empresaPagination = {per_page: 10};
   $scope.paginationForm = {};
+  $scope.imgLocation = apiInterface.getImgUrl();
+  $scope.cache = new Date().getTime();
 
   const apiName = 'producto';
 
@@ -205,6 +207,39 @@ app.controller('productoController', function($scope, apiInterface, snackbar) {
   }
 
   $scope.searchEmpresas = function(){
-    loaProdcuto();
+    loadProducto();
   }
+
+  $scope.prepareImages = function(producto={}){
+    $scope.producto = producto;
+    $("#modalArchivos").modal('show');
+  }
+
+  $scope.uploadFile = function (productoId, property) {
+    $scope.saving = true;
+    var file = $scope.myFile;
+    var fileFormData = new FormData();
+    fileFormData.append('file', file);
+    fileFormData.append('property', property);
+    fileFormData.append('location',  'img/productos');
+    fileFormData.append('id', productoId);
+    var uploadUrl = apiInterface.getApiUrl()+"upload/producto?api_token="+apiInterface.getApiToken(), //Url of webservice/api/server
+        promise = fileUploadService.uploadFileToUrl(fileFormData, uploadUrl);
+
+    promise.then(function (response) {
+        if(response.status == 200){
+          $scope.producto[response.data.property] = response.data.saved;
+          $scope.cache = new Date().getTime();
+          $timeout(() => {
+            $scope.saving = false;
+          }, 1000);
+        }
+        else{
+          $scope.saving = false;
+        }
+      }, function () {
+        $scope.serverResponse = 'An error has occurred';
+        $scope.saving = false;
+    })
+  };
 });

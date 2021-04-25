@@ -1,10 +1,12 @@
-app.controller('eventoController', function($scope, apiInterface, snackbar) {
+app.controller('eventoController', function($scope, apiInterface, snackbar, fileUploadService, $timeout) {
   $scope.eventoList = [];
   $scope.empresaList = [];
 
   $scope.pagination = {per_page: 20};
   $scope.empresaPagination = {per_page: 10};
   $scope.paginationForm = {};
+  $scope.imgLocation = apiInterface.getImgUrl();
+  $scope.cache = new Date().getTime();
 
 
   const apiName = 'evento';
@@ -194,4 +196,37 @@ app.controller('eventoController', function($scope, apiInterface, snackbar) {
   $scope.searchEmpresas = function(){
     loadEvento();
   }
+
+  $scope.prepareImages = function(evento={}){
+    $scope.evento = evento;
+    $("#modalArchivos").modal('show');
+  }
+
+  $scope.uploadFile = function (eventoId, property) {
+    $scope.saving = true;
+    var file = $scope.myFile;
+    var fileFormData = new FormData();
+    fileFormData.append('file', file);
+    fileFormData.append('property', property);
+    fileFormData.append('location',  'img/eventos');
+    fileFormData.append('id', eventoId);
+    var uploadUrl = apiInterface.getApiUrl()+"upload/evento?api_token="+apiInterface.getApiToken(), //Url of webservice/api/server
+        promise = fileUploadService.uploadFileToUrl(fileFormData, uploadUrl);
+
+    promise.then(function (response) {
+        if(response.status == 200){
+          $scope.evento[response.data.property] = response.data.saved;
+          $scope.cache = new Date().getTime();
+          $timeout(() => {
+            $scope.saving = false;
+          }, 1000);
+        }
+        else{
+          $scope.saving = false;
+        }
+      }, function () {
+        $scope.serverResponse = 'An error has occurred';
+        $scope.saving = false;
+    })
+  };
 });

@@ -1,4 +1,4 @@
-app.controller('newsController', function($scope, apiInterface, snackbar) {
+app.controller('newsController', function($scope, apiInterface, snackbar, fileUploadService, $timeout) {
   $scope.newsList = [];
   $scope.empresaList = [];
 
@@ -7,6 +7,8 @@ app.controller('newsController', function($scope, apiInterface, snackbar) {
   $scope.pagination = {per_page: 20};
   $scope.empresaPagination = {per_page: 10};
   $scope.paginationForm = {};
+  $scope.imgLocation = apiInterface.getImgUrl();
+  $scope.cache = new Date().getTime();
 
   $scope.perPageOptions = [
     {des: '10', val: 10},
@@ -192,4 +194,37 @@ app.controller('newsController', function($scope, apiInterface, snackbar) {
   $scope.searchEmpresas = function(){
     loadNews();
   }
+
+  $scope.prepareImages = function(news={}){
+    $scope.news = news;
+    $("#modalArchivos").modal('show');
+  }
+
+  $scope.uploadFile = function (newsId, property) {
+    $scope.saving = true;
+    var file = $scope.myFile;
+    var fileFormData = new FormData();
+    fileFormData.append('file', file);
+    fileFormData.append('property', property);
+    fileFormData.append('location',  'img/novedades');
+    fileFormData.append('id', newsId);
+    var uploadUrl = apiInterface.getApiUrl()+"upload/news?api_token="+apiInterface.getApiToken(), //Url of webservice/api/server
+        promise = fileUploadService.uploadFileToUrl(fileFormData, uploadUrl);
+
+    promise.then(function (response) {
+        if(response.status == 200){
+          $scope.news[response.data.property] = response.data.saved;
+          $scope.cache = new Date().getTime();
+          $timeout(() => {
+            $scope.saving = false;
+          }, 1000);
+        }
+        else{
+          $scope.saving = false;
+        }
+      }, function () {
+        $scope.serverResponse = 'An error has occurred';
+        $scope.saving = false;
+    })
+  };
 });

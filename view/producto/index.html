@@ -6,7 +6,7 @@
 
     <div class="col-md-4 float-right mb-2 mb2">
       <div class="input-group">
-        <input type="text" ng-model='pagination.nombre' class="form-control" required name="search">
+        <input type="text" ng-model='pagination.search' class="form-control" required name="search">
         <div class="input-group-append">
           <button class="btn btn-sm btn-secondary" ng-click="searchEmpresas()"><i class="fa fa-search"></i></button>
         </div>
@@ -38,6 +38,7 @@
             <div class="btn-group" role="group" aria-label="Basic example">
               <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareForm(producto, false, $index)'><i class="fa fa-search"></i></button>
               <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareDelete(producto, $event, $index)'><i class="fa fa-trash"></i></button>
+              <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareImages(producto, $event, $index)'><i class="fa fa-image"></i></button>
             </div>
           </td>
         </tr>
@@ -276,6 +277,69 @@
 
   </div>
 
+  <div class="modal fade" id="modalArchivos" tabindex="-1" role="dialog" aria-labelledby="modalArchivos" aria-hidden="true">
+    <div class="modal-dialog" style='width:600px'>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="">{{producto.descripcion}}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-header py-0">
+          Galería de imágenes. Click en la imagen para cambiar.
+        </div>
+        <div class="modal-body">
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <label for="logo_image">Imagen #1</label>
+              <div ng-hide='saving'>
+                <img ng-hide="producto.imagen" src="http://via.placeholder.com/150" alt="No se ha cargado el logo" class="img-thumbnail cursor-pointer upload-gallery-ph" onclick="$('#uploadImagen1').click()">
+                <img ng-show="producto.imagen" src="{{imgLocation + 'productos/' +producto.imagen + '?' + cache}}" class="img-thumbnail cursor-pointer upload-gallery-ph" onclick="$('#uploadImagen1').click()">
+              </div>
+              <div ng-show='saving'>
+                <i class="fa fa-cog fa-spin"></i>
+              </div>
+              <form class="dont-show">
+                <input id='uploadImagen1' type="file" demo-file-model="myFile" onchange="autoUpload($(this))"/>
+                <button ng-click="uploadFile(producto.id, 'imagen')" ng-disabled='saving' class = "upload-button"></button>
+              </form>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="logo_image">Imagen #2</label>
+              <div ng-hide='saving'>
+                <img ng-hide="producto.imagen2" src="http://via.placeholder.com/150" alt="No se ha cargado el logo" class="img-thumbnail cursor-pointer upload-gallery-ph" onclick="$('#uploadImagen2').click()">
+                <img ng-show="producto.imagen2" src="{{imgLocation + 'productos/' +producto.imagen2 + '?' + cache}}" class="img-thumbnail cursor-pointer upload-gallery-ph" onclick="$('#uploadImagen2').click()">
+              </div>
+              <div ng-show='saving'>
+                <i class="fa fa-cog fa-spin"></i>
+              </div>
+              <form class="dont-show">
+                <input id='uploadImagen2' type="file" demo-file-model="myFile" onchange="autoUpload($(this))"/>
+                <button ng-click="uploadFile(producto.id, 'imagen2')" ng-disabled='saving' class = "upload-button"></button>
+              </form>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="logo_image">Imagen #3</label>
+              <div ng-hide='saving'>
+                <img ng-hide="producto.imagen3" src="http://via.placeholder.com/150" alt="No se ha cargado el logo" class="img-thumbnail cursor-pointer upload-gallery-ph" onclick="$('#uploadImagen3').click()">
+                <img ng-show="producto.imagen3" src="{{imgLocation + 'productos/' +producto.imagen3 + '?' + cache}}" class="img-thumbnail cursor-pointer upload-gallery-ph" onclick="$('#uploadImagen3').click()">
+              </div>
+              <div ng-show='saving'>
+                <i class="fa fa-cog fa-spin"></i>
+              </div>
+              <form class="dont-show">
+                <input id='uploadImagen3' type="file" demo-file-model="myFile"/>
+                <button ng-click="uploadFile(producto.id, 'imagen3')" ng-disabled='saving' class = "upload-button"></button>
+              </form>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <div role="alert" aria-live="assertive" aria-atomic="true" class="toast delete hide" data-autohide="false">
     <div class="toast-header">
@@ -287,7 +351,6 @@
       <button type="button" class="btn btn-link" data-dismiss="toast" aria-label="Close">Cancelar</button>
     </div>
   </div>
-
   
   <div class="col-md-12" ng-include='"/view/empresa/modal_buscar.html"'></div>
 
