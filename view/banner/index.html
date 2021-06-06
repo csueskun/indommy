@@ -1,0 +1,183 @@
+<div>
+
+
+  <div class="collapse show" id="list">
+    <p>Banners <button type="button" class="btn btn-link" ng-click='prepareForm()'>Nuevo</button></p>
+
+    <div class="col-md-4 float-right mb-2 mb2">
+      <div class="input-group">
+        <input type="text" ng-model='pagination.search' class="form-control" required name="search">
+        <div class="input-group-append">
+          <button class="btn btn-sm btn-secondary" ng-click="searchBanners()"><i class="fa fa-search"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Titulo</th>
+          <th scope="col">Vence</th>
+          <th scope="col">Ancho</th>
+		      <th scope="col">Pantalla</th>
+		      <th scope="col">Estado</th>
+		      <th scope="col">Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat='banner in bannerList'>
+          <td>{{$index + 1}}</td>
+		      <td>{{banner.titulo}} </td>
+          <td>{{banner.vence}}</td>
+          <td>{{banner.ancho}}</td>
+          <td>{{banner.pantalla}}</td>
+		      <td>{{banner.estado_}}</td>
+		  <td>
+            <div class="btn-group" role="group" aria-label="Basic example">
+              <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareForm(banner, false, $index)'><i class="fa fa-search"></i></button>
+              <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareDelete(banner, $event, $index)'><i class="fa fa-trash"></i></button>
+              <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareImages(banner, $event, $index)'><i class="fa fa-image"></i></button>
+            </div>
+          </td>
+        </tr>
+        <tr ng-hide='loadingBanner || bannerList.length'>
+          <td colspan="6">
+            <div class="alert alert-warning" role="alert">
+              No se encontraron registros
+            </div>
+          </td>
+        </tr>
+        <tr ng-show='loadingBanner'>
+          <td colspan="6" class="text-center">
+            <h1><i class="fa fa-cog fa-spin text-secondary"></i></h1>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="collapse" id="form">
+    <button class="btn btn-link" type="button" ng-click='show("list")'>
+      Volver
+    </button>
+    <div ng-show="banner.id" style="display: initial;">
+      <button class="btn btn-link" type="button" ng-click='editable=!editable'>
+        {{editable?'Ver detalles':'Editar'}}
+      </button>
+      <h3>{{editable?'Editar Banner':'Detalles Banner'}}</h3>
+    </div>
+    
+    <h3 ng-hide='banner.id'>Nuevo Banner</h3>
+    <form name="form" novalidate class="needs-validation">
+      <div class="form-row">
+
+        <div class="form-group col-md-4">
+          <label for="titulo">Titulo</label>
+          <input type="text" ng-model="banner.titulo" class="form-control {{form.titulo.$valid?'is-valid':'is-invalid'}}" name="titulo" required ng-readonly="!editable">
+          <!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>-->
+          <div class="invalid-feedback" ng-if="form.titulo.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+        </div>
+
+        <div class="form-group col-md-4">
+          <label for="vence">Fecha de vencimiento</label>
+          <div class="input-group">
+            <input type="text" id='_vence' ng-model='banner._vence' class="form-control {{form._vence.$valid?'is-valid':'is-invalid'}}" required name="_vence" readonly>
+            <div class="input-group-append" ng-if="editable">
+              <button class="btn btn-sm btn-success" onclick="$('#vencePicker').datetimepicker('show')"><i class="fa fa-calendar-day"></i></button>
+            </div>
+            <div class="invalid-feedback" ng-if="form._vence.$error.required"><i class="fa fa-times"></i> La Fecha de vencimiento es obligatoria</div> 
+          </div>
+          <div class="datetimepicker" data-link-field="_vence" id="vencePicker"><input type="hidden"></div>  
+        </div>
+
+		    <div class="form-group col-md-4">
+           <label for="estado">Estado</label>
+           <select class="custom-select {{form.estado.$valid?'is-valid':'is-invalid'}}" name="estado" ng-model="banner.estado" required ng-disabled="!editable" ng-readonly="!editable"
+             ng-options="item.val as item.des for item in estados"></select>
+           <div class="invalid-feedback" ng-if="form.estado.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+        </div>
+
+        <div class="form-group col-md-4">
+          <label for="titulo">Redireccionar a vista de la APP:</label>
+          <select class="custom-select" name="pantalla" ng-model="banner.pantalla" required ng-disabled="!editable" ng-readonly="!editable">
+            <option value="">No redirigir</option>
+            <option value="Eventos">Eventos</option>
+            <option value="Promociones">Promociones</option>
+            <option value="Noticias">Noticias</option>
+            <option value="Novedades">Novedades</option>
+          </select>
+          <div class="invalid-feedback" ng-if="form.titulo.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+        </div>
+
+        <div class="form-group col-md-4">
+          <label for="ancho">Ancho de la imagen (Alto fijo de 100 pixeles)</label>
+          <input type="number" max="1000" min="100" ng-model="banner.ancho" class="form-control {{form.ancho.$valid?'is-valid':'is-invalid'}}" name="ancho" required ng-readonly="!editable">
+          <div class="invalid-feedback" ng-if="form.ancho.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+        </div>
+
+      </div>
+	  
+      <div class="form row">
+        <div class="col-md-12">
+           <button ng-click="save()" ng-if="editable" type="submit" class="btn btn-primary" ng-disabled="form.$invalid || saving">
+              <i class="fa fa-save {{saving?'fa-spin':''}}"></i> Guardar
+           </button>
+        </div>
+      </div>
+
+    </form>
+
+  </div>
+
+  <div class="modal fade" id="modalArchivos" tabindex="-1" role="dialog" aria-labelledby="modalArchivos" aria-hidden="true">
+    <div class="modal-dialog" style='width:600px'>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="">{{banner.titulo}}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-header py-0">
+          Click en la imagen para cambiar. (La imagen se mostrará con un alto fijo de 100 pixeles y el ancho establecido)
+        </div>
+        <div class="modal-body">
+          <div class="form-row">
+            <div class="form-group col-md-12 text-center">
+              <label for="logo_image">Imágen del banner</label>
+              <div ng-hide='saving'>
+                <img ng-hide="banner.img" src="http://via.placeholder.com/300" alt="No se ha cargado el logo" class="img-thumbnail cursor-pointer upload-gallery-ph300x300" onclick="$('#uploadImagen1').click()">
+                <img ng-show="banner.img" src="{{imgLocation + 'banners/' +banner.img + '?' + cache}}" class="img-thumbnail cursor-pointer upload-gallery-phph300x300" onclick="$('#uploadImagen1').click()">
+              </div>
+              <div ng-show='saving'>
+                <i class="fa fa-cog fa-spin"></i>
+              </div>
+              <form class="dont-show">
+                <input id='uploadImagen1' type="file" demo-file-model="myFile" onchange="autoUpload($(this))"/>
+                <button ng-click="uploadFile(banner.id, 'img')" ng-disabled='saving' class = "upload-button"></button>
+              </form>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div role="alert" aria-live="assertive" aria-atomic="true" class="toast delete hide" data-autohide="false">
+    <div class="toast-header">
+      <i class="fa fa-trash"></i>&nbsp;&nbsp;<strong class="mr-auto">Desea borrar el registro?</strong>
+    </div>
+    <div class="toast-body">
+      Esta acción es definitiva
+      <button type="button" class="btn btn-link" ng-disabled='saving' ng-click='delete()'>Borrar</i></button>
+      <button type="button" class="btn btn-link" data-dismiss="toast" aria-label="Close">Cancelar</button>
+    </div>
+  </div>
+
+  <button id="udfb" ng-click="updateDateField()" style="display: none;"></button>
+  <div class="col-md-12" ng-include='"/view/empresa/modal_buscar.html"'></div>
+
+
+</div>

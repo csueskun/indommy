@@ -71,6 +71,10 @@ function routes($routeProvider) {
     templateUrl : "/view/new_usuario.html",
     controller: 'loginController'
   })
+  .when("/banner", {
+    templateUrl : "/view/banner/index.html",
+    controller: 'bannerController'
+  })
   .when("/login", {
     templateUrl : "/view/login.html",
     controller: 'loginController'
