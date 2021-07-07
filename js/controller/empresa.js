@@ -1,7 +1,10 @@
 app.controller('empresaController', function($scope, apiInterface, snackbar, fileUploadService, $timeout) {
   $scope.empresaList = [];
   $scope.ciudadList = [];
+  $scope.tipoproductoList = [];
+  $scope.tipocategoriaList = [];
   $scope.pagination = {per_page: 20};
+  $scope.pagination2 = {per_page: 20};
   $scope.paginationForm = {};
   $scope.imgLocation = apiInterface.getImgUrl();
   $scope.cache = new Date().getTime();
@@ -36,6 +39,8 @@ app.controller('empresaController', function($scope, apiInterface, snackbar, fil
 
   loadCiudades();
   loadEmpresas();
+  loadTipoproducto();
+  loadTipocategoria();
 
   function loadEmpresas(){
     $scope.loadingEmpresas = true;
@@ -52,6 +57,22 @@ app.controller('empresaController', function($scope, apiInterface, snackbar, fil
     apiInterface.get('paginated/empresa', {params: $scope.pagination}, success, error);
   }
 
+  function loadProductos(){
+    $scope.loadingEmpresas = true;
+    let success = data=>{
+      if(data.status == 200){
+        $scope.productoList = data.data.data.data;
+        $scope.pagination2 = data.data.data.pagination;
+        $scope.loadingEmpresas = false;
+        $("#modalProductos").modal('show');
+      }};
+    let error = error=>{
+      console.log(error);
+      $scope.loadingEmpresas = false;
+    };
+    apiInterface.get('paginated/producto', {params: $scope.pagination2}, success, error);
+  }
+
   $scope.setPaginationPage = function(page){
     $scope.pagination.current_page = page;
     loadEmpresas();
@@ -59,6 +80,14 @@ app.controller('empresaController', function($scope, apiInterface, snackbar, fil
   $scope.setPerPage = function(){
     $scope.pagination.current_page = 1;
     loadEmpresas();
+  }
+  $scope.setPagination2Page = function(page){
+    $scope.pagination2.current_page = page;
+    loadEmpresas();
+  }
+  $scope.setPerPage2 = function(){
+    $scope.pagination2.current_page = 1;
+    loadProductos();
   }
 
   function loadCiudades(){
@@ -76,9 +105,9 @@ app.controller('empresaController', function($scope, apiInterface, snackbar, fil
   }
 
 
-  $scope.show = function(section){
-    $('.collapse.show').collapse('toggle');
-    $('.collapse#'+section).collapse('toggle');
+  $scope.show = function(section, parent='.empresa'){
+    $(parent+'.collapse.show').collapse('toggle');
+    $(parent+'.collapse#'+section).collapse('toggle');
   }
 
   $scope.prepareDelete = function(empresa, event, index){
@@ -189,6 +218,126 @@ app.controller('empresaController', function($scope, apiInterface, snackbar, fil
   $scope.prepareImages = function(empresa={}){
     $scope.empresa = empresa;
     $("#modalArchivos").modal('show');
+  }
+
+  $scope.prepareProductos = function(empresa){
+    $scope.empresa = empresa;
+    $scope.pagination2.empresa = empresa.id;
+    loadProductos();
+  }
+
+  $scope.prepareImagesProducto = function(producto={}){
+    $scope.producto = producto;
+    $scope.show("archivos", ".producto");
+  }
+
+  $scope.prepareFormProducto = function(producto={}, editable=true, index){
+    $scope.show("list", ".producto");
+    $scope.productoIndex = index;
+    $scope.editableProducto = editable;
+    $scope.producto = Object.assign({}, producto);
+    $scope.producto.empresa_id = $scope.empresa.id;
+    if($scope.producto.empresa){
+      $scope.producto._empresa_id = $scope.producto.empresa.nombre;
+    }
+    $scope.show('formProducto', '.producto');
+  }
+
+
+  $scope.saveProducto = function(){
+    let success = data=>{
+      if(data.status == 200){
+        snackbar.green('Guardado exitosamente.');
+      }
+      $scope.saving = false;
+      if($scope.producto.id){
+        $scope.editableProducto = false;
+      }
+      else{
+        $scope.producto = Object.assign({}, {});
+        $scope.form.$setPristine();
+      }
+      loadProductos();
+    };
+    let error = error=>{
+      snackbar.red('Se presentó un error al guardar.');
+      console.log(error);
+      if(error.status == 422) {
+        $scope.formErrors = error.data;
+        updateFormValidation();
+      }
+      $scope.saving = false;
+    };
+    $scope.saving = true;
+    if($scope.producto.id){
+      apiInterface.put('producto'+'/'+$scope.producto.id, $scope.producto, {}, success, error);
+    }
+    else{
+      apiInterface.post('producto', $scope.producto, {}, success, error);
+    }
+  }
+
+  function loadTipocategoria(){
+    $scope.loadingProducto = true;
+    let success = data=>{
+      if(data.status == 200){
+        $scope.tipocategoriaList = data.data.data;
+        $scope.loadingProducto = false;
+      }};
+    let error = error=>{
+      console.log(error);
+      $scope.loadingProducto = false;
+    };
+    apiInterface.get('tipocategoria', {}, success, error);
+  }
+
+  function loadTipoproducto(){
+    $scope.loadingProducto = true;
+    let success = data=>{
+      if(data.status == 200){
+        $scope.tipoproductoList = data.data.data;
+        $scope.loadingProducto = false;
+      }};
+    let error = error=>{
+      console.log(error);
+      $scope.loadingProducto = false;
+    };
+    apiInterface.get('tipoproducto', {}, success, error);
+  }
+
+
+  $scope.uploadFileProducto = function (productoId, property) {
+    $scope.saving = true;
+    var file = $scope.myFile;
+    var fileFormData = new FormData();
+    fileFormData.append('file', file);
+    fileFormData.append('property', property);
+    fileFormData.append('location',  'img/productos');
+    fileFormData.append('id', productoId);
+    var uploadUrl = apiInterface.getApiUrl()+"upload/producto?api_token="+apiInterface.getApiToken(), //Url of webservice/api/server
+        promise = fileUploadService.uploadFileToUrl(fileFormData, uploadUrl);
+
+    promise.then(function (response) {
+        if(response.status == 200){
+          $scope.producto[response.data.property] = response.data.saved;
+          $scope.cache = new Date().getTime();
+          $timeout(() => {
+            $scope.saving = false;
+          }, 1000);
+        }
+        else{
+          $scope.saving = false;
+        }
+      }, function () {
+        $scope.serverResponse = 'An error has occurred';
+        $scope.saving = false;
+    })
+  };
+
+  $scope.prepareDeleteProducto = function(producto, event, index){
+    $scope.productoIndex = index;
+    $scope.producto = Object.assign({}, producto);
+    showToast('.toast.producto.delete', event.clientY - 140);
   }
 
 });

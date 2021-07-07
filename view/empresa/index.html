@@ -1,5 +1,5 @@
 <div>
-    <div class="collapse show" id="list">
+    <div class="empresa collapse show" id="list">
     <p>EMPRESAS <button type="button" class="btn btn-link" ng-click='prepareForm()'>Nueva</button></p>
 
     <div class="col-md-4 float-right mb-2 mb2">
@@ -35,6 +35,7 @@
               <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareForm(empresa, false, $index)'><i class="fa fa-search"></i></button>
               <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareDelete(empresa, $event, $index)'><i class="fa fa-trash"></i></button>
               <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareImages(empresa, $event, $index)'><i class="fa fa-image"></i></button>
+              <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareProductos(empresa, $event, $index)'><i class="fa fa-th-large"></i></button>
             </div>
           </td>
         </tr>
@@ -55,7 +56,7 @@
     <div class="col-md-12" ng-include='"/view/pagination.html"'></div>
   </div>
 
-  <div class="collapse" id="form">
+  <div class="empresa collapse" id="form">
     <button class="btn btn-link" type="button" ng-click='show("list")'>
       Volver
     </button>
@@ -350,7 +351,7 @@
     </div>
   </div>
 
-  
+  <div class="col-md-12" ng-include='"/view/empresa/productos.html"'></div>
 
 
 </div>
