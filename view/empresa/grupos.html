@@ -1,0 +1,46 @@
+  <div class="modal fade" id="modalGrupos" tabindex="-1" role="dialog" aria-labelledby="modalGrupos" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="buscarEmpresa">{{empresa.nombre}}. Grupos</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="grupo collapse show" id="new">
+            <table class="table table-sm">
+            <thead>
+                <tr>
+                <th scope="col"></th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Clase</th>
+                <th scope="col">Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat='g in grupoList'>
+                <td>
+                    <div ng-show="empresaGrupos.includes(g.id)"><i class="fa fa-check-circle text-success"></i></div>
+                </td>
+                <td>{{g.id}}</td>
+                <td>{{g.clase.descripcion}}</td>
+                <td>
+                    <button ng-disabled="removingGrupos" ng-show="empresaGrupos.includes(g.id)" type="button" class="btn btn-sm btn-outline-dark" ng-click='deleteGrupo(g.id)'style="width: 32px" ><i class="fa fa-times"></i></button>
+                    <button ng-disabled="addingGrupos" ng-hide="empresaGrupos.includes(g.id)" type="button" class="btn btn-sm btn-outline-dark" ng-click='addGrupo(g.id)'><i class="fa fa-check"></i></button>
+                </td>
+                </tr>
+                <tr ng-hide='grupoList.length'>
+                <td colspan="4">
+                    <div class="alert alert-warning" role="alert">
+                    No existe grupos para asociar
+                    </div>
+                </td>
+                </tr>
+            </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

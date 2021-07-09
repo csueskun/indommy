@@ -36,6 +36,7 @@
               <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareDelete(empresa, $event, $index)'><i class="fa fa-trash"></i></button>
               <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareImages(empresa, $event, $index)'><i class="fa fa-image"></i></button>
               <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareProductos(empresa, $event, $index)'><i class="fa fa-th-large"></i></button>
+              <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareGrupos(empresa, $event, $index)'><i class="fa fa-share-alt"></i></button>
             </div>
           </td>
         </tr>
@@ -352,6 +353,7 @@
   </div>
 
   <div class="col-md-12" ng-include='"/view/empresa/productos.html"'></div>
+  <div class="col-md-12" ng-include='"/view/empresa/grupos.html"'></div>
 
 
 </div>

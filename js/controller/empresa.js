@@ -1,6 +1,7 @@
 app.controller('empresaController', function($scope, apiInterface, snackbar, fileUploadService, $timeout) {
   $scope.empresaList = [];
   $scope.ciudadList = [];
+  $scope.grupoList = [];
   $scope.tipoproductoList = [];
   $scope.tipocategoriaList = [];
   $scope.pagination = {per_page: 20};
@@ -41,6 +42,20 @@ app.controller('empresaController', function($scope, apiInterface, snackbar, fil
   loadEmpresas();
   loadTipoproducto();
   loadTipocategoria();
+  loadGrupo();
+  
+  function loadGrupo(){
+    $scope.loadingEmpresas = true;
+    let success = data=>{
+      if(data.status == 200){
+        $scope.grupoList = data.data.data;
+        $scope.loadingEmpresas = false;
+      }};
+    let error = error=>{
+      $scope.loadingEmpresas = false;
+    };
+    apiInterface.get('grupo', {}, success, error);
+  }
 
   function loadEmpresas(){
     $scope.loadingEmpresas = true;
@@ -338,6 +353,62 @@ app.controller('empresaController', function($scope, apiInterface, snackbar, fil
     $scope.productoIndex = index;
     $scope.producto = Object.assign({}, producto);
     showToast('.toast.producto.delete', event.clientY - 140);
+  }
+
+  $scope.prepareGrupos = function(empresa){
+    $scope.empresa = empresa;
+    $scope.empresaGrupos = [];
+    try {
+      $scope.empresa.grupos.forEach(function(g){
+        $scope.empresaGrupos.push(g.grupo.id);
+      });
+    } catch (error) {}
+    $("#modalGrupos").modal('show');
+  }
+
+  $scope.deleteGrupo = function(grupo){
+    $scope.removingGrupos = true;
+    var grupoEmpresaIndex = -1;
+    var ge = -1;
+    for (let i = 0; i < $scope.empresa.grupos.length; i++) {
+      const grupoEmpresa = $scope.empresa.grupos[i];
+      if(grupoEmpresa.grupo.id==grupo){
+        grupoempresaIndex = i;
+        ge = grupoEmpresa.id;
+        break;
+      }      
+    }
+    let success = data=>{
+      $scope.removingGrupos = false;
+      snackbar.green('Se ha borrado la asociación.');
+      $scope.empresa.grupos.splice(grupoempresaIndex, 1);
+      $scope.empresaGrupos = $scope.empresaGrupos.filter(function(g){
+        return g != grupo;
+      });
+    };
+    let error = error=>{
+    };
+    apiInterface.delete('grupoempresa/'+ge, {}, success, success);
+  }
+
+  $scope.addGrupo = function(grupo){
+    $scope.addingGrupos = true;
+    let success = data=>{
+      if(data.status == 200){
+        $scope.empresaGrupos.push(grupo);
+        var grupoEmpresa = data.data.data;
+        grupoEmpresa.grupo = {id: grupo};
+        $scope.empresa.grupos.push(grupoempresa);
+        $scope.addingGrupos = false;
+      }
+    };
+    let error = error=>{
+      snackbar.red('No se ha asociado el grupo.');
+      $scope.deletingGrupo = false;
+      $scope.addingGrupos = false;
+    };
+    var ge = {empresa_id: $scope.empresa.id, grupo_id:grupo, estado:1, prioridad:1};
+    apiInterface.post('grupoempresa', ge, {}, success, error);
   }
 
 });
