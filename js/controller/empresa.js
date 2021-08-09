@@ -157,6 +157,10 @@ app.controller('empresaController', function($scope, apiInterface, snackbar, fil
   }
 
   $scope.save = function(){
+    if($scope.form.$invalid){
+      $scope.form.$setDirty();
+      return false;
+    }
     let success = data=>{
       if(data.status == 200){
         snackbar.green('Guardado exitosamente.');
