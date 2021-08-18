@@ -79,21 +79,20 @@
           <div class="invalid-feedback" ng-if="form.nombre.$error.unique"><i class="fa fa-times"></i> El nombre ya existe</div> 
         </div>
 
-        <!--<div class="form-group col-md-6">
-          <label for="codemp">Código</label>
-          <input type="text" ng-model="empresa.codemp" class="form-control {{form.$pristine?'':form.codemp.$valid?'is-valid':'is-invalid'}}" name="codemp" required ng-readonly="!editable">
-          <div class="invalid-feedback" ng-if="form.codemp.$error.required"><i class="fa fa-times"></i> El código es obligatorio</div> 
-          <div class="invalid-feedback" ng-if="form.codemp.$error.unique"><i class="fa fa-times"></i> El código ya existe</div> 
-        </div>
-        -->
       </div>
 
       <div class="form-row">
-        <div class="form-group col-md-12">
+        <div class="form-group col-md-8">
           <label for="descripcion">Descripción</label>
           <input type="text" ng-model="empresa.descripcion" class="form-control {{form.$pristine?'':form.descripcion.$valid?'is-valid':'is-invalid'}}" name="descripcion" required ng-readonly="!editable">
           <!--div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  -->
           <div class="invalid-feedback" ng-if="form.descripcion.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+        </div>
+        <div class="form-group col-md-4">
+          <label for="codemp">Código</label>
+          <input type="text" ng-model="empresa.codemp" class="form-control {{form.$pristine?'':form.codemp.$valid?'is-valid':'is-invalid'}}" name="codemp" ng-readonly="true">
+          <div class="invalid-feedback" ng-if="form.codemp.$error.required"><i class="fa fa-times"></i> El código es obligatorio</div> 
+          <div class="invalid-feedback" ng-if="form.codemp.$error.unique"><i class="fa fa-times"></i> El código ya existe</div> 
         </div>
       </div>
 

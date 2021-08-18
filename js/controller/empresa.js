@@ -153,7 +153,21 @@ app.controller('empresaController', function($scope, apiInterface, snackbar, fil
     $scope.empresaIndex = index;
     $scope.editable = editable;
     $scope.empresa = Object.assign({}, empresa);
-    $scope.show('form');
+    if(empresa.id){
+      $scope.show('form');
+      return false;
+    }
+    let success = data=>{
+      if(data.status == 200){
+        $scope.empresa = Object.assign({}, data.data);
+        $scope.show('form');
+      }};
+    let error = error=>{
+      console.error(error);
+      $scope.show('form');
+    };
+    apiInterface.get('next/empresa', {}, success, error);
+
   }
 
   $scope.save = function(){
@@ -181,6 +195,7 @@ app.controller('empresaController', function($scope, apiInterface, snackbar, fil
       if(error.status == 422) {
         $scope.formErrors = error.data;
         updateFormValidation();
+        $scope.form.$setDirty();
       }
       $scope.saving = false;
     };
