@@ -171,8 +171,10 @@ app.controller('empresaController', function($scope, apiInterface, snackbar, fil
   }
 
   $scope.save = function(){
+    $scope.form['nombre'].$setValidity('unique', true);
     if($scope.form.$invalid){
       $scope.form.$setDirty();
+      scrollToError();
       return false;
     }
     let success = data=>{
@@ -190,12 +192,14 @@ app.controller('empresaController', function($scope, apiInterface, snackbar, fil
       loadEmpresas();
     };
     let error = error=>{
-      snackbar.red('Se presentó un error al guardar.');
-      console.log(error);
       if(error.status == 422) {
+        snackbar.red('Se encontraron errores en el formulario.');
         $scope.formErrors = error.data;
         updateFormValidation();
         $scope.form.$setDirty();
+      }
+      else{
+        snackbar.red('Se presentó un error al guardar.');
       }
       $scope.saving = false;
     };
@@ -207,12 +211,22 @@ app.controller('empresaController', function($scope, apiInterface, snackbar, fil
       apiInterface.post(apiName, $scope.empresa, {}, success, error);
     }
   }
+  function scrollToError(){
+    const e = $('.invalid-feedback')[0];
+    scrollToElement(e,-140);
+  }
 
   function updateFormValidation(){
-    const keys = Object.keys($scope.formErrors);
-    keys.forEach(k=>{
-      $scope.form[k].$setValidity('unique', false);
-    })
+    var keys = [];
+    try {
+      keys = Object.keys($scope.formErrors);
+    } catch (error) {
+    }
+    for (var index = 0; index < keys.length; index++) {
+      const element = keys[index];
+      $scope.form[element].$setValidity('unique', false);
+    }
+    $timeout(scrollToError,100);
   }
   
   $scope.searchEmpresas = function(){

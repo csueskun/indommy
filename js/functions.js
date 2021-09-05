@@ -42,3 +42,12 @@ function formatDateFromIso(iso, format='DD/MM/YYYY hh:mma'){
   const date = moment(iso);
   return date.format(format);
 }
+function scrollToElement(element, yOffset=0){
+  console.log(element);
+  try {
+    const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+    window.scrollTo({top: y, behavior: 'smooth'});
+  } catch (error) {
+    console.log(error);
+  }
+}
