@@ -1,5 +1,5 @@
-const apiUrl = 'http://localhost:8000/';
-const imgUrl = 'http://localhost:8000/img/';
+const apiUrl = 'http://api.uplacecol.com/';
+const imgUrl = 'http://api.uplacecol.com/img/';
 
 class ApiInterface {
   constructor($http) {
