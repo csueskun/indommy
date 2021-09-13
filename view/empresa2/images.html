@@ -2,7 +2,7 @@
 	Galería de imágenes. Click en la imagen para cambiar.
 </div>
 <div class="form-row">
-	<div class="form-group col-md-6">
+	<div class="form-group col-md-3">
 			<label for="logo_image">Logo</label>
 			<div ng-hide='saving'>
 					<img ng-hide="empresa.rutalogo" src="http://via.placeholder.com/150" alt="No se ha cargado el logo" class="img-thumbnail cursor-pointer upload-gallery-ph" onclick="$('#uploadRutaLogo').click()">
@@ -16,7 +16,7 @@
 					<button ng-click="uploadFile(empresa.id, 'rutalogo', 'uploadRutaLogo')" ng-disabled='saving' class = "upload-button"></button>
 			</form>
 	</div>
-	<div class="form-group col-md-6">
+	<div class="form-group col-md-3">
 			<label for="logo_image">Portada</label>
 			<div ng-hide='saving'>
 					<img ng-hide="empresa.rutafoto" src="http://via.placeholder.com/150" alt="No se ha cargado el logo" class="img-thumbnail cursor-pointer upload-gallery-ph" onclick="$('#uploadRutafoto').click()">
@@ -32,7 +32,7 @@
 	</div>
 </div>
 <div class="form-row">
-	<div class="form-group col-md-6">
+	<div class="form-group col-md-3">
 			<label for="logo_image">Foto 2</label>
 			<div ng-hide='saving'>
 					<img ng-hide="empresa.rutafoto2" src="http://via.placeholder.com/150" alt="No se ha cargado el logo" class="img-thumbnail cursor-pointer upload-gallery-ph" onclick="$('#uploadrutafoto2').click()">
@@ -46,7 +46,7 @@
 					<button ng-click="uploadFile(empresa.id, 'rutafoto2', 'uploadrutafoto2')" ng-disabled='saving' class = "upload-button"></button>
 			</form>
 	</div>
-	<div class="form-group col-md-4">
+	<div class="form-group col-md-3">
 			<label for="logo_image">Foto 3</label>
 			<div ng-hide='saving'>
 					<img ng-hide="empresa.rutafoto3" src="http://via.placeholder.com/150" alt="No se ha cargado el logo" class="img-thumbnail cursor-pointer upload-gallery-ph" onclick="$('#uploadrutafoto3').click()">
