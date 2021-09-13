@@ -1,0 +1,165 @@
+<div>
+    <div class="section collapse show" id="list">
+    <p>EMPRESAS <button type="button" class="btn btn-link" ng-click='prepareForm()'>Nueva</button></p>
+
+    <div class="col-md-4 float-right mb-2 mb2">
+      <div class="input-group">
+        <input type="text" ng-model='pagination.nombre' class="form-control" required name="search">
+        <div class="input-group-append">
+          <button class="btn btn-sm btn-secondary" ng-click="searchEmpresas()"><i class="fa fa-search"></i></button>
+        </div>
+      </div>
+    </div>
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Código</th>
+		      <th scope="col">Nombre</th>
+          <th scope="col">Descripción</th>
+          <th scope="col">Teléfono</th>
+          <th scope="col">Estado</th>
+		  <th scope="col">Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat='empresa in empresaList'>
+          <td>{{$index + 1 + (pagination.per_page * (pagination.current_page - 1))}}</td>
+		      <td>{{empresa.codemp}}</td>
+          <td>{{empresa.nombre}}</td>
+          <td>{{empresa.descripcion}}</td>
+          <td>{{empresa.telefono}}</td>
+          <td align= "center">{{empresa.estado}}</td>
+          <td>
+            <div class="btn-group" role="group" aria-label="Basic example">
+              <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareForm(empresa, false, $index)'><i class="fa fa-search"></i></button>
+              <button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareDelete(empresa, $event, $index)'><i class="fa fa-trash"></i></button>
+            </div>
+          </td>
+        </tr>
+        <tr ng-show='!loadingEmpresas && !empresaList.length'>
+          <td colspan="7">
+            <div class="alert alert-warning" role="alert">
+              No se encontraron registros
+            </div>
+          </td>
+        </tr>
+        <tr ng-show='loadingEmpresas'>
+          <td colspan="7" class="text-center">
+            <h1><i class="fa fa-cog fa-spin text-secondary"></i></h1>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="col-md-12" ng-include='"/view/pagination.html"'></div>
+  </div>
+  
+  <div class="section collapse" id="form">
+
+    <button class="btn btn-link mb-2" type="button" ng-click='backToList()'>
+      Volver a la lista de empresas
+    </button>
+
+    <div id="accordion">
+
+      <div class="card">
+        <div class="card-header" id="headingOne">
+          <h3 class="mb-0 btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            <span ng-hide='empresa.id'>Datos de la nueva Empresa</span>
+            <span ng-show='empresa.id'>{{empresa.nombre}}</span>
+          </h3>
+        </div>
+        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+          <div class="card-body">
+
+            <div class="col-md-12" ng-include='"/view/empresa2/form.html"'></div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header" id="headingTwo">
+          <h3 class="mb-0">
+            <button ng-disabled="!empresa.id" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              GALERÍA DE IMÁGENES <span ng-hide="empresa.id">Complete los datos básicos de la empresa para continuar<span>
+            </button>
+          </h3>
+        </div>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+          <div class="card-body">
+
+            <div class="col-md-12" ng-include='"/view/empresa2/images.html"'></div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header" id="headingThree">
+          <h3 class="mb-0">
+            <button  ng-disabled="!empresa.id" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+              GRUPOS <span ng-hide="empresa.id">Complete los datos básicos de la empresa para continuar<span>
+            </button>
+          </h3>
+        </div>
+        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+          <div class="card-body p0 p-0">
+            <div class="col-md-12 p0 p-0" ng-include='"/view/empresa2/grupos.html"'></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header" id="headingProductos">
+          <h3 class="mb-0">
+            <button  ng-disabled="!empresa.id" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseProductos" aria-expanded="false" aria-controls="collapseProductos">
+              PRODUCTOS <span ng-hide="empresa.id">Complete los datos básicos de la empresa para continuar<span>
+            </button>
+          </h3>
+        </div>
+        <div id="collapseProductos" class="collapse" aria-labelledby="headingProductos" data-parent="#accordion">
+          <div class="card-body p0 p-0">
+            <div class="sub-section collapse show" id="producto-list">
+              <button class="btn btn-link mb-2" type="button" ng-click='prepareFormProducto()'>
+                Nuevo producto
+              </button>
+              <div class="col-md-12 p0 p-0" ng-include='"/view/empresa2/lista-productos.html"'></div>
+            </div>
+            <div class="sub-section collapse" id="producto-form">
+              <p><button type="button" class="btn btn-link" onClick='doCollapse("producto-list", "sub-section")'>Volver a la lista de productos</button></p>
+              <div class="col-md-12" ng-include='"/view/empresa2/form-productos.html"'></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+
+
+  <div role="alert" aria-live="assertive" aria-atomic="true" class="toast delete producto hide" data-autohide="false">
+    <div class="toast-header">
+    <i class="fa fa-trash"></i>&nbsp;&nbsp;<strong class="mr-auto">Desea borrar el registro?</strong>
+    </div>
+    <div class="toast-body">
+    Esta acción es definitiva
+    <button type="button" class="btn btn-link" ng-disabled='saving' ng-click='deleteProducto()'>Borrar</i></button>
+    <button type="button" class="btn btn-link" data-dismiss="toast" aria-label="Close">Cancelar</button>
+    </div>
+  </div>
+
+  <div role="alert" aria-live="assertive" aria-atomic="true" class="toast delete empresa hide" data-autohide="false">
+    <div class="toast-header">
+      <i class="fa fa-trash"></i>&nbsp;&nbsp;<strong class="mr-auto">Desea borrar el registro?</strong>
+    </div>
+    <div class="toast-body">
+      Esta acción es definitiva
+      <button type="button" class="btn btn-link" ng-disabled='saving' ng-click='delete()'>Borrar</i></button>
+      <button type="button" class="btn btn-link" data-dismiss="toast" aria-label="Close">Cancelar</button>
+    </div>
+  </div>
+
+
+</div>

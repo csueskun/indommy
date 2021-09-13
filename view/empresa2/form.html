@@ -1,0 +1,170 @@
+
+<div ng-show="empresa.id" style="display: initial;" class="mb-2">
+	<button class="btn btn-warning btn-sm" type="button" ng-click='editable=!editable'>
+		{{editable?'Cancelar edición':'Editar'}}
+	</button>
+</div>
+
+<form name="empresaForm" class="my-form" novalidate class="needs-validation" ng-controller="empresa2Controller">
+
+
+	<div class="form-row">
+
+		<div class="form-group col-md-12">
+			<label for="nombre">Nombre</label>
+			<input type="text" ng-model="empresa.nombre" class="form-control {{empresaForm.$pristine?'':empresaForm.nombre.$valid?'is-valid':'is-invalid'}}" name="nombre" required ng-readonly="!editable">
+			<!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  -->
+			<div class="invalid-feedback" ng-if="empresaForm.nombre.$error.required"><i class="fa fa-times"></i> El nombre es obligatorio</div> 
+			<div class="invalid-feedback" ng-if="empresaForm.nombre.$error.unique"><i class="fa fa-times"></i> El nombre ya existe</div> 
+		</div>
+
+	</div>
+
+	<div class="form-row">
+		<div class="form-group col-md-8">
+			<label for="descripcion">Descripción</label>
+			<input type="text" ng-model="empresa.descripcion" class="form-control {{empresaForm.$pristine?'':empresaForm.descripcion.$valid?'is-valid':'is-invalid'}}" name="descripcion" required ng-readonly="!editable">
+			<!--div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  -->
+			<div class="invalid-feedback" ng-if="empresaForm.descripcion.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+		</div>
+		<div class="form-group col-md-4">
+			<label for="codemp">Código</label>
+			<input type="text" ng-model="empresa.codemp" class="form-control {{empresaForm.$pristine?'':empresaForm.codemp.$valid?'is-valid':'is-invalid'}}" name="codemp" ng-readonly="true">
+			<div class="invalid-feedback" ng-if="empresaForm.codemp.$error.required"><i class="fa fa-times"></i> El código es obligatorio</div> 
+			<div class="invalid-feedback" ng-if="empresaForm.codemp.$error.unique"><i class="fa fa-times"></i> El código ya existe</div> 
+		</div>
+
+		<div class="form-group col-md-2">
+			<label for="nomcorto">Nombre corto</label>
+			<input  type="text" ng-model="empresa.nomcorto" class="form-control {{empresaForm.$pristine?'':empresaForm.nomcorto.$valid?'is-valid':'is-invalid'}}" name="nomcorto" ng-readonly="!editable">
+			<div class="invalid-feedback" ng-if="empresaForm.nomcorto.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div>
+		</div>
+		<div class="form-group col-md-4">
+			<label for="descrip_comida">Descripción de Productos y Servicios</label>
+			<input type="text" ng-model="empresa.descrip_comida" class="form-control {{empresaForm.$pristine?'':empresaForm.descrip_comida.$valid?'is-valid':'is-invalid'}}" name="descrip_comida" ng-readonly="!editable">
+			<!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>-->
+			<div class="invalid-feedback" ng-if="empresaForm.descrip_comida.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+		</div>
+		<div class="form-group col-md-3">
+			<label for="direccion">Dirección</label>
+			<input type="text" ng-model="empresa.direccion" class="form-control {{empresaForm.$pristine?'':empresaForm.direccion.$valid?'is-valid':'is-invalid'}}" name="direccion" ng-readonly="!editable">
+			<!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  -->
+			<div class="invalid-feedback" ng-if="empresaForm.direccion.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+		</div>
+		<div class="form-group col-md-3">
+			<label for="email">Email</label>
+			<input type="text" ng-model="empresa.email" class="form-control {{empresaForm.$pristine?'':empresaForm.email.$valid?'is-valid':'is-invalid'}}" name="email" ng-readonly="!editable">
+			<!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div> -->
+			<div class="invalid-feedback" ng-if="empresaForm.email.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div>
+		</div>
+		<div class="form-group col-md-3">
+			<label for="telefono">Teléfono Empresa</label>
+			<input type="text" ng-model="empresa.telefono" class="form-control {{empresaForm.$pristine?'':empresaForm.telefono.$valid?'is-valid':'is-invalid'}}" name="telefono" ng-readonly="!editable">
+			<!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>  -->
+			<div class="invalid-feedback" ng-if="empresaForm.telefono.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+		</div>
+		<div class="form-group col-md-3">
+			<label for="celular1">Celular Empresa</label>
+			<input type="text" ng-model="empresa.celular1" class="form-control {{empresaForm.$pristine?'':empresaForm.celular1.$valid?'is-valid':'is-invalid'}}" name="celular1" ng-readonly="!editable">
+			<!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>-->
+			<div class="invalid-feedback" ng-if="empresaForm.celular1.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div>
+		</div>
+		<div class="form-group col-md-2">
+			<label for="fechaini_actividad">Fecha Actividad</label>
+			<input type="text" ng-model="empresa.fechaini_actividad" class="form-control {{empresaForm.$pristine?'':empresaForm.fechaini_actividad.$valid?'is-valid':'is-invalid'}}" name="fechaini_actividad" ng-readonly="!editable">
+			<!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>-->
+			<div class="invalid-feedback" ng-if="empresaForm.fechaini_actividad.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+		</div>
+		<div class="form-group col-md-2">
+			<label for="prioridad">Prioridad</label>
+			<select class="custom-select {{empresaForm.$pristine?'':empresaForm.prioridad.$valid?'is-valid':'is-invalid'}}" name="prioridad" ng-model="empresa.prioridad" ng-disabled="!editable" ng-readonly="!editable"
+				ng-options="item.val as item.des for item in prioridades"></select>
+			<div class="invalid-feedback" ng-if="empresaForm.prioridad.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div>
+		</div>
+		<div class="form-group col-md-2">
+			<label for="estado">Estado</label>
+			<select class="custom-select {{empresaForm.$pristine?'':empresaForm.estado.$valid?'is-valid':'is-invalid'}}" name="estado" ng-model="empresa.estado" ng-disabled="!editable" ng-readonly="!editable"
+				ng-options="item.val as item.des for item in estados"></select>
+			<div class="invalid-feedback" ng-if="empresaForm.estado.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+		</div>
+		<div class="form-group col-md-3">
+			<label for="contacto">Nombre del Contacto</label>
+			<input type="text" ng-model="empresa.contacto" class="form-control {{empresaForm.$pristine?'':empresaForm.contacto.$valid?'is-valid':'is-invalid'}}" name="contacto" ng-readonly="!editable">
+			<!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>-->
+			<div class="invalid-feedback" ng-if="empresaForm.contacto.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+		</div>
+		<div class="form-group col-md-2">
+			<label for="celular2">Celular del Contacto</label>
+			<input type="text" ng-model="empresa.celular2" class="form-control {{empresaForm.$pristine?'':empresaForm.celular2.$valid?'is-valid':'is-invalid'}}" name="celular2" ng-readonly="!editable">
+			<!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>-->
+			<div class="invalid-feedback" ng-if="empresaForm.celular2.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div>
+		</div>
+		<div class="form-group col-md-5">
+			<label for="etiquetas">Etiquetas de búsqueda</label>
+			<input type="text" ng-model="empresa.etiquetas" class="form-control {{empresaForm.$pristine?'':empresaForm.etiquetas.$valid?'is-valid':'is-invalid'}}" name="etiquetas" ng-readonly="!editable">
+			<!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div>-->
+			<div class="invalid-feedback" ng-if="empresaForm.etiquetas.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+		</div>
+		<div class="form-group col-md-2">
+			<label for="ciudad_id">Ciudad</label>
+			<select class="custom-select {{empresaForm.$pristine?'':empresaForm.ciudad_id.$valid?'is-valid':'is-invalid'}}" name="ciudad_id" ng-model="empresa.ciudad_id" ng-disabled="!editable" 
+				ng-readonly="!editable" ng-options="item.id as item.nombre for item in ciudadList"></select>
+			<div class="invalid-feedback" ng-if="empresaForm.ciudad_id.$error.required"><i class="fa fa-times"></i> Campo es obligatorio</div> 
+		</div>
+		<div class="form-group col-md-2">
+			<label for="facebook">Facebook</label>
+			<div class="input-group">
+				<div class="input-group-prepend">
+					<span class="input-group-text"><i class="fab fa-facebook-f"></i></span>
+				</div>
+				<input type="text" ng-model="empresa.facebook" class="form-control {{empresaForm.$pristine?'':empresaForm.facebook.$valid?'is-valid':'is-invalid'}}" name="facebook" ng-readonly="!editable">
+			</div>
+		</div>
+
+		<div class="form-group col-md-2">
+			<label for="instagram">Instagram</label>
+			<div class="input-group">
+				<div class="input-group-prepend">
+					<span class="input-group-text"><i class="fab fa-instagram"></i></span>
+				</div>
+				<input type="text" ng-model="empresa.instagram" class="form-control {{empresaForm.$pristine?'':empresaForm.instagram.$valid?'is-valid':'is-invalid'}}" name="instagram" ng-readonly="!editable">
+			</div>
+		</div>
+		
+		<div class="form-group col-md-2">
+			<label for="sitioweb">Sitio Web</label>
+			<div class="input-group">
+				<div class="input-group-prepend">
+					<span class="input-group-text"><i class="fa fa-globe"></i></span>
+				</div>
+				<input type="text" ng-model="empresa.sitioweb" class="form-control {{empresaForm.$pristine?'':empresaForm.sitioweb.$valid?'is-valid':'is-invalid'}}" name="sitioweb" ng-readonly="!editable">
+			</div>
+		</div>
+		<div class="form-group col-md-2">
+			<label for="coordenadax">Coordenada X</label>
+			<input type="text" ng-model="empresa.coordenadax" class="form-control {{empresaForm.$pristine?'':empresaForm.coordenadax.$valid?'is-valid':'is-invalid'}}" name="coordenadax" ng-readonly="!editable">
+			<!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div> -->
+			<div class="invalid-feedback" ng-if="empresaForm.coordenadax.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+		</div>
+		<div class="form-group col-md-2">
+			<label for="coordenaday">Coordenada Y</label>
+			<input type="text" ng-model="empresa.coordenaday" class="form-control {{empresaForm.$pristine?'':empresaForm.coordenaday.$valid?'is-valid':'is-invalid'}}" name="coordenaday" ng-readonly="!editable">
+			<!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div> -->
+			<div class="invalid-feedback" ng-if="empresaForm.coordenaday.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div>
+		</div>
+		<div class="form-group col-md-2">
+			<label for="valor_contrato">Valor Mensual</label>
+			<input type="text" ng-model="empresa.valor_contrato" class="form-control {{empresaForm.$pristine?'':empresaForm.valor_contrato.$valid?'is-valid':'is-invalid'}}" name="valor_contrato" ng-readonly="!editable">
+			<!--<div class="valid-feedback"><i class="fa fa-check"></i> Correcto</div> 
+			<div class="invalid-feedback" ng-if="empresaForm.valor_contrato.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div>-->
+		</div>
+	</div>
+	
+	<div class="form row">
+		<div class="col-md-12">
+			<button ng-click="save()" ng-if="editable" type="submit" class="btn btn-primary" ng-disabled="saving">
+				<i class="fa fa-save {{saving?'fa-spin':''}}"></i> Guardar
+			</button>
+		</div>
+	</div>
+</form>

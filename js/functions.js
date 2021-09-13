@@ -29,9 +29,12 @@ function paramObjectToString(params){
   }
   return string; 
 }
-function showToast(selector, position = 0){
-  if (position !== 0) {
-    $(selector).css('top', position);
+function showToast(selector, positionY = 0, positionX=0){
+  if (positionY !== 0) {
+    $(selector).css('top', positionY);
+  }
+  if (positionX !== 0) {
+    $(selector).css('left', positionX);
   }
   $(selector).toast('show');
 }
@@ -43,11 +46,17 @@ function formatDateFromIso(iso, format='DD/MM/YYYY hh:mma'){
   return date.format(format);
 }
 function scrollToElement(element, yOffset=0){
-  console.log(element);
   try {
     const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
     window.scrollTo({top: y, behavior: 'smooth'});
   } catch (error) {
     console.log(error);
   }
+}
+function doCollapse(showSection, level='section', collapseOthers=true){
+  // console.log(showSection, level, collapseOthers);
+  if(collapseOthers){
+    $(`.${level}.collapse.show`).collapse('toggle');
+  }
+  $(`.${level}.collapse#${showSection}`).collapse('toggle');
 }

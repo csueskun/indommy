@@ -1,0 +1,41 @@
+<table class="table table-sm">
+	<thead>
+		<tr>
+			<th class="text-right" scope="col">#</th>
+			<th scope="col">Código</th>
+			<th scope="col">Descripción</th>
+			<th scope="col">Tipo Producto</th>
+			<th class="text-right" scope="col">Precio</th>
+			<th width="1" scope="col">Acción</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat='producto in productoList'>
+			<td class="text-right">{{$index + 1 + (pagination.per_page * (pagination.current_page - 1))}}</td>
+			<td>{{producto.codigo}}</td>
+			<td>{{producto.descripcion}}</td>    
+			<td>{{producto.tipoproducto.descripcion}}</td>    
+			<td align = "right" >{{producto.precio1}}</td>
+			<td>
+				<div class="btn-group" role="group" aria-label="Basic example">
+					<button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareFormProducto(producto, false, $index)'><i class="fa fa-search"></i></button>
+					<button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareDeleteProducto(producto, $event, $index)'><i class="fa fa-trash"></i></button>
+					<button type="button" class="btn btn-sm btn-outline-dark" ng-click='prepareImagesProducto(producto, $event, $index)'><i class="fa fa-image"></i></button>
+				</div>
+			</td>
+		</tr>
+		<tr ng-show='!loadingProducto && !productoList.length'>
+			<td colspan="7">
+				<div class="alert alert-warning" role="alert">
+					No se encontraron registros
+				</div>
+			</td>
+		</tr>
+		<tr ng-show='loadingProducto'>
+			<td colspan="7" class="text-center">
+				<h1><i class="fa fa-cog fa-spin text-secondary"></i></h1>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<div class="col-md-12" ng-include='"/view/pagination2.html"'></div>

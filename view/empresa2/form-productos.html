@@ -1,0 +1,135 @@
+
+
+<form name="productoForm" class="my-form-producto" novalidate class="needs-validation" ng-controller="empresa2Controller">
+	<div class="form-row">
+			<div class="form-group col-md-4">
+				<label for="codigo">Código</label>
+				<input type="text" ng-model="producto.codigo" class="form-control {{productoForm.$pristine?'':productoForm.codigo.$valid?'is-valid':'is-invalid'}}" name="codigo" required ng-readonly="!editableProducto">
+				<div class="invalid-feedback" ng-if="productoForm.codigo.$error.required"><i class="fa fa-times"></i> El código es obligatorio</div> 
+				<div class="invalid-feedback" ng-if="productoForm.codigo.$error.unique"><i class="fa fa-times"></i> El código ya existe</div> 
+			</div>
+	
+		<div class="form-group col-md-8">
+				<label for="descripcion">Descripción del Producto</label>
+				<input type="text" ng-model="producto.descripcion" class="form-control {{productoForm.$pristine?'':productoForm.descripcion.$valid?'is-valid':'is-invalid'}}" required name="descripcion" ng-readonly="!editableProducto">
+				<div class="invalid-feedback" ng-if="productoForm.descripcion.$error.required"><i class="fa fa-times"></i> La descripción es obligatorio</div> 
+				<div class="invalid-feedback" ng-if="productoForm.descripcion.$error.unique"><i class="fa fa-times"></i> La descripción ya existe</div> 
+		</div>
+	</div>
+
+	<div class="form-row">
+		<div class="form-group col-md-12">
+			<label for="detalle">Detalle del Producto</label>
+			<input type="text" ng-model="producto.detalle" class="form-control" name="detalle" ng-readonly="!editableProducto">
+		</div>
+	</div>
+	
+	<div class="form-row">
+
+		<div class="form-group col-md-3">
+			<label for="tipoproducto_id">Tipo Producto</label>
+			<select class="custom-select {{productoForm.$pristine?'':productoForm.tipoproducto_id.$valid?'is-valid':'is-invalid'}}" required name="tipoproducto_id" ng-model="producto.tipoproducto_id" ng-disabled="!editableProducto" 
+				ng-readonly="!editableProducto" ng-options="itemt.id as itemt.descripcion for itemt in tipoproductoList"></select>
+			<div class="invalid-feedback" ng-if="productoForm.tipoproducto_id.$error.required"><i class="fa fa-times"></i> Campo es obligatorio</div> 
+		</div>
+
+		<div class="form-group col-md-3">
+			<label for="tipocategoria_id">Categoría</label>
+			<select class="custom-select {{productoForm.$pristine?'':productoForm.tipocategoria_id.$valid?'is-valid':'is-invalid'}}" required name="tipocategoria_id" ng-model="producto.tipocategoria_id" ng-disabled="!editableProducto" 
+				ng-readonly="!editableProducto" ng-options="itemc.id as itemc.nombre for itemc in tipocategoriaList"></select>
+			<div class="invalid-feedback" ng-if="productoForm.tipocategoria_id.$error.required"><i class="fa fa-times"></i> Campo es obligatorio</div> 
+		</div>
+
+		<div class="form-group col-md-3">
+			<label for="prioridad">Prioridad</label>
+			<select class="custom-select" name="prioridad" ng-model="producto.prioridad" ng-disabled="!editableProducto" ng-readonly="!editableProducto"
+				ng-options="item.val as item.des for item in prioridades"></select>
+		</div>
+		<div class="form-group col-md-3">
+			<label for="estado">Estado</label>
+			<select class="custom-select {{productoForm.$pristine?'':productoForm.estado.$valid?'is-valid':'is-invalid'}}" required name="estado" ng-model="producto.estado" ng-disabled="!editableProducto" ng-readonly="!editableProducto"
+				ng-options="item.val as item.des for item in estados"></select>
+			<div class="invalid-feedback" ng-if="productoForm.estado.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+		</div>
+
+	</div>
+
+	<div class="form-row">
+
+		<div class="form-group col-md-3">
+				<label for="tamano">Tamano del producto</label>
+				<input type="text" ng-model="producto.tamano" class="form-control" name="tamano" ng-readonly="!editableProducto">
+		</div>
+	
+		<div class="form-group col-md-3">
+			<label for="precio1">Precio Detal</label>
+			<input type="text" ng-model="producto.precio1" required class="form-control {{productoForm.$pristine?'':productoForm.precio1.$valid?'is-valid':'is-invalid'}}" name="precio1" ng-readonly="!editableProducto">
+		</div>
+
+		<div class="form-group col-md-3">
+			<label for="precio3">Precio Mayor</label>
+			<input type="text" ng-model="producto.precio3" class="form-control" name="precio3" ng-readonly="!editableProducto">
+		</div>
+
+		<div class="form-group col-md-3">
+			<label for="unidad">Unidad</label>
+			<input type="text" ng-model="producto.unidad" class="form-control" name="unidad" ng-readonly="!editableProducto">
+		</div>
+			
+	</div>
+
+	<div class="form-row">
+		<div class="form-group col-md-12">
+			<label for="etiquetas">Etiquetas de búsqueda</label>
+			<input type="text" ng-model="producto.etiquetas" class="form-control" name="etiquetas" ng-readonly="!editableProducto">
+		</div>
+	</div>
+
+
+<div class="form-row">
+		<div class="form-group col-md-2">
+			<label for="iva">Valor IVA</label>
+			<input type="text" ng-model="producto.iva" class="form-control" name="iva" ng-readonly="!editableProducto">
+		</div>
+		<div class="form-group col-md-2">
+			<label for="impco">Imp CO</label>
+			<input type="text" ng-model="producto.impco" class="form-control" name="impco" ng-readonly="!editableProducto">
+		</div>
+
+		<div class="form-group col-md-2">
+			<label for="precio2">Precio Detal 2</label>
+			<input type="text" ng-model="producto.precio2" class="form-control " name="precio2" ng-readonly="!editableProducto">
+	</div>
+
+	<div class="form-group col-md-2">
+		<label for="precio4">Precio Mayor 2</label>
+		<input type="text" ng-model="producto.precio4" class="form-control " name="precio4" ng-readonly="!editableProducto">
+	</div>
+
+	<div class="form-group col-md-2">
+		<label for="marca">Marca</label>
+		<input type="text" ng-model="producto.marca" class="form-control " name="marca" ng-readonly="!editableProducto">
+	</div>
+
+	<div class="form-group col-md-2">
+		<label for="bodega">Bodega</label>
+		<input type="text" ng-model="producto.bodega" class="form-control " name="bodega" ng-readonly="!editableProducto">
+	</div>
+		
+</div>
+
+<div class="form-row">
+		<div class="form-group col-md-12">
+			<label for="observacion">Observacion</label>
+			<input type="text" ng-model="producto.observacion" class="form-control" name="observacion" ng-readonly="!editableProducto">
+		</div>
+</div>  
+
+<div class="form row">
+		<div class="col-md-12">
+			<button ng-click="saveProducto()" ng-if="editableProducto" type="submit" class="btn btn-primary" ng-disabled="saving">
+				<i class="fa fa-save {{saving?'fa-spin':''}}"></i> Guardar
+			</button>
+		</div>
+</div>
+</form>

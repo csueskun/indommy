@@ -8,6 +8,10 @@ function routes($routeProvider) {
     controller: 'empresaController',
     auth: 'perro'
   })
+  .when("/empresa2", {
+    templateUrl : "/view/empresa2/index.html",
+    controller: 'empresa2Controller',
+  })
   .when("/clase", {
     templateUrl : "/view/clase/index.html",
     controller: 'claseController'

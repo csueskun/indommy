@@ -1,0 +1,30 @@
+<table class="table table-sm">
+	<thead>
+		<tr>
+			<th scope="col"></th>
+			<th scope="col">Clase</th>
+			<th scope="col">Grupo</th>
+			<th scope="col">Acción</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat='g in grupoList'>
+			<td style="text-align: right">
+					<div ng-show="empresaGrupos.includes(g.id)"><i class="fa fa-check-circle text-success"></i></div>
+			</td>
+			<td>{{g.clase.descripcion}}</td>
+			<td>{{g.descripcion}}</td>
+			<td>
+					<button ng-disabled="removingGrupos" ng-show="empresaGrupos.includes(g.id)" type="button" class="btn btn-sm btn-outline-dark" ng-click='deleteGrupo(g.id)'style="width: 32px" ><i class="fa fa-times"></i></button>
+					<button ng-disabled="addingGrupos" ng-hide="empresaGrupos.includes(g.id)" type="button" class="btn btn-sm btn-outline-dark" ng-click='addGrupo(g.id)'><i class="fa fa-check"></i></button>
+			</td>
+		</tr>
+		<tr ng-hide='grupoList.length'>
+			<td colspan="4">
+					<div class="alert alert-warning" role="alert">
+					No existe grupos para asociar
+					</div>
+			</td>
+		</tr>
+	</tbody>
+</table>
