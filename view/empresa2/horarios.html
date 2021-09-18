@@ -1,0 +1,114 @@
+
+  <form name="horarioForm" class="my-form-nuevo-producto" novalidate class="needs-validation">
+    <input type="hidden" name="empresa_id" id="empresa_id" ng-model="newHorario.empresa_id">
+    <div class="form-row">
+      <div class="form-group col-md-3">
+        <label for="day">Día</label>
+        <select class="custom-select {{horarioForm.$pristine?'':horarioForm.day.$valid?'is-valid':'is-invalid'}}" 
+                  required name="day" ng-model="newHorario.day" >
+          <option ng-repeat="item in days" value="{{item.v}}">{{item.d}}</option>  
+        </select>
+        <div class="invalid-feedback" ng-if="horarioForm.day.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+      </div>      
+      <div class="form-group col-md-3">
+        <label for="hora_inicio">Hora inicio</label>
+        <select class="custom-select {{horarioForm.$pristine?'':horarioForm.hora_inicio.$valid?'is-valid':'is-invalid'}}" 
+                  required name="hora_inicio" ng-model="newHorario.hora_inicio" >
+          <option ng-repeat="item in initHours" value="{{item}}">{{item}}</option>  
+        </select>
+        <div class="invalid-feedback" ng-if="horarioForm.hora_inicio.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+      </div>       
+      <div class="form-group col-md-3">
+        <label for="hora_fin">Hora Fin</label>
+        <select class="custom-select {{horarioForm.$pristine?'':horarioForm.hora_fin.$valid?'is-valid':'is-invalid'}}" 
+                  required name="hora_fin" ng-model="newHorario.hora_fin" >
+          <option ng-repeat="item in endHours" value="{{item}}">{{item}}</option>  
+        </select>
+        <div class="invalid-feedback" ng-if="horarioForm.hora_fin.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+      </div>       
+      <div class="form-group col-md-3">
+        <label class="d-block" for="submit">&nbsp;</label>
+        <button ng-click="saveNewHorario(horarioForm)" type="button" class="btn btn-primary" ng-disabled="saving||horarioForm.$invalid">
+          <i class="fa fa-save {{saving?'fa-spin':''}}"></i> Guardar Nuevo
+        </button>
+      </div>      
+    </div>
+  </form>
+  <table class="table table-sm">
+    <thead>
+      <tr>
+        <th scope="col">Día</th>
+        <th scope="col">Hora Inicio</th>
+        <th scope="col">Hora Fin</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat='h in horarioList'>
+        <td>{{dayName[h.day]}}</td>
+        <td>{{h.hora_inicio}}</td>
+        <td>{{h.hora_fin}}</td>
+        <td>
+          <button type="button" class="btn btn-sm btn-outline-dark" ng-click='editarHorario(h)'><i class="fa fa-edit"></i></button>
+          <button type="button" class="btn btn-sm btn-outline-dark" ng-click='deleteHorario(h.id, $index)'style="width: 32px" ><i class="fa fa-times"></i></button>
+        </td>
+      </tr>
+      <tr ng-hide='horarioList.length'>
+        <td colspan="4">
+            <div class="alert alert-warning" role="alert">Aún sin horarios</div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="modal fade" id="modalEditarHorario" tabindex="-1" role="dialog" aria-labelledby="modalEditarHorario" aria-hidden="true">
+    <div class="modal-dialog" style='width:600px'>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="">Editando horario</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form name="editHorarioForm" class="my-form-nuevo-producto" novalidate class="needs-validation">
+            <input type="hidden" name="empresa_id" id="empresa_id" ng-model="selectedHorario.empresa_id">
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label for="day">Día</label>
+                <select class="custom-select {{editHorarioForm.$pristine?'':editHorarioForm.day.$valid?'is-valid':'is-invalid'}}" 
+                          required name="day" ng-model="selectedHorario.day" >
+                  <option ng-repeat="item in days" value="{{item.v}}">{{item.d}}</option>  
+                </select>
+                <div class="invalid-feedback" ng-if="editHorarioForm.day.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+              </div>      
+              <div class="form-group col-md-4">
+                <label for="hora_inicio">Hora inicio</label>
+                <select class="custom-select {{editHorarioForm.$pristine?'':editHorarioForm.hora_inicio.$valid?'is-valid':'is-invalid'}}" 
+                          required name="hora_inicio" ng-model="selectedHorario.hora_inicio" >
+                  <option ng-repeat="item in initHours" value="{{item}}">{{item}}</option>  
+                </select>
+                <div class="invalid-feedback" ng-if="editHorarioForm.hora_inicio.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+              </div>       
+              <div class="form-group col-md-4">
+                <label for="hora_fin">Hora Fin</label>
+                <select class="custom-select {{editHorarioForm.$pristine?'':editHorarioForm.hora_fin.$valid?'is-valid':'is-invalid'}}" 
+                          required name="hora_fin" ng-model="selectedHorario.hora_fin" >
+                  <option ng-repeat="item in endHours" value="{{item}}">{{item}}</option>  
+                </select>
+                <div class="invalid-feedback" ng-if="editHorarioForm.hora_fin.$error.required"><i class="fa fa-times"></i> Campo obligatorio</div> 
+              </div>       
+            </div>       
+            <div class="form-row row justify-content-end">
+                <div class="form-group col-md-4 text-right mb-0 mb0">
+                  <label class="d-block" for="submit">&nbsp;</label>
+                  <button ng-click="saveHorario(editHorarioForm)" type="button" class="btn btn-primary" ng-disabled="saving||editHorarioForm.$invalid">
+                    <i class="fa fa-save {{saving?'fa-spin':''}}"></i> Guardar
+                  </button>
+                </div>      
+              </div>       
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

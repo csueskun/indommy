@@ -4,6 +4,7 @@ app.controller('empresa2Controller', function($scope, apiInterface, snackbar, fi
   $scope.grupoList = [];
   $scope.tipoproductoList = [];
   $scope.tipocategoriaList = [];
+  $scope.horarioList = [];
   $scope.pagination = {per_page: 20};
   $scope.pagination2 = {per_page: 20};
   $scope.paginationForm = {};
@@ -23,6 +24,18 @@ app.controller('empresa2Controller', function($scope, apiInterface, snackbar, fi
     {des: 'Activo', val: 1}
     
   ]
+  $scope.days = [
+    {v: '8', d: 'Lunes-Viernes'},
+    {v: '9', d: 'Lunes-Sábado'},
+    {v: '10', d: 'Lunes-Domingo'},
+    {v: '1', d: 'Lunes'},
+    {v: '2', d: 'Martes'},
+    {v: '3', d: 'Miércoles'},
+    {v: '4', d: 'Jueves'},
+    {v: '5', d: 'Viernes'},
+    {v: '6', d: 'Sábado'},
+    {v: '7', d: 'Domingo'}
+  ];
 
   $scope.prioridades = [
     {des: '0', val: 0},
@@ -126,6 +139,7 @@ app.controller('empresa2Controller', function($scope, apiInterface, snackbar, fi
       showForm();
       prepareGrupos();
       loadProductos();
+      loadHorarios();
       return false;
     }
     let success = data=>{
@@ -375,7 +389,7 @@ app.controller('empresa2Controller', function($scope, apiInterface, snackbar, fi
     let success = data=>{
       if(data.status == 200){
         snackbar.green('Guardado exitosamente.');
-        $scope.productoList.push(data.data.data);
+        // $scope.productoList.push(data.data.data);
       }
       $scope.saving = false;
       if($scope.producto.id){
@@ -432,11 +446,11 @@ app.controller('empresa2Controller', function($scope, apiInterface, snackbar, fi
   }
 
 
-  $scope.uploadFileProducto = function (productoId, property) {
+  $scope.uploadFileProducto = function (productoId, property, element) {
     $scope.saving = true;
     var file = $scope.myFile;
     var fileFormData = new FormData();
-    fileFormData.append('file', file);
+    fileFormData.append('file', document.getElementById(element).files[0]);
     fileFormData.append('property', property);
     fileFormData.append('location',  'img/productos');
     fileFormData.append('id', productoId);
@@ -482,4 +496,100 @@ app.controller('empresa2Controller', function($scope, apiInterface, snackbar, fi
     };
     apiInterface.delete('producto/'+$scope.producto.id, {}, success, error);
   }
+
+  $scope.prepareImagesProducto = function(producto={}){
+    $scope.producto = producto;
+    doCollapse("producto-images", "sub-section");
+  }
+
+  var fillHours = function(init=true){
+    var start = init?0:1;
+    var end = init?23:24;
+    var hours = [];
+    var hour = '';
+    for (var index = start; index <= end; index++) {
+      hour = ''
+      if(index<10){
+        hour = '0';
+      }
+      hours.push(hour+index+':00');      
+    }
+    return hours;
+  }
+
+  // HORARIOS
+
+  $scope.initHours = fillHours();
+  $scope.endHours = fillHours(false);
+  $scope.dayName = ['', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+
+  function loadHorarios(){
+    $scope.newHorario = {empresa_id:$scope.empresa.id};
+    $scope.loadingHorarios = true;
+    let success = data=>{
+      if(data.status == 200){
+        $scope.horarioList = data.data.data;
+        $scope.loadingHorarios = false;
+      }};
+    let error = error=>{
+      $scope.loadingHorarios = false;
+    };
+    apiInterface.get('horario', {params: {empresa_id:$scope.empresa.id, order_asc:'day'}}, success, error);
+  }
+
+  $scope.saveNewHorario = function(form){
+    let success = data=>{
+      if(data.status == 200){
+        snackbar.green('Guardado exitosamente.');
+        $scope.newHorario = {empresa_id:$scope.newHorario.empresa_id};
+        loadHorarios();
+      }
+      $scope.saving = false;
+      form.$setPristine();
+    };
+    let error = error=>{
+      snackbar.red('Se presentó un error al guardar.');
+      $scope.saving = false;
+      loadHorarios();
+    };
+    $scope.saving = true;
+    apiInterface.post('horario', $scope.newHorario, {}, success, error);
+  }
+
+  $scope.saveHorario = function(form){
+    let success = data=>{
+      if(data.status == 200){
+        snackbar.green('Guardado exitosamente.');
+      }
+      $scope.saving = false;
+      form.$setPristine();
+      $('#modalEditarHorario').modal('hide');
+    };
+    let error = error=>{
+      snackbar.red('Se presentó un error al guardar.');
+      $scope.saving = false;
+      $('#modalEditarHorario').modal('hide');
+      loadHorarios();
+    };
+    $scope.saving = true;
+    apiInterface.put('horario/'+$scope.selectedHorario.id, $scope.selectedHorario, {}, success, error);
+  }
+
+  $scope.deleteHorario = function(id, index){
+    let success = data=>{
+      if(data.status == 200){
+        $scope.horarioList.splice(index, 1);
+      }
+    };
+    let err = error=>{
+    };
+    apiInterface.delete('horario/' + id, {}, success, err);
+  }
+
+  $scope.editarHorario = function(horario){
+    $scope.selectedHorario = horario;
+    $scope.selectedHorario.day = String(horario.day);
+    $('#modalEditarHorario').modal('show');
+  }
+
 });

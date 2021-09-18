@@ -59,14 +59,14 @@
     <button class="btn btn-link mb-2" type="button" ng-click='backToList()'>
       Volver a la lista de empresas
     </button>
-
+    <h4>{{empresa.nombre}}</h4>
+    
     <div id="accordion">
 
       <div class="card">
         <div class="card-header" id="headingOne">
           <h3 class="mb-0 btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-            <span ng-hide='empresa.id'>Datos de la nueva Empresa</span>
-            <span ng-show='empresa.id'>{{empresa.nombre}}</span>
+            <span>DATOS BÁSICOS DE LA EMPRESA</span>
           </h3>
         </div>
         <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
@@ -130,6 +130,25 @@
               <p><button type="button" class="btn btn-link" onClick='doCollapse("producto-list", "sub-section")'>Volver a la lista de productos</button></p>
               <div class="col-md-12" ng-include='"/view/empresa2/form-productos.html"'></div>
             </div>
+            <div class="sub-section collapse" id="producto-images">
+              <p><button type="button" class="btn btn-link" onClick='doCollapse("producto-list", "sub-section")'>Volver a la lista de productos</button></p>
+              <div class="col-md-12" ng-include='"/view/empresa2/images-producto.html"'></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header" id="heading4">
+          <h3 class="mb-0">
+            <button  ng-disabled="!empresa.id" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse4" aria-expanded="false" aria-controls="collapse4">
+              HORARIOS <span ng-hide="empresa.id">Complete los datos básicos de la empresa para continuar<span>
+            </button>
+          </h3>
+        </div>
+        <div id="collapse4" class="collapse" aria-labelledby="heading4" data-parent="#accordion">
+          <div class="card-body">
+            <div class="col-md-12 p0 p-0" ng-include='"/view/empresa2/horarios.html"'></div>
           </div>
         </div>
       </div>

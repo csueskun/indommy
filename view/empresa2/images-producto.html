@@ -1,0 +1,45 @@
+<p>Empresa: <strong>{{empresa.nombre}}.</strong> Imágenes del producto: <strong>{{producto.descripcion}}</strong></p>
+<div class="form-row">
+<div class="form-group col-md-4">
+    <label for="logo_image">Imagen #1</label>
+    <div ng-hide='saving'>
+    <img ng-hide="producto.imagen" src="http://via.placeholder.com/150" alt="No se ha cargado el logo" class="img-thumbnail cursor-pointer upload-gallery-ph" onclick="$('#uploadImagenP1').click()">
+    <img ng-show="producto.imagen" src="{{imgLocation + 'productos/' +producto.imagen + '?' + cache}}" class="img-thumbnail cursor-pointer upload-gallery-ph" onclick="$('#uploadImagenP1').click()">
+    </div>
+    <div ng-show='saving'>
+    <i class="fa fa-cog fa-spin"></i>
+    </div>
+    <form class="dont-show">
+    <input id='uploadImagenP1' type="file" demo-file-model="myFile" onchange="autoUpload($(this))"/>
+    <button ng-click="uploadFileProducto(producto.id, 'imagen', 'uploadImagenP1')" ng-disabled='saving' class = "upload-button"></button>
+    </form>
+</div>
+<div class="form-group col-md-4">
+    <label for="logo_image">Imagen #2</label>
+    <div ng-hide='saving'>
+    <img ng-hide="producto.imagen2" src="http://via.placeholder.com/150" alt="No se ha cargado el logo" class="img-thumbnail cursor-pointer upload-gallery-ph" onclick="$('#uploadImagenP2').click()">
+    <img ng-show="producto.imagen2" src="{{imgLocation + 'productos/' +producto.imagen2 + '?' + cache}}" class="img-thumbnail cursor-pointer upload-gallery-ph" onclick="$('#uploadImagenP2').click()">
+    </div>
+    <div ng-show='saving'>
+    <i class="fa fa-cog fa-spin"></i>
+    </div>
+    <form class="dont-show">
+    <input id='uploadImagenP2' type="file" demo-file-model="myFile" onchange="autoUpload($(this))"/>
+    <button ng-click="uploadFileProducto(producto.id, 'imagen2')" ng-disabled='saving' class = "upload-button"></button>
+    </form>
+</div>
+<div class="form-group col-md-4">
+    <label for="logo_image">Imagen #3</label>
+    <div ng-hide='saving'>
+    <img ng-hide="producto.imagen3" src="http://via.placeholder.com/150" alt="No se ha cargado el logo" class="img-thumbnail cursor-pointer upload-gallery-ph" onclick="$('#uploadImagenP3').click()">
+    <img ng-show="producto.imagen3" src="{{imgLocation + 'productos/' +producto.imagen3 + '?' + cache}}" class="img-thumbnail cursor-pointer upload-gallery-ph" onclick="$('#uploadImagenP3').click()">
+    </div>
+    <div ng-show='saving'>
+    <i class="fa fa-cog fa-spin"></i>
+    </div>
+    <form class="dont-show">
+    <input id='uploadImagenP3' type="file" demo-file-model="myFile"/>
+    <button ng-click="uploadFileProducto(producto.id, 'imagen3')" ng-disabled='saving' class = "upload-button"></button>
+    </form>
+</div>
+</div>
