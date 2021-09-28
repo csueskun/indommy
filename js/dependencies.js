@@ -19,6 +19,7 @@ class ApiInterface {
   }
   post(url, data={}, config={}, thenCallback=()=>{}, errorCallback=()=>{}, finallyCallback=()=>{}) {
     config.params = { api_token: this.api_token };
+    config.headers = {"Access-Control-Allow-Origin": "*"};
     url = apiUrl+url+paramObjectToString(config.params);
     this.$http.post(url, data, config).then(thenCallback, errorCallback);
   }
