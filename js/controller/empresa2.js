@@ -136,7 +136,7 @@ app.controller('empresa2Controller', function($scope, apiInterface, snackbar, fi
     $scope.empresaIndex = index;
     $scope.empresa = Object.assign({}, empresa);
     if(empresa.id){
-      $scope.pagination2.empresa_id = empresa.id;
+      $scope.pagination2.empresa = empresa.id;
       showForm();
       prepareGrupos();
       loadProductos();
